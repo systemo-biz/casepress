@@ -41,6 +41,8 @@ class Cases_Widget_User extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */  
     function widget($args, $instance) {
+		if (!is_singular('persons')) exit(); //if not person page - exit
+		
 		global $wpdb;
 		$wpdb->show_errors();			
 		global $post;
