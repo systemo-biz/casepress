@@ -1,0 +1,44 @@
+#news-bar {
+	left: 0;
+	width: 100%;
+	height: 32px;
+}
+#news-bar-shell {
+	position: relative;
+	height: 32px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+#news-bar-ticker {
+	height: 32px;
+	padding-left: 25px;
+	overflow: hidden;
+}
+
+.news-bar-item {
+	height: 32px;
+	line-height: 32px;
+}
+
+#news-bar-social-icons {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 32px;
+	padding-left: 15px;
+}
+#news-bar-social-icons a {
+	float: left;
+	display: block;
+	width: 16px;
+	height: 16px;
+	padding: 8px;
+}
+#news-bar-social-icons img {
+	display: block;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+}

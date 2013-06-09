@@ -1,0 +1,25 @@
+#news-bar {
+	background: #444 url(images/default.png) repeat-x;
+	color: #ccc;
+	text-shadow: 1px 1px 0 #111;
+	-moz-text-shadow: 1px 1px 0 #111;
+	-webkit-text-shadow: 1px 1px 0 #111;
+}
+
+#news-bar-ticker a,
+#news-bar-ticker a:visited {
+	color: #fff;
+	text-decoration: none;
+	background: none;
+	outline: none;
+}
+#news-bar-ticker a:hover,
+#news-bar-ticker a:active,
+#news-bar-ticker a:focus {
+	color: #fff;
+	text-decoration: underline;
+	background: none;
+	outline: none;
+}
+
+#news-bar-social-icons a:hover { background: 0 100% url(images/default.png) }

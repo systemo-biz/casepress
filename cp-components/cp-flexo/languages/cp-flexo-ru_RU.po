@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gn_themes\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-08 13:35+0300\n"
+"PO-Revision-Date: 2013-01-08 13:39+0300\n"
+"Last-Translator: Vladimir Anokhin <ano.vladimir@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./includes\n"
+
+#: cases-flexo.php:25
+msgid "Cases. Flexo"
+msgstr "Cases. Flexo"
+
+#: cases-flexo.php:26
+msgid "Vladimir Anokhin"
+msgstr "Владимир Анохин"
+
+#: cases-flexo.php:27
+msgid "Gmail-like popup windows"
+msgstr "Gmail-подобные всплывающие окна"
+
+#: classes/sunrise.class.php:317
+msgid "Settings"
+msgstr "Настройки"
+

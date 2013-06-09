@@ -1,0 +1,224 @@
+/***********************************
+	Common styles
+***********************************/
+
+.casepress-component-column {
+	float: left;
+	width: 260px;
+}
+
+.casepress-component-clear {
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+
+
+/***********************************
+	Nav tabs
+***********************************/
+
+#casepress-component-nav-tabs {}
+#casepress-component-nav-tabs span { cursor: pointer }
+#casepress-component-nav-tabs .nav-tab-active,
+#casepress-component-nav-tabs span:hover { color: #464646 }
+
+
+
+/***********************************
+	Panes
+***********************************/
+
+.casepress-component-nav-pane {
+	margin: 20px 0;
+	padding-bottom: 20px;
+	border-bottom: 3px solid #f0f0f0;
+}
+.js .casepress-component-nav-pane {
+	padding-bottom: 0;
+	border: none;
+}
+
+
+
+/***********************************
+	Fields
+***********************************/
+
+#casepress-component-wrapper .description {
+	display: block;
+	margin-top: 5px;
+}
+
+
+
+/***********************************
+	Icon picker
+***********************************/
+
+.casepress-component-icon-picker { position: relative }
+.casepress-component-icon-picker-preview {
+	width: 16px;
+	height: 16px;
+	margin: 0 0 -3px 5px;
+	cursor: pointer;
+}
+.casepress-component-icon-picker-dropdown {
+	position: absolute;
+	left: 1px;
+	top: 23px;
+	display: none;
+	width: 288px;
+	max-height: 180px;
+	padding: 5px;
+	overflow: auto;
+	background: #fff;
+	border: 1px solid #ccc;
+	z-index: 5;
+}
+.casepress-component-icon-picker-dropdown img {
+	width: 16px;
+	height: 16px;
+	margin: 2px;
+	padding: 2px;
+	cursor: pointer;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.casepress-component-icon-picker-dropdown img:hover { background: #2681AC }
+.casepress-component-icon-picker-upload {
+	display: block;
+	text-align: center;
+}
+
+
+
+/***********************************
+	Color picker
+***********************************/
+
+.casepress-component-color-picker {
+	position: relative;
+	width: 300px;
+}
+.casepress-component-color-picker-preview {
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+	background: #fff;
+	border: 1px solid #eee;
+	z-index: 4;
+}
+
+
+
+/***********************************
+	Fillers
+***********************************/
+
+#casepress-component-fillers {
+	position: relative;
+}
+.casepress-component-fillers-actions { height: 40px }
+.casepress-component-fillers-actions .button { margin-right: 10px }
+
+#casepress-component-filler-template { display: none }
+
+.casepress-component-filler {
+	position: relative;
+	height: 24px;
+	padding: 10px;
+	overflow: hidden;
+	background: #f8f8f8;
+	margin-bottom: 10px;
+	border: 1px solid #ddd;
+	border-bottom: 4px solid #ddd;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.casepress-component-filler-editing {
+	height: auto;
+	background: #f3f3f3;
+}
+
+.casepress-component-filler-menu {
+	position: absolute;
+	left: 325px;
+	top: 12px;
+	display: none;
+}
+
+.casepress-component-filler:hover .casepress-component-filler-menu { display: block }
+.casepress-component-edit-filler .close { display: none }
+.casepress-component-filler-editing .close { display: inline }
+.casepress-component-filler-editing .edit { display: none }
+
+.casepress-component-remove-filler { color: #f03 }
+
+.casepress-component-filler input[type="text"] {
+	margin-bottom: 10px;
+	cursor: text;
+}
+.casepress-component-filler textarea {
+	width: 99%;
+}
+
+.CodeMirror {
+	border: 1px solid #ddd;
+	background: #fff;
+	cursor: text;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+
+
+/***********************************
+	Notifications
+***********************************/
+
+#casepress-component-wrapper .casepress-component-notification {
+	position: relative;
+	margin: 20px 0;
+}
+#casepress-component-wrapper .casepress-component-notification small {
+	position: absolute;
+	right: 10px;
+	top: 9px;
+	display: none;
+	color: #555;
+}
+.js #casepress-component-wrapper .casepress-component-notification:hover small { display: inline }
+
+
+
+/***********************************
+	Actions bar
+***********************************/
+
+.casepress-component-actions-bar {
+	margin-top: 20px;
+	padding: 10px;
+	background: #f5f5f5;
+	border-top: 1px solid #eee;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.casepress-component-spin,
+.casepress-component-success-tip {
+	display: none;
+	margin-left: 10px;
+}
+.casepress-component-success-tip { color: #0b0 }
+.casepress-component-spin img,
+.casepress-component-success-tip img { margin: 0 5px -3px 0 }

@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gndevinfo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-18 21:40+0300\n"
+"PO-Revision-Date: 2013-04-18 21:40+0300\n"
+"Last-Translator: Vladimir Anokhin <ano.vladimir@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: inc/ajax.php:40
+msgid "Error"
+msgstr "Ошибка"
+
+#: inc/ajax.php:44
+msgid "This life cycle is now default"
+msgstr "Установлен жизненным циклом по умолчанию"
+
+#: inc/helpers.php:99
+msgid "Not selected"
+msgstr "Не выбрано"
+
+#: inc/metabox.php:10
+msgid "Life cycle"
+msgstr "Жизненный цикл"
+
+#: inc/metabox.php:23
+msgid "Default"
+msgstr "По умолчанию"
+
+#: inc/metabox.php:25
+msgid "Set this life cycle as default"
+msgstr "Сделать жизненным циклом по умолчанию"
+
+#: inc/metabox.php:26
+msgid "You can set this life cycle as defaut and then it will be used in all categories that does not have applied life cycles"
+msgstr "Вы можете установить этот жизненный цикл как цикл поумолчанию и он будет использоваться во всех категориях, которые не имеют заданного жизненного цикла"
+
+#: inc/metabox.php:30
+msgid "Terms"
+msgstr "Категории"
+
+#: inc/metabox.php:33
+msgid "Select categories for which will be applied states and results selected below"
+msgstr "Выберите категории, для которых будут применяться состояния и результаты, указанные ниже"
+
+#: inc/metabox.php:37
+msgid "States"
+msgstr "Состояния"
+
+#: inc/metabox.php:40
+msgid "Select states that will be used in selected above cateories"
+msgstr "Выберите состояния, которые будут использоваться в указанных выше категориях"
+
+#: inc/metabox.php:44
+msgid "Results"
+msgstr "Результаты"
+
+#: inc/metabox.php:47
+msgid "Select results that will be used in selected above cateories"
+msgstr "Выберите результаты, которые будут использоваться в указанных выше категориях"
+

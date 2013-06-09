@@ -1,0 +1,13 @@
+#TB_overlay {
+	z-index: 300000;
+}
+#TB_load {
+	z-index: 300001;
+}
+#TB_window {
+	z-index: 300002;
+}
+#TB_title {
+	background: #333;
+	color: #f0f0f0;
+}

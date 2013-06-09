@@ -1,0 +1,47 @@
+.lfc-field {
+	position: relative;
+	margin: 15px 0;
+	line-height: 30px;
+}
+
+.lfc-field > strong {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: inline-block;
+}
+.lfc-field.lfc-loading > strong {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+.lfc-field > span {
+	display: block;
+	margin-left: 120px;
+}
+.lfc-field.lfc-loading > span {
+	min-height: 21px;
+	background: 0 5px url('../images/loading.gif') no-repeat;
+	text-indent: -9999px;
+}
+.lfc-field > span input.select2-input {
+	box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	-webkit-box-sizing: content-box !important;
+}
+.lfc-field > span > em {
+	display: block;
+	padding-top: 10px;
+	font-size: 0.9em;
+	line-height: 1.4;
+	color: #777;
+}
+.lfc-init-select2 { width: 100% }
+
+.lfc-hidden {
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+}
