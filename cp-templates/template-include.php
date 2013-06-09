@@ -65,7 +65,7 @@
 		
 		// reports list
 		if ($post->ID == get_option('page_for_reports_list') || is_post_type_archive('reports')){
-			$tmpl_file_name = 'archive-sql_report.php';
+			$tmpl_file_name = 'archive-report.php';
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
