@@ -17,8 +17,8 @@
 	</aside><!-- /#sidebar -->
 	<?php roots_sidebar_after(); ?>
 	<?php roots_main_before(); ?>
+	
 	<div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
-
 		<?php
 			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 			echo "<h1>". $term->name ."</h1>";
@@ -32,32 +32,22 @@
 		<?php /* Start loop */ ?>
 		<?php
 			// DataTable
-//echo $term->term_id;
-	?>	<h2>
-<?php echo $term->name;	?>	
-</h2> <?
- query_posts(array( 'post_type'=>'report', 'tax_query' => array(
-array(
-'taxonomy' => 'report_cat',
-'field' => 'id',
-'terms' => $term->term_id
-)
-))); 
- ?>
-	<ul class="thumbnails">
-	<?php while (have_posts()) : the_post(); ?>
-	  <li class="span4">
-			<div class="caption">
-				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-				<?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
-		 </div>
-	  </li>
+				// DataTable
+			if ( function_exists( 'datatable_generator' ) )
+				datatable_generator( array(
+					'tax' => 'report_cat:' . $term->term_id,
+					'type' => 'report',
+					'fields' => 'ID:int, post_title:link',
+					'titles' => 'post_title:Отчет',
+					'template' => 'bootstrap'
+				) );
+				
 
-	  <?php endwhile; ?>
-	</ul>
-		
+		?>
 		<?php roots_loop_after(); ?>
 	</div><!-- /#main -->
+	
+
 	<?php roots_main_after(); ?>
 </div><!-- /#content -->
 <?php

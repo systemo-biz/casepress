@@ -62,6 +62,19 @@
 			}
 			die;
 		}		
+
+		
+		// reports category
+		if (is_tax('report_cat')){
+			
+			$tmpl_file_name = 'taxonomy-report_cat.php';
+			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
+				load_template( $overridden_template );
+			} else {
+				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
+			}
+			die;
+		}		
 		
 		// reports list
 		if ($post->ID == get_option('page_for_reports_list') || is_post_type_archive('reports')){
