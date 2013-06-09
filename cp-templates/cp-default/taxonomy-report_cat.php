@@ -20,7 +20,9 @@
 	<div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
 
 		<?php
-		
+			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+			echo "<h1>". $term->name ."</h1>";
+			echo '<hr/>';
 			// Term description
 			$category_description = category_description();
 			if ( !empty( $category_description ) )
@@ -30,7 +32,6 @@
 		<?php /* Start loop */ ?>
 		<?php
 			// DataTable
-			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 //echo $term->term_id;
 	?>	<h2>
 <?php echo $term->name;	?>	

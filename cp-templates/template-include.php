@@ -14,6 +14,54 @@
 			}
 			die;
 		}
+
+		// organizations category
+		if (is_tax('organizations_category')){
+			
+			$tmpl_file_name = 'taxonomy-organizations_category.php';
+			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
+				load_template( $overridden_template );
+			} else {
+				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
+			}
+			die;
+		}
+
+		// organization_structure
+		if (is_tax('organization_structure')){
+			
+			$tmpl_file_name = 'taxonomy-organization_structure.php';
+			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
+				load_template( $overridden_template );
+			} else {
+				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
+			}
+			die;
+		}
+
+		// persons_category
+		if (is_tax('persons_category')){
+			
+			$tmpl_file_name = 'taxonomy-persons_category.php';
+			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
+				load_template( $overridden_template );
+			} else {
+				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
+			}
+			die;
+		}		
+		
+		// objects_category
+		if (is_tax('objects_category')){
+			
+			$tmpl_file_name = 'taxonomy-objects_category.php';
+			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
+				load_template( $overridden_template );
+			} else {
+				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
+			}
+			die;
+		}		
 		
 		// reports list
 		if ($post->ID == get_option('page_for_reports_list') || is_post_type_archive('reports')){
