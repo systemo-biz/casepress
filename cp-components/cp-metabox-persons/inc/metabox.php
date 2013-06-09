@@ -16,7 +16,7 @@
 					</h3>
 				</div>
 				<div class="cases-box-content">
-					<?php cmp_metabox(); ?>
+					<?php cmp_metabox($post, ''); ?>
 				</div>
 			</div>
 			<?php
