@@ -35,7 +35,6 @@
 			if ( function_exists( 'datatable_generator' ) )
 				datatable_generator( array(
 					'tax' => 'organizations_category:' . $term->term_id,
-					'title' => $term->name,
 					'type' => 'organizations',
 					'fields' => 'ID:int, post_title:link',
 					'titles' => 'post_title:Организация'
