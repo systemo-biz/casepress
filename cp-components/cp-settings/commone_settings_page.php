@@ -4,6 +4,7 @@ class cpCommoneSettingsPage{
 	function __construct(){
 		add_action('admin_menu', array($this, 'add_setting_page_in_menu'));
 		add_action('admin_init', array($this, 'init_cp_settings_commone'));
+		add_action('wp_enqueue_scripts', array($this, 'load_ss'));
 	}
 	
 
@@ -35,24 +36,44 @@ class cpCommoneSettingsPage{
 	
 	function page_for_reports_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_reports_list' ) );
-		echo "<input type='text' name='page_for_reports_list' value='$setting' />";
+		?>
+		<label for="page_for_reports_list">
+			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
+		</label>
+		<?php
 	}
 	function page_for_persons_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_persons_list' ) );
-		echo "<input type='text' name='page_for_persons_list' value='$setting' />";
+		?>
+		<label for="page_for_reports_list">
+			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
+		</label>
+		<?php
 	}
 	function page_for_objects_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_objects_list' ) );
-		echo "<input type='text' name='page_for_objects_list' value='$setting' />";
+		?>
+		<label for="page_for_reports_list">
+			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
+		</label>
+		<?php
 	}
 	function page_for_organizations_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_organizations_list' ) );
-		echo "<input type='text' name='page_for_organizations_list' value='$setting' />";
+		?>
+		<label for="page_for_reports_list">
+			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
+		</label>
+		<?php
 	}
 
 	function page_for_cases_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_cases_list' ) );
-		echo "<input type='text' name='page_for_cases_list' value='$setting' />";
+		?>
+		<label for="page_for_reports_list">
+			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
+		</label>
+		<?php
 	}
 
 	function get_cp_commone_setting_form() {
@@ -66,6 +87,11 @@ class cpCommoneSettingsPage{
 			</form>
 		</div>
 		<?php
+	}
+	
+	function load_ss(){
+		wp_enqueue_script( 'select2' );
+		wp_enqueue_style( 'select2' );
 	}
 }
 
