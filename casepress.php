@@ -9,8 +9,8 @@
   Version: 0.5beta20130610
 */
 	 
-	include_once 'cp-core/core-includes.php';
 	include_once 'cp-includes/load.php';
+	include_once 'cp-core/core-includes.php';
 	include_once 'cp-components/components-includes.php';
 	include_once 'cp-templates/template-include.php';
 

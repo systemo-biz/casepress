@@ -8,8 +8,8 @@ class CP_Include {
 	function register_ss(){
 
 		//select2 - register component files
-		wp_register_script( 'select2', plugins_url( '/cp-includes/select2/select2.js',__FILE__ ));
-		wp_register_style( 'select2', plugins_url( '/cp-includes/select2/select2.css',__FILE__ ), array(), '20120208', 'all' );
+		wp_register_script( 'select2', plugins_url( '/cp-includes/select2/select2.js',__FILE__ ), array(), '3.4.0', 'all');
+		wp_register_style( 'select2', plugins_url( '/cp-includes/select2/select2.css',__FILE__ ), array(), '3.4.0', 'all' );
 	}
 }
 
