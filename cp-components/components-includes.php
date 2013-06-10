@@ -32,5 +32,7 @@ include_once 'cp-term-meta/cp-term-meta.php';
 include_once 'cp-acf-integration/class-cp-add-acf-form-to-pages.php';
 
 include_once 'cp-life-cycle/cp-life-cycle.php';
+include_once 'cp-settings/commone_settings_page.php';
+include_once 'cp-settings/setting_page_security.php';
 
 ?>

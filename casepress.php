@@ -10,11 +10,11 @@
 */
 	 
 	include_once 'cp-core/core-includes.php';
+	include_once 'cp-includes/load.php';
 	
 	include_once 'cp-components/components-includes.php';
 	include_once 'cp-templates/template-include.php';
 
-	include_once 'cp-settings/settings_include.php';
 
 	register_activation_hook( __FILE__, 'cp_activation' );
 
