@@ -30,50 +30,42 @@ class cpCommoneSettingsPage{
 	}
 	
 	function cp_settings_pages_section_callback(){
-		echo "<p>Укажите ID страницы, на которой нужно будет выводить список:</p>";
+		?>
+		<p>Укажите ID страницы, на которой нужно будет выводить список:</p>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$("select").select2();
+			});
+		</script> 
+		<style type="text/css">
+			.select2-container {
+				width:50%;
+				}
+		</style>
+		<?php
 	}
 
 	
 	function page_for_reports_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_reports_list' ) );
-		?>
-		<label for="page_for_reports_list">
-			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
-		</label>
-		<?php
+		wp_dropdown_pages( array( 'name' => 'page_for_reports_list', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ;
 	}
 	function page_for_persons_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_persons_list' ) );
-		?>
-		<label for="page_for_reports_list">
-			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
-		</label>
-		<?php
+		wp_dropdown_pages( array( 'name' => 'page_for_persons_list', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ;
 	}
 	function page_for_objects_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_objects_list' ) );
-		?>
-		<label for="page_for_reports_list">
-			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
-		</label>
-		<?php
+		wp_dropdown_pages( array( 'name' => 'page_for_objects_list', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ;
 	}
 	function page_for_organizations_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_organizations_list' ) );
-		?>
-		<label for="page_for_reports_list">
-			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
-		</label>
-		<?php
+		wp_dropdown_pages( array( 'name' => 'page_for_organizations_list', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; 
 	}
 
 	function page_for_cases_list_field_callback(){
 		$setting = esc_attr( get_option( 'page_for_cases_list' ) );
-		?>
-		<label for="page_for_reports_list">
-			<?php wp_dropdown_pages( array( 'name' => $setting, 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; ?>
-		</label>
-		<?php
+		wp_dropdown_pages( array( 'name' => 'page_for_cases_list', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting ) ) ; 
 	}
 
 	function get_cp_commone_setting_form() {
