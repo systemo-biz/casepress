@@ -3,7 +3,6 @@
 include_once 'core-functions.php';
 
 include_once 'post_types/add_cases.php';
-include_once 'post_types/add_chart_report.php';
 include_once 'post_types/add_checklist.php';
 include_once 'post_types/add_notify_templates.php';
 include_once 'post_types/add_objects.php';
