@@ -61,9 +61,9 @@
 	}
 	// Navbar styles
 	if ( is_admin() && is_admin_bar_showing() ) {
-		wp_enqueue_style( 'navbar', $this->assets( 'css', 'navbar.css' ), false, $this->class_version, 'all' );
+		//wp_enqueue_style( 'navbar', $this->assets( 'css', 'navbar.css' ), false, $this->class_version, 'all' );
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'navbar', $this->assets( 'js', 'navbar.js' ), array( 'jquery' ), $this->class_version, false );
+		//wp_enqueue_script( 'navbar', $this->assets( 'js', 'navbar.js' ), array( 'jquery' ), $this->class_version, false );
 	}
 
 	/**

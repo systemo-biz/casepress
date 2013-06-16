@@ -22,6 +22,7 @@ function gf_register_cases_posttype() {
     'title',
     'editor',
     'comments',
+	'custom-fields'
     );
 
   $args = array(
