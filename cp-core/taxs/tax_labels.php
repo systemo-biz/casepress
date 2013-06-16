@@ -22,7 +22,7 @@
 		register_taxonomy( 'labels', 'cases', array(
 			'hierarchical' => false,
 			'labels' => $labels,
-			'show_ui' => true,
+			'show_ui' => false,
 			'update_count_callback' => '_update_post_term_count',
 			'query_var' => true,
 			'rewrite' => array(
