@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gn_themes\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-06 04:35+0300\n"
+"PO-Revision-Date: 2013-04-06 04:35+0300\n"
+"Last-Translator: Vladimir Anokhin <ano.vladimir@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: casepress-metabox-persons.php:31
+msgid "Cancel"
+msgstr "Отмена"
+
+#: casepress-metabox-persons.php:31
+msgid "Ok"
+msgstr "Готово"
+
+#: casepress-metabox-persons.php:44
+msgid "CasePress. Metabox Persons"
+msgstr "CasePress. Метабокс Персоны"
+
+#: casepress-metabox-persons.php:45
+msgid "Vladimir Anokhin"
+msgstr "Владимир Анохин"
+
+#: casepress-metabox-persons.php:46
+msgid "Adds persons management metabox"
+msgstr "Добавляет метабокс для управления персонами"
+
+#: classes/casepress-chooser.class.php:89
+msgid "Filter groups"
+msgstr "Фильтр групп"
+
+#: classes/casepress-chooser.class.php:89
+msgid "Clear field"
+msgstr "Очистить поле"
+
+#: classes/casepress-chooser.class.php:127
+msgid "Search"
+msgstr "Поиск"
+
+#: classes/casepress-chooser.class.php:128
+msgid "Find"
+msgstr "Найти"
+
+#: classes/casepress-chooser.class.php:129
+msgid "Results count"
+msgstr "Количество результатов"
+
+#: classes/casepress-chooser.class.php:192
+msgid "Loading data"
+msgstr "Загрузка данных"
+
+#: classes/casepress-chooser.class.php:218
+msgid "Select all"
+msgstr "Выбрать все"
+
+#: classes/casepress-chooser.class.php:225
+msgid "Nothing found"
+msgstr "Ничего не найдено"
+
+#: classes/casepress-chooser.class.php:249
+msgid "Add this group"
+msgstr "Добавить эту группу"
+
+#: classes/sunrise.class.php:312
+msgid "Settings"
+msgstr "Настройки"
+
+#: inc/ajax.php:102
+#: inc/helpers.php:23
+#: inc/metabox.php:50
+msgid "Not selected"
+msgstr "Не выбрано"
+
+#: inc/helpers.php:43
+msgid "Click to edit"
+msgstr "Нажмите, чтобы редактировать"
+
+#: inc/helpers.php:44
+msgid "Advanced search"
+msgstr "Расширенный поиск"
+
+#: inc/helpers.php:93
+msgid "Y/m/d"
+msgstr "Y/m/d"
+
+#: inc/metabox.php:12
+msgid "Persons"
+msgstr "Персоны"
+
+#: inc/metabox.php:34
+msgid "Participants"
+msgstr "Участники"
+
+#: inc/metabox.php:52
+msgid "Initiator"
+msgstr "Инициатор"
+
+#: inc/metabox.php:53
+msgid "Responsible"
+msgstr "Ответственный"
+
+#: inc/metabox.php:54
+msgid "Co-executors"
+msgstr "Соисполнители"
+
+#: inc/metabox.php:96
+msgid "Person selection"
+msgstr "Выбор персон"
+
+#: inc/metabox.php:98
+msgid "Use search form to find persons. Also, you can use filters in left sidebar to filter persons by the categories. You can also add category completely by clicking on it's plus button."
+msgstr "Используйте форму поиска, чтобы найти и выбрать персоны. Также, Вы можете использовать меню слева, чтобы отфильтровать персоны по категориям. Вы также можете добавить целую категорию персон, нажав кнопку \"плюс\" возле соответствующей категории в левом меню."
+

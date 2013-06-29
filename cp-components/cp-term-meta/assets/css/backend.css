@@ -1,0 +1,39 @@
+/***********************************
+	Common styles
+***********************************/
+
+.gndev-plugin-column {
+	float: left;
+	width: 46%;
+	margin-right: 4%;
+	min-width: 300px;
+}
+
+.gndev-plugin-clear {
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+.gndev-plugin-hidden { display: none }
+
+
+
+/***********************************
+	Plugin specific styles
+***********************************/
+
+.ctmeta-checkbox { display: inline-block; margin: 1em 0 }
+.ctmeta-checkbox input[type="checkbox"] { width: auto }
+
+#ctmeta-deadline input[type="number"] {
+	width: 100px;
+	text-align: left;
+}
+
+.ctmeta-warning {
+	text-transform: uppercase;
+	font-size: 0.9em;
+	font-weight: bold;
+	color: #b00;
+}

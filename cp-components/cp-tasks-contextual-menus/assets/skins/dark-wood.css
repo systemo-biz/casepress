@@ -1,0 +1,25 @@
+#news-bar {
+	background: #444 url(images/dark-wood.png) repeat-x;
+	color: #ccc;
+	text-shadow: 1px 1px 0 #222;
+	-moz-text-shadow: 1px 1px 0 #222;
+	-webkit-text-shadow: 1px 1px 0 #222;
+}
+
+#news-bar-ticker a,
+#news-bar-ticker a:visited {
+	color: #fff;
+	text-decoration: none;
+	background: none;
+	outline: none;
+}
+#news-bar-ticker a:hover,
+#news-bar-ticker a:active,
+#news-bar-ticker a:focus {
+	color: #fff;
+	text-decoration: underline;
+	background: none;
+	outline: none;
+}
+
+#news-bar-social-icons a:hover { background: 0 100% url(images/dark-wood.png) }
