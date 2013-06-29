@@ -19,12 +19,14 @@ function gf_register_cases_posttype() {
     );
 
   $supports = array(
-    'title',
     'editor',
     'comments',
-	'custom-fields'
-    );
+    'title'
+     );
 
+  //add custom-fields, if it is enable
+  if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
+      
   $args = array(
     'labels' => $labels,
     'singular_label' => $n[0],

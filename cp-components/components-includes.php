@@ -7,8 +7,8 @@ include_once 'cp-acl/acl.php';
 include_once 'cp-visits/visits.php';
 include_once 'cp-checks/checks.php'; // <--------------------------- JS errors
 include_once 'cp-labels/labels.php';
-include_once 'cp-case-management/cp-case-management.php';
-include_once 'cp-metabox-persons/cp-metabox-persons.php';
+//include_once 'cp-case-management/cp-case-management.php';
+//include_once 'cp-metabox-persons/cp-metabox-persons.php';
 include_once 'cp-datatable/dt.php'; // <---------------------------- JS errors
 //include_once 'cp-instant-post/cp-instant-post.php';
 //include_once 'cp-workflow/cp-workflow.php';

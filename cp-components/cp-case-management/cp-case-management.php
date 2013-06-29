@@ -17,7 +17,7 @@
 	require_once 'inc/save.php';
 	require_once 'inc/actions.php';
 	//require_once 'inc/navbar.php';
-	require_once 'inc/remove.php';
-	require_once 'inc/redirect.php';
+	//require_once 'inc/remove.php';
+	//require_once 'inc/redirect.php';
 	require_once 'inc/button-extra.php';
 ?>

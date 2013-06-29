@@ -20,14 +20,12 @@ function register_results_tax() {
 	$args = array(
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Результат',
-		'public' 			=> true,
-		'show_ui' 			=> true,
-		'hierarchical' 		=> false,
+		'public' 			=> false,
+		//'show_ui' 			=> true,
+		'hierarchical' 		=> true,
 		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => true,
+		//'show_in_nav_menus' => true,
 		'rewrite' 			=> array('slug' => 'results', 'with_front' => false ),
 	 );
 	register_taxonomy('results', $pages, $args);
 }
-
-?>

@@ -17,5 +17,7 @@
 		return $post_id;
 	}
 
-	add_action( 'wp_insert_post', 'cmmngt_onsave_redirect' );
+    // add condition for this hook
+    if (!(esc_attr( get_option( 'enable_custom_fields_for_cases' ) ) == "1"))
+        add_action( 'wp_insert_post', 'cmmngt_onsave_redirect' );
 ?>

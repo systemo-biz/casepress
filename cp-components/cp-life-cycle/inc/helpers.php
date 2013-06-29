@@ -30,7 +30,7 @@
 				$id = $terms[0];
 			// Terms not found
 			else
-				return false;
+				$id='0';//set no term for get default life cicle;
 		}
 		// Prepare args
 		$args = array(
