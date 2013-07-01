@@ -20,7 +20,7 @@ include_once 'cp-cases/cases.php';
 include_once 'cp-hailer/hailer.php';
 include_once 'cp-flexo/cp-flexo.php';
 include_once 'cp-acf-functions-select/cp-acf-functions-select.php';
-include_once 'cp-gn-tabs/cp-gn-tabs.php';
+//include_once 'cp-gn-tabs/cp-gn-tabs.php';
 //include_once 'cp-sub-poster/cp-sub-poster.php';
 include_once 'cp-drafts-shorcodes/drafts-shorcodes.php';
 include_once 'cp-new-content-menu/new-content-menu.php';
