@@ -188,41 +188,42 @@
 		return $template;
 	}
 	
-	function ctmeta_get_default_responsible( $term ) {
-
-		if ( $term ) {
-			$responsible = ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $term );
-
-			// Template for current term isn't set
-			if ( empty( $responsible ) ) {
-				for ( $i = 0; $i < 5; $i++ ) {
-
-					// Get current term
-					$term_obj = ( isset( $parent ) ) ? get_term_by( 'id', $parent, 'functions' ) : get_term_by( 'id', $term, 'functions' );
-
-					// Check parent
-					$parent = (!is_wp_error( $term_obj ) && is_numeric( $term_obj->parent ) ) ? $term_obj->parent : false;
-
-					// Got parent
-					if ( $parent ) {
-						if ( ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $parent ) ) {
-							$responsible = ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $parent );
-							break;
-						}
-					}
-
-					// No parents, stop the loop
-					else {
-						$responsible = '';
-						break;
-					}
-					unset( $term_obj );
-				}
-			}
-		}
-
-		return $responsible;
-	}
+// del https://trello.com/card/-/51a42bcc2b657e0052007db4/2
+//		function ctmeta_get_default_responsible( $term ) {
+//
+//		if ( $term ) {
+//			$responsible = ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $term );
+//
+//			// Template for current term isn't set
+//			if ( empty( $responsible ) ) {
+//				for ( $i = 0; $i < 5; $i++ ) {
+//
+//					// Get current term
+//					$term_obj = ( isset( $parent ) ) ? get_term_by( 'id', $parent, 'functions' ) : get_term_by( 'id', $term, 'functions' );
+//
+//					// Check parent
+//					$parent = (!is_wp_error( $term_obj ) && is_numeric( $term_obj->parent ) ) ? $term_obj->parent : false;
+//
+//					// Got parent
+//					if ( $parent ) {
+//						if ( ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $parent ) ) {
+//							$responsible = ctmeta_get_meta( 'ctmeta_default_responsible', 'functions', $parent );
+//							break;
+//						}
+//					}
+//
+//					// No parents, stop the loop
+//					else {
+//						$responsible = '';
+//						break;
+//					}
+//					unset( $term_obj );
+//				}
+//			}
+//		}
+//
+//		return $responsible;
+//	}
 
 	function ctmeta_is_working_day( $date ) {
 		if ( is_string( $date ) )
@@ -249,19 +250,19 @@
 	/**
 	 * Determine case end date.
 	 *
-	 * Четыре параметра:
-	 * 1. Начало рабочего дня (9:00)
-	 * 2. Конец рабочего дня (18:00)
-	 * 3. Начало обеда (13:00)
-	 * 4. Конец обеда (14:00)
+	 * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+	 * 1. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (9:00)
+	 * 2. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (18:00)
+	 * 3. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (13:00)
+	 * 4. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (14:00)
 	 *
-	 * Вычисление даты:
-	 * 1. Берём время начала.
-	 * 2. Смотрим, до обеда оно или после.
-	 * 3. Вычисляем, сколько осталось до конца рабочего дня (с учётом обеда).
-	 * 4. Если срок меньше этого времени, то задача решена.
-	 * 5. Если больше, то из срока отнимаем время, оставшееся до конца рабочего дня (величину, полученную на шаге 3).
-	 * 6. Переходим на следующий рабочий день (возвращаемся к шагу 1).
+	 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ:
+	 * 1. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+	 * 2. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
+	 * 3. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ).
+	 * 4. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+	 * 5. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ 3).
+	 * 6. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ 1).
 	 *
 	 * @return string Case end date.
 	 */
@@ -289,8 +290,8 @@
 		if ( is_string( $date_start ) )
 			$date_start = strtotime( $date_start );
 
-		// Если начало работы приходится на нерабочее время или выходной день, то сдвигаем его на начало ближайшего рабочего дня.
-		// Если начало работы приходится на время обеда, то сдвигаем его на время конца обеда.
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 		$case_start_time = date( 'H:i', $date_start );
 		if ( $case_start_time < $settings['working_hours_start'] && ctmeta_is_working_day( $date_start ) )
 			$date_start = date( 'd.m.Y', $date_start ) . ' ' . $settings['working_hours_start'];
