@@ -23,7 +23,7 @@
 	// Fill title by default template
 	require_once 'inc/title-template.php';
 	// Apply default responsible by term meta
-	require_once 'inc/default-responsible.php';
+	//require_once 'inc/default-responsible.php';
 	// Apply default deadline by term meta
 	require_once 'inc/default-deadline.php';
 	//Auto hide titles and content editboxes 
