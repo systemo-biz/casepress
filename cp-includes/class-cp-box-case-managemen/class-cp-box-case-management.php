@@ -24,7 +24,7 @@ class CP_Case_Management {
         add_action( 'save_post', array($this, 'save_data_post'), 9);
         add_action( 'wp_ajax_save_data_cp_members', array($this, 'save_data_cp_members') );
         add_action( 'wp_ajax_get_member_from', array($this, 'get_member_from_callback') );
-        add_action( 'wp_ajax_save_data_post', array($this, 'save_data_post') );
+        add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
         
         
   
@@ -209,13 +209,32 @@ class CP_Case_Management {
 
 
 	
+    function save_data_ajax() {
+        error_log ("go ajax");
 
+        if (isset($_REQUEST['deadline']) && isset($_REQUEST['case_id'])) {
+            error_log ("go ajax 2");
+			$key = 'cp_date_deadline';
+            $timestamp = strtotime($_REQUEST['deadline']);
+			$post_id = $_REQUEST['case_id'];
+                    
+            if ($timestamp > 0) {
+                if (date('H:i:s', $timestamp) == "00:00:00") $timestamp = $timestamp + 86399;
+                $value = date('Y-m-d H:i:s', $timestamp);
+    			update_post_meta( $post_id, $key, $value);
+            }
+            
+            
+            return "111";
+        }
+    }
 
 		
 	function save_data_post(){
 		global $post;
         //check right post type
-        if (is_admin() && !($post->post_type == 'cases')) return;
+        if (!(is_object($post))) return;
+        if (!($post->post_type == 'cases')) return;
         
 		$post_id = $post->ID;
         
@@ -277,7 +296,7 @@ class CP_Case_Management {
                 $term = get_the_terms( $post_id, "results" );
                 
                 //delete only if not result
-                if (!($term[0]->count > 0)) 
+                if (is_object($term) && !($term[0]->count > 0)) 
                     delete_post_meta($post_id, $key);
             } else {
                $timestamp = strtotime($_REQUEST['cp_date_end']);
@@ -289,14 +308,15 @@ class CP_Case_Management {
 		if (isset($_REQUEST['cp_date_deadline'])) {
 			$key = 'cp_date_deadline';
             $timestamp = strtotime($_REQUEST['cp_date_deadline']);
-			
+                    
             if ($timestamp > 0) {
                 if (date('H:i:s', $timestamp) == "00:00:00") $timestamp = $timestamp + 86399;
                 $value = date('Y-m-d H:i:s', $timestamp);
     			update_post_meta( $post_id, $key, $value);
             }
 		}
-                
+        
+            
 		if (isset($_REQUEST['cp_prioritet'])) {
 			$key = 'cp_prioritet';
 			$value = $_REQUEST['cp_prioritet'];
@@ -311,7 +331,7 @@ class CP_Case_Management {
         
         //check right post type
 		global $post;
-        if (!($post->post_type == 'cases')) return;
+        if ($post && !($post->post_type == 'cases')) return;
         
         wp_enqueue_script( 'select2' );
         wp_enqueue_style( 'select2' );
@@ -424,9 +444,10 @@ class CP_Render_Fields {
             <label for="cp_case_category_select">Категория дела</label>
             <?php
             $case_category_id = '0';
+            
             if (isset($term->term_id)){
                 $case_category_id = $term->term_id;
-            } elseif ($_REQUEST['case_category_id'] > 0) {
+            } elseif (isset($_REQUEST['case_category_id'])) {
                 $case_category_id = $_REQUEST['case_category_id'];
             } else $case_category_id = '0';
 
@@ -660,7 +681,7 @@ class CP_Render_Fields {
                             <input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
                     </p>
             </div>
-            <script>
+            <script type="text/javascript">
                 jQuery(document).ready(function($) {
                     var placeholder = "";
 
@@ -725,6 +746,7 @@ class CP_Render_Fields {
 
         //convert date
         $timestamp = strtotime(get_post_meta($post->ID, "cp_date_deadline", true));
+        $value = "";
         if ($timestamp > 0) $value = date('Y-m-d', $timestamp);
         
 
@@ -737,9 +759,38 @@ class CP_Render_Fields {
                         <input type="date" id="cp_field_date_deadline_input" name="cp_date_deadline" class="cp_full_width cp_input_datepicker" value="<?php echo $value?>"/>
                     </div>  
                     <p>
-                        <a href="#ok" class="button">OK</a>
-                        <a href="#cancel">Отмена</a>
+                        <a href="#ok" id="cp_action_save_deadline" class="button">OK</a>
+                        <a href="#cancel" id="cp_action_cancel_deadline">Отмена</a>
                     </p>
+                    <script type="text/javascript">
+                        (function($) {
+                            $("#cp_action_save_deadline").click(function(){
+                                alert($("#cp_field_date_deadline_input").val());
+                                deadline = $("#cp_field_date_deadline_input").val();
+                                $.ajax({
+                                    data: ({
+                                        deadline: deadline,
+                                        case_id: <?php echo $post->ID?>,
+                                        action: 'save_data_post'
+                                    }),
+                                    url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                    success: function(data) {
+                                        alert(data);
+                                     }
+                                 });
+
+
+
+
+                            });
+
+                            $("#cp_action_cancel_deadline").click(function(){
+                                    alert("23");
+
+                            });
+
+                        })(jQuery);
+                    </script>
                </div>
         </div>
         <?php
@@ -769,7 +820,7 @@ class CP_Automaton_Case {
 
         $current_date_end = get_post_meta($post_id, $key, true);
         
-        if ($term->taxonomy === "results" && !($current_date_end > 0)){
+        if (is_object($term) && $term->taxonomy === "results" && !($current_date_end > 0)){
                 update_post_meta( $post_id, $key, $value);
         }
     }
