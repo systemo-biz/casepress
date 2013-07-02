@@ -9,6 +9,7 @@ class CP_Add_ACF_Form_On_Pages {
 	function __construct(){
 		add_action('cp_post_after', array($this, 'add_acf_form_to_page_organizaton'));
 		add_action('get_header',array($this, 'load_acf_components'));
+		add_action('cp_loop_after',array($this, 'load_acf_form'));
 	}
 	
 	function load_acf_components(){
@@ -26,6 +27,9 @@ class CP_Add_ACF_Form_On_Pages {
 				}
 			}
 		}
+	}
+	function load_acf_form(){
+		if (function_exists('acf_form')) get_template_part('template', 'acf-form');
 	}
 }
 

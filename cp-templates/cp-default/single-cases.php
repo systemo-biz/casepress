@@ -1,8 +1,7 @@
 <?php
     global $tabs;
     $template_name = (isset($tabs) && $tabs) ? 'single-tabs' : 'single';
-
-	acf_form_head();
+	if (function_exists('acf_form_head')) acf_form_head();
 	get_header();
 ?>
 <?php roots_content_before(); ?>
