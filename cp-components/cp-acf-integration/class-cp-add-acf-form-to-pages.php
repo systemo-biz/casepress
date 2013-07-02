@@ -8,28 +8,32 @@ class CP_Add_ACF_Form_On_Pages {
 
 	function __construct(){
 		add_action('cp_post_after', array($this, 'add_acf_form_to_page_organizaton'));
-		add_action('get_header',array($this, 'load_acf_components'));
-		add_action('cp_loop_after',array($this, 'load_acf_form'));
+		add_action('cp_loop_after', array($this, 'add_acf_form_to_page_persones'));
+		add_action('get_header', array($this, 'load_acf_components'));
 	}
 	
 	function load_acf_components(){
 		global $post;
-		if (is_single() && $post->post_type == 'organizations') acf_form_head();
+		if (is_single() && ($post->post_type == 'organizations' || 
+							$post->post_type == 'persons' || 
+							$post->post_type == 'cases')) acf_form_head();
 	}
 	function add_acf_form_to_page_organizaton(){
 		global $post;
-		if (is_single() && $post->post_type == 'organizations'){
-			global $post;
+		if (is_single() && $post->post_type == 'organizations') {
 			echo '<br/><h1>Дополнительные данные</h1>';
-			if (is_single() && $post->post_type == 'organizations') {
-				if (function_exists('acf_form')){
-					acf_form();
-				}
+			if (function_exists('acf_form')){
+				acf_form();
 			}
 		}
 	}
-	function load_acf_form(){
-		if (function_exists('acf_form')) get_template_part('template', 'acf-form');
+	function add_acf_form_to_page_persones(){
+		global $post;
+		if (is_single() && $post->post_type == 'persones') {
+			if (function_exists('acf_form')){
+				acf_form();
+			}
+		}
 	}
 }
 
