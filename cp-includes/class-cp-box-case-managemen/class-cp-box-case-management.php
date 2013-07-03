@@ -24,6 +24,7 @@ class CP_Case_Management {
         add_action( 'save_post', array($this, 'save_data_post'), 9);
         add_action( 'wp_ajax_save_data_cp_members', array($this, 'save_data_cp_members') );
         add_action( 'wp_ajax_get_member_from', array($this, 'get_member_from_callback') );
+		add_action( 'wp_ajax_get_responsible', array($this, 'get_responsible_callback') );
         add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
         
         
@@ -140,7 +141,45 @@ class CP_Case_Management {
             echo json_encode($data[0]);
             exit;
     }
+    /*
+     * Get member "From" for case
+     * 
+     * @return "json"
+     */
+    function get_responsible_callback(){
+        $post_id = $_REQUEST['case_id'];
+        $user_id = $_REQUEST['user_id'];
+        $key = 'responsible-cp-posts-sql';
 
+        //get Members IDs from Case metafield by key
+        if (isset($post_id)) $ids = get_post_meta($post_id, $key);
+
+        //Create array for save out data
+        $out = array();
+
+        if (count($ids) > 0){
+            //get member From by data metafield
+            foreach ($ids as $member_id){
+                $out[] = array(
+                    'id' => $member_id,
+                    'title' => get_the_title( $member_id )
+                );			
+            }
+            $out = $out[0];
+        } else if(count($ids) == 0)  {
+            //get person by current user id as default
+            $member_id = get_person_by_user($user_id);
+            $out[] = array(
+                'id' => $member_id,
+                'title' => get_the_title( $member_id )
+            );    
+            $out = $out[0];
+        }
+
+
+        echo json_encode($out);
+        exit;     
+    }
     /*
      * Get member "From" for case
      * 
@@ -291,7 +330,20 @@ class CP_Case_Management {
             }
         }
 
-            
+        /*
+         * Field "Responsible"
+         */
+        $key = 'responsible-cp-posts-sql';
+        $data = trim( $_REQUEST['cp_responsible'] );
+        delete_post_meta($post_id, $key);
+
+        if ($_REQUEST['cp_responsible'] != '') {
+			
+            foreach (explode( ',', $data ) as $value ){
+                add_post_meta( $post_id, $key, $value, true);
+            }
+        }  
+		
 		if (isset($_REQUEST['cp_date_end'])) {
             $key = 'cp_date_end';
 
@@ -542,33 +594,20 @@ class CP_Render_Fields {
     }
         
     function field_member_responsible_render(){
-        //global $post;
+        global $post;
 
         ?>
             <div class="cp_field">
                             <p>
-                                <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="show_field_responsible(event);">Ответственный</label>
-                                <input type="hidden" id="cp_case_responsible_input" name="cp_case_responsible" class="cp_select2_single" />
+                                <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
+                                <input type="hidden" id="cp_case_responsible_input" name="cp_responsible" class="cp_select2_single" />
                             </p>
             </div>
             <script>
                             jQuery(document).ready(function($) {
-                                //
-                            });
 
-                            function show_field_responsible(event){
-
-                                //check one clicked element, and break fubction
-                                if (jQuery(event.target).hasClass('clicked')) {return;}
-
-                                //if this first click, then add class "clicked"
-                                jQuery(event.target).addClass('clicked'); 
-
-                                //set up select2 parameters
-                                var placeholder = "";
-
-                                jQuery("#cp_case_responsible_input").select2({
-                                        placeholder: placeholder,
+									jQuery("#cp_case_responsible_input").select2({
+                                        placeholder: "",
                                         width: '100%',
                                         minimumInputLength: 1,
                                         ajax: {
@@ -599,8 +638,21 @@ class CP_Render_Fields {
                                         formatSelection: elementFormatSelection, // omitted for brevity, see the source of this page
                                         dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                                         escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
-                                });
-                            };
+									});
+									$.ajax({
+										data: ({
+											action: 'get_responsible',
+											dataType: 'json',
+											user_id: <?php echo get_current_user_id() ?>,
+											case_id: <?php echo $post->ID ?>
+										}),
+										url: "<?php echo admin_url('admin-ajax.php') ?>",
+										success: function(data) {
+											data = $.parseJSON(data);
+											$('#cp_case_responsible_input').select2('data', data);
+										}
+									});
+								});
                         </script>
         <?php
 
@@ -666,9 +718,9 @@ class CP_Render_Fields {
                         }),
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
-                                members = $.parseJSON(data);
-                                $('#cp_case_members_input').select2('data',  members);
-                            }
+                            members = $.parseJSON(data);
+                            $('#cp_case_members_input').select2('data',  members);
+                        }
                     });
                 });
             </script>
