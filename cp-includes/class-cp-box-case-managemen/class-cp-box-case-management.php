@@ -224,8 +224,11 @@ class CP_Case_Management {
     			update_post_meta( $post_id, $key, $value);
             }
             
-            
-            return "111";
+            $date_deadline = get_post_meta($post_id, $key, true);
+            $date_deadline = strtotime($date_deadline);
+            $date_deadline = date('d.m.Y', $timestamp);
+            echo $date_deadline;
+            exit;
         }
     }
 
@@ -752,9 +755,9 @@ class CP_Render_Fields {
 
         ?>
         <div id="cp_field_date_deadline_div" >
-                <label for="cp_field_date_deadline_input">Срок</label>
+                <label for="cp_field_date_deadline_input" id="cp_field_date_deadline_label">Срок</label>
                 <span id="cp_field_date_deadline_view"><?php echo $value?></span>
-                <div id="cp_field_date_deadline_edit">
+                <div id="cp_field_date_deadline_edit" style="display: none">
                     <div id="cp_field_date_deadline_edit_input">
                         <input type="date" id="cp_field_date_deadline_input" name="cp_date_deadline" class="cp_full_width cp_input_datepicker" value="<?php echo $value?>"/>
                     </div>  
@@ -764,8 +767,19 @@ class CP_Render_Fields {
                     </p>
                     <script type="text/javascript">
                         (function($) {
+                            $("#cp_field_date_deadline_label").click(function(){
+                                $("#cp_field_date_deadline_edit").show();
+                                $("#cp_field_date_deadline_view").hide();
+                            });
+                            
+                            $("#cp_action_cancel_deadline").click(function(){
+                                $("#cp_field_date_deadline_edit").hide();
+                                $("#cp_field_date_deadline_view").show();
+
+                            });
+                            
                             $("#cp_action_save_deadline").click(function(){
-                                alert($("#cp_field_date_deadline_input").val());
+                                //alert($("#cp_field_date_deadline_input").val());
                                 deadline = $("#cp_field_date_deadline_input").val();
                                 $.ajax({
                                     data: ({
@@ -774,9 +788,10 @@ class CP_Render_Fields {
                                         action: 'save_data_post'
                                     }),
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
-                                    success: function(data) {
-                                        alert(data);
-                                     }
+                                    success: function(data, str) {
+                                        $("#cp_field_date_deadline_view").text(data);
+                                        $("#cp_field_date_deadline_edit").hide();
+                                        $("#cp_field_date_deadline_view").show();                                     }
                                  });
 
 
@@ -784,10 +799,7 @@ class CP_Render_Fields {
 
                             });
 
-                            $("#cp_action_cancel_deadline").click(function(){
-                                    alert("23");
 
-                            });
 
                         })(jQuery);
                     </script>
