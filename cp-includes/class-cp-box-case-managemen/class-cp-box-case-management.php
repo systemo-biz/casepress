@@ -606,9 +606,10 @@ class CP_Render_Fields {
             <script>
                             jQuery(document).ready(function($) {
 
-									jQuery("#cp_case_responsible_input").select2({
+									$("#cp_case_responsible_input").select2({
                                         placeholder: "",
                                         width: '100%',
+										allowClear: true,
                                         minimumInputLength: 1,
                                         ajax: {
                                                 url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -643,7 +644,6 @@ class CP_Render_Fields {
 										data: ({
 											action: 'get_responsible',
 											dataType: 'json',
-											user_id: <?php echo get_current_user_id() ?>,
 											case_id: <?php echo $post->ID ?>
 										}),
 										url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -651,6 +651,16 @@ class CP_Render_Fields {
 											data = $.parseJSON(data);
 											$('#cp_case_responsible_input').select2('data', data);
 										}
+									});
+									$("#cp_case_responsible_input").on('change', function(){
+									
+										var first = $("#cp_case_members_input").select2('data');
+										var	second = $("#cp_case_responsible_input").select2('data');
+										
+										first.push(second);
+										
+										$("#cp_case_members_input").select2('data', first);	
+										
 									});
 								});
                         </script>
@@ -788,6 +798,7 @@ class CP_Render_Fields {
                             $('#cp_member_from_input').select2('data', data);
                         }
                     });
+					
                 });
 
             </script>
