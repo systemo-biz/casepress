@@ -142,7 +142,7 @@ class CP_Case_Management {
             exit;
     }
     /*
-     * Get member "From" for case
+     * Get member "Responsible" for case
      * 
      * @return "json"
      */
@@ -592,7 +592,7 @@ class CP_Render_Fields {
                             </p>
             </div>
             <script>
-                            jQuery(document).ready(function($) {
+								jQuery(document).ready(function($) {
 
 									$("#cp_case_responsible_input").select2({
                                         placeholder: "",
