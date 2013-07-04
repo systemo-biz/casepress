@@ -330,8 +330,12 @@ class CP_Case_Management {
 			
 			foreach (explode(',', $data) as $value){
 				add_post_meta($post_id, $key, $value, true);
-            }
-        }  
+            }	
+        }
+		
+		$meta_responsible = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
+		$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
+		if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
 		
 		if (isset($_REQUEST['cp_date_end'])) {
             $key = 'cp_date_end';
