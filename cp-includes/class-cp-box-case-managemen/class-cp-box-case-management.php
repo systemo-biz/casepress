@@ -251,8 +251,30 @@ class CP_Case_Management {
     function save_data_ajax() {
         error_log ("go ajax");
 
+        /*
+         * Save case result
+         * field name: cp_case_result
+         */
+        if (isset($_REQUEST['result']) && isset($_REQUEST['case_id'])) {
+//            error_log ("go ajax 2");
+			//$key = 'cp_date_deadline';
+            //$timestamp = strtotime($_REQUEST['deadline']);
+			$post_id = $_REQUEST['case_id'];
+            $term = $_REQUEST['result'];
+            $taxonomy = "results";
+            $append = false;
+            wp_set_post_terms( $post_id, $term, $taxonomy, $append );
+            
+
+            echo $term;
+            exit;
+        }
+
+
+        /*
+         * save deadline
+         */
         if (isset($_REQUEST['deadline']) && isset($_REQUEST['case_id'])) {
-            error_log ("go ajax 2");
 			$key = 'cp_date_deadline';
             $timestamp = strtotime($_REQUEST['deadline']);
 			$post_id = $_REQUEST['case_id'];
@@ -280,16 +302,7 @@ class CP_Case_Management {
         
 		$post_id = $post->ID;
         
-        /*
-         * Save case result
-         * field name: cp_case_result
-         */
-        if ($_REQUEST['cp_case_result'] != ''){
-            $terms = $_REQUEST['cp_case_result'];
-            $taxonomy = "results";
-            $append = false;
-            wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
-        }
+
         
         /*
          * Save case category
@@ -360,16 +373,6 @@ class CP_Case_Management {
             }
         }	
                 
-		if (isset($_REQUEST['cp_date_deadline'])) {
-			$key = 'cp_date_deadline';
-            $timestamp = strtotime($_REQUEST['cp_date_deadline']);
-                    
-            if ($timestamp > 0) {
-                if (date('H:i:s', $timestamp) == "00:00:00") $timestamp = $timestamp + 86399;
-                $value = date('Y-m-d H:i:s', $timestamp);
-    			update_post_meta( $post_id, $key, $value);
-            }
-		}
         
             
 		if (isset($_REQUEST['cp_prioritet'])) {
@@ -570,27 +573,55 @@ class CP_Render_Fields {
         
         //get first term from array
         if (is_array($terms)) $term = array_shift($terms);
-        
-        
         if (isset($term->term_id)){
             $case_result_id = $term->term_id;
         } else $case_result_id = '0';
-            
-        echo "<div id=\"cp_field_result_div\">";
-        echo "<label for=\"cp_field_result_select\">Результат</label>";
-        wp_dropdown_categories( array(
-            'name' => 'cp_case_result',
-            'class' => 'cp_full_width',
-            'id' => 'cp_field_result_select',
-            'echo' => 1,
-            'hide_empty' => 0, 
-            'show_option_none' => 'Выберите результат',
-            'option_none_value' => '0',
-            'selected' => $case_result_id,
-            'hierarchical' => 1,
-            'taxonomy' => 'results'
-        )) ;
-        echo "</div>";
+        ?>    
+        <div id="cp_field_result_div">
+            <label for="cp_field_result_select">Результат</label>
+                <?php
+                wp_dropdown_categories( array(
+                    'name' => 'cp_case_result',
+                    'class' => 'cp_full_width',
+                    'id' => 'cp_field_result_select',
+                    'echo' => 1,
+                    'hide_empty' => 0, 
+                    'show_option_none' => 'Выберите результат',
+                    'option_none_value' => '0',
+                    'selected' => $case_result_id,
+                    'hierarchical' => 1,
+                    'taxonomy' => 'results'
+                )) ;
+                ?>
+            <div id="cp_field_result_edit" style="display: none">
+                <a href="#ok" class="cp_button" id="cp_field_result_button_save">OK</a>
+            </div>
+        </div>
+        <script>
+            (function($) {
+                $("#cp_field_result_select").change(function(){
+                    $("#cp_field_result_edit").show();
+                });
+
+                $("#cp_field_result_button_save").click(function(){
+                    //alert("!!!");
+                    result = $("#cp_field_result_select").val();
+                    $.ajax({
+                        data: ({
+                            result: result,
+                            case_id: <?php echo $post->ID?>,
+                            action: 'save_data_post'
+                        }),
+                        url: "<?php echo admin_url('admin-ajax.php') ?>",
+                        success: function(data) {
+                            $("#cp_field_result_edit").hide();
+                        }                                
+                     });
+                });
+
+            })(jQuery);   
+        </script>
+        <?php
     }
         
     function field_member_responsible_render(){
@@ -813,13 +844,17 @@ class CP_Render_Fields {
         //convert date
         $timestamp = strtotime(get_post_meta($post->ID, "cp_date_deadline", true));
         $value = "";
-        if ($timestamp > 0) $value = date('Y-m-d', $timestamp);
+        $date_deadline = "";
+        if ($timestamp > 0) {
+            $value = date('Y-m-d', $timestamp);
+            $date_deadline = date('d.m.Y', $timestamp);
+        }
         
 
         ?>
         <div id="cp_field_date_deadline_div" >
-                <label for="cp_field_date_deadline_input" id="cp_field_date_deadline_label">Срок</label>
-                <span id="cp_field_date_deadline_view"><?php echo $value?></span>
+                <label for="cp_field_date_deadline_input" class="cp_forms" id="cp_field_date_deadline_label">Срок:</label>
+                <span id="cp_field_date_deadline_view" class="cp_forms"><?php echo $date_deadline?></span>
                 <div id="cp_field_date_deadline_edit" style="display: none">
                     <div id="cp_field_date_deadline_edit_input">
                         <input type="date" id="cp_field_date_deadline_input" name="cp_date_deadline" class="cp_full_width cp_input_datepicker" value="<?php echo $value?>"/>
@@ -856,9 +891,6 @@ class CP_Render_Fields {
                                         $("#cp_field_date_deadline_edit").hide();
                                         $("#cp_field_date_deadline_view").show();                                     }
                                  });
-
-
-
 
                             });
 

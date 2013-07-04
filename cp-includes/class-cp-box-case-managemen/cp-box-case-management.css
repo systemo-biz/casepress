@@ -33,3 +33,14 @@ div#cp_add_case_data{
 #cp_field_date_deadline_view{
     display: inline;
 }
+
+.cp_forms{
+    display: inline;
+    vertical-align: middle;
+}
+
+.cp_section_field{
+    padding: 6px 10px 8px;
+    border-width: 1px 0;
+    border-style: solid;
+}
