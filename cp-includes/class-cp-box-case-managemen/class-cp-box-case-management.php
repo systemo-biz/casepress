@@ -142,13 +142,12 @@ class CP_Case_Management {
             exit;
     }
     /*
-     * Get member "From" for case
+     * Get member "Responsible" for case
      * 
      * @return "json"
      */
     function get_responsible_callback(){
         $post_id = $_REQUEST['case_id'];
-        $user_id = $_REQUEST['user_id'];
         $key = 'responsible-cp-posts-sql';
 
         //get Members IDs from Case metafield by key
@@ -157,25 +156,14 @@ class CP_Case_Management {
         //Create array for save out data
         $out = array();
 
-        if (count($ids) > 0){
-            //get member From by data metafield
-            foreach ($ids as $member_id){
-                $out[] = array(
-                    'id' => $member_id,
-                    'title' => get_the_title( $member_id )
-                );			
-            }
-            $out = $out[0];
-        } else if(count($ids) == 0)  {
-            //get person by current user id as default
-            $member_id = get_person_by_user($user_id);
+        //get member From by data metafield
+        foreach ($ids as $member_id){
             $out[] = array(
                 'id' => $member_id,
                 'title' => get_the_title( $member_id )
-            );    
-            $out = $out[0];
+            );			
         }
-
+        $out = $out[0];
 
         echo json_encode($out);
         exit;     
@@ -635,7 +623,7 @@ class CP_Render_Fields {
                             </p>
             </div>
             <script>
-                            jQuery(document).ready(function($) {
+								jQuery(document).ready(function($) {
 
 									$("#cp_case_responsible_input").select2({
                                         placeholder: "",
@@ -682,16 +670,6 @@ class CP_Render_Fields {
 											data = $.parseJSON(data);
 											$('#cp_case_responsible_input').select2('data', data);
 										}
-									});
-									$("#cp_case_responsible_input").on('change', function(){
-									
-										var first = $("#cp_case_members_input").select2('data');
-										var	second = $("#cp_case_responsible_input").select2('data');
-										
-										first.push(second);
-										
-										$("#cp_case_members_input").select2('data', first);	
-										
 									});
 								});
                         </script>
