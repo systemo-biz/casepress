@@ -645,16 +645,6 @@ class CP_Render_Fields {
 											$('#cp_case_responsible_input').select2('data', data);
 										}
 									});
-									$("#cp_case_responsible_input").on('change', function(){
-									
-										var first = $("#cp_case_members_input").select2('data');
-										var	second = $("#cp_case_responsible_input").select2('data');
-										
-										first.push(second);
-										
-										$("#cp_case_members_input").select2('data', first);	
-										
-									});
 								});
                         </script>
         <?php
