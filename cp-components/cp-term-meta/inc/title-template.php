@@ -7,11 +7,12 @@
 
 		// Get post ID
 		$post_id = get_the_ID();
-
+		
 		// Check revision, post title and post type
-		if ( !is_admin() && is_single() && get_post_type() == 'cases' && get_the_title( $post_id ) == '' ) {
+		/*if ( !is_admin() && is_single() && get_post_type() == 'cases' && get_the_title( $post_id ) == '' ) {
 
 			$functions = wp_get_post_terms( $post_id, 'functions' );
+			print_r($functions);
 			$function = (!is_wp_error( $functions ) && is_numeric( $functions[0]->term_id ) ) ? $functions[0]->term_id : false;
 			$organizations = wp_get_post_terms( $post_id, 'organizations' );
 			$organization = (!is_wp_error( $organizations ) && is_numeric( $organizations[0]->term_id ) ) ? $organizations[0]->term_id : false;
@@ -38,7 +39,7 @@
 				wp_redirect( get_permalink( $post_id ) );
 				exit;
 			}
-		}
+		}*/
 	}
 
 	add_action( 'template_redirect', 'ctmeta_fill_title' );

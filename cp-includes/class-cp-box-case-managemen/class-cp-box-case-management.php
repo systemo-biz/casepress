@@ -309,26 +309,27 @@ class CP_Case_Management {
          */
         $key = 'member_from-cp-posts-sql';
         $data = trim( $_REQUEST['cp_member_from'] );
+
         delete_post_meta($post_id, $key);
 
         if ($_REQUEST['cp_member_from'] != '') {
-			
-            foreach (explode( ',', $data ) as $value ){
-                add_post_meta( $post_id, $key, $value, true);
+		
+            foreach (explode(',', $data) as $value){
+                add_post_meta($post_id, $key, $value, true);
             }
         }
 
         /*
          * Field "Responsible"
          */
-        $key = 'responsible-cp-posts-sql';
+		$key = 'responsible-cp-posts-sql';
         $data = trim( $_REQUEST['cp_responsible'] );
         delete_post_meta($post_id, $key);
 
         if ($_REQUEST['cp_responsible'] != '') {
 			
-            foreach (explode( ',', $data ) as $value ){
-                add_post_meta( $post_id, $key, $value, true);
+			foreach (explode(',', $data) as $value){
+				add_post_meta($post_id, $key, $value, true);
             }
         }  
 		
@@ -702,7 +703,7 @@ class CP_Render_Fields {
                         data: ({
                             action: 'get_members',
                             dataType: 'json',
-                            case_id: <?php echo $post->ID?>,
+                            case_id: <?php echo $post->ID ?>,
                         }),
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
