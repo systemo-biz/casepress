@@ -578,6 +578,7 @@ class CP_Render_Fields {
                             url: "<?php echo admin_url('admin-ajax.php') ?>",
                             success: function(data) {
                                 $("#cp_field_case_category_edit").hide();
+                                <?php if (!(is_admin())) echo "location.reload();"; ?>
                             }                                
                          });
                     });
