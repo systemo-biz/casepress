@@ -322,28 +322,33 @@ class CP_Case_Management {
          */
         $key = 'member_from-cp-posts-sql';
         $data = trim( $_REQUEST['cp_member_from'] );
+
         delete_post_meta($post_id, $key);
 
         if ($_REQUEST['cp_member_from'] != '') {
-			
-            foreach (explode( ',', $data ) as $value ){
-                add_post_meta( $post_id, $key, $value, true);
+		
+            foreach (explode(',', $data) as $value){
+                add_post_meta($post_id, $key, $value, true);
             }
         }
 
         /*
          * Field "Responsible"
          */
-        $key = 'responsible-cp-posts-sql';
+		$key = 'responsible-cp-posts-sql';
         $data = trim( $_REQUEST['cp_responsible'] );
         delete_post_meta($post_id, $key);
 
         if ($_REQUEST['cp_responsible'] != '') {
 			
-            foreach (explode( ',', $data ) as $value ){
-                add_post_meta( $post_id, $key, $value, true);
-            }
-        }  
+			foreach (explode(',', $data) as $value){
+				add_post_meta($post_id, $key, $value, true);
+            }	
+        }
+		
+		$meta_responsible = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
+		$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
+		if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
 		
 		if (isset($_REQUEST['cp_date_end'])) {
             $key = 'cp_date_end';
@@ -733,7 +738,7 @@ class CP_Render_Fields {
                         data: ({
                             action: 'get_members',
                             dataType: 'json',
-                            case_id: <?php echo $post->ID?>,
+                            case_id: <?php echo $post->ID ?>,
                         }),
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
