@@ -5,7 +5,7 @@
 					<h3>
 						<a href="#" class="cases-box-toggle">Заметки</a>
 						<a href="#checks" name="checks" class="cases-box-anchor">#</a>
-						<img id="check_ajax_load" src="/wp-content/plugins/cases-metabox-checks/ajax-loading.gif" style="padding-left: 20px; display: none;">
+						<img id="check_ajax_load" src="<?php echo trailingslashit( plugin_dir_url(__FILE__) ) . 'ajax-loading.gif' ?>" style="padding-left: 20px; display: none;">
 					</h3>
 					<div class="cases-box-actions">
 						
