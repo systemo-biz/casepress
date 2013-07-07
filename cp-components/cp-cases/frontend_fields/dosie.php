@@ -29,18 +29,9 @@ function cases_display_childs() {
 							<a href="#" class="cases-box-toggle">Досье  </a>
 							<? /*echo count($childs)*/?>
 							<a href="#childs" name="childs" class="cases-box-anchor">#</a>
-							<img id="check_ajax_load2" src="/wp-content/plugins/cases-metabox-checks/ajax-loading.gif" style="padding-left: 20px; display: none; ">
 						</h3>
 						<div class="cases-box-actions">
 							<a href="<?php echo $sub_task_link; ?>" class="fancybox-iframe btn btn-mini">Добавить подзадачу</a>
-							<?php
-							// Это договор по ипотеке, нужно вывести ссылку "Заявка в банк"
-							if ( has_term( 114, 'functions' ) ) {
-								?>
-								<a href="<?php echo $call_bank_link; ?>" class="fancybox-iframe btn btn-mini">Прием сотрудника</a>
-								<?php
-							}
-							?>
 						</div>
 					</div>
 					<div class="cases-box-content" id="cases_dossie">
@@ -86,7 +77,7 @@ function cases_display_childs() {
 				<!-- Action priority: 60 -->
 				<?php
 			}
-			get_template_part( 'template', 'acf-form' );
+			//get_template_part( 'template', 'acf-form' );
 		}
 	}
 
