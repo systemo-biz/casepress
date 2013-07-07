@@ -4,13 +4,13 @@ function cases_display_childs() {
 		if ( is_single() && get_post_type() == 'cases' ) {
 			if ( function_exists( 'datatable_generator' ) ) {
 			
-				$cp_components_url = plugin_dir_url(__FILE__).'casepress/cp-components/';
-		wp_enqueue_script('datatable', $cp_components_url.'cp-datatable/assets/dt.js', array('jquery'));
-		wp_enqueue_script('datatable.tt', $cp_components_url.'cp-datatable/assets/dt.tableTools.js', array('datatable'));
-		wp_enqueue_script('datatable.rg', $cp_components_url.'cp-datatable/assets/dt.rowGrouping.js', array('datatable'));
-		wp_enqueue_script('datatable.tg', $cp_components_url.'cp-datatable/assets/dt.treeGrid.js', array('datatable'));
-		wp_enqueue_script('datatable.init', $cp_components_url.'cp-datatable/assets/init.js', array('datatable'));
-		wp_enqueue_style('datatable', $cp_components_url.'cp-datatable/assets/theme.css');
+				//$cp_components_url = plugin_dir_url(__FILE__);
+		wp_enqueue_script('datatable', plugin_dir_url(__FILE__).'../../cp-datatable/assets/dt.js', array('jquery'));
+		wp_enqueue_script('datatable.tt', plugin_dir_url(__FILE__).'../../cp-datatable/assets/dt.tableTools.js', array('datatable'));
+		wp_enqueue_script('datatable.rg', plugin_dir_url(__FILE__).'../../cp-datatable/assets/dt.rowGrouping.js', array('datatable'));
+		wp_enqueue_script('datatable.tg', plugin_dir_url(__FILE__).'../../cp-datatable/assets/dt.treeGrid.js', array('datatable'));
+		wp_enqueue_script('datatable.init', plugin_dir_url(__FILE__).'../../cp-datatable/assets/init.js', array('datatable'));
+		wp_enqueue_style('datatable', plugin_dir_url(__FILE__).'../../cp-datatable/assets/theme.css');
 		
 				global $post;
 				$childs = get_children( array(
@@ -30,9 +30,7 @@ function cases_display_childs() {
 							<? /*echo count($childs)*/?>
 							<a href="#childs" name="childs" class="cases-box-anchor">#</a>
 						</h3>
-						<div class="cases-box-actions">
-							<a href="<?php echo $sub_task_link; ?>" class="fancybox-iframe btn btn-mini">Добавить подзадачу</a>
-						</div>
+
 					</div>
 					<div class="cases-box-content" id="cases_dossie">
 						<?php //$childss=datatable_generator( array( 'src' => 'global', 'tree' => 'ID:post_parent', 'view' => 'id:dt_case_childs' ) ); ?>
@@ -81,7 +79,7 @@ function cases_display_childs() {
 		}
 	}
 
-	add_action( 'roots_entry_content_after', 'cases_display_childs', 60 );
+	add_action( 'cp_post_before_comments', 'cases_display_childs', 60 );
 	function get_case_dossier_datatable(){
 	
 	

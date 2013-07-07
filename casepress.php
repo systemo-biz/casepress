@@ -6,7 +6,7 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: 0.5beta20130708-01
+  Version: 0.5beta20130708-02
 */
 	 
 	include_once 'cp-includes/load.php';

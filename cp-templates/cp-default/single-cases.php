@@ -59,7 +59,12 @@
                     <?php do_action('cp_entry_footer_after'); ?>
                 </footer>
             </div>
-			<?php comments_template(); ?>
+            <div>
+                <?php do_action('cp_post_before_comments'); ?>
+            </div>
+            <div id="cp_comments">
+                <?php comments_template(); ?>
+            </div>
 		<?php roots_post_inside_after(); ?>
 		<?php do_action('cp_post_inside_after'); ?>
 		</article>
