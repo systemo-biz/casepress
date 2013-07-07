@@ -6,7 +6,9 @@
 	function cmmngt_onsave_redirect( $post_id ) {
 		// Prepare data
 		global $post;
-		$post_status = $_POST['post_status'];
+		if (isset($_POST['post_status'])) {
+            $post_status = $_POST['post_status'];
+        }
 		$affected_post_types = array( 'cases', 'objects', 'persons', 'organizations' );
 		if ( $post_status == 'publish' && in_array( $post->post_type, $affected_post_types ) ) {
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
