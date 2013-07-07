@@ -285,6 +285,24 @@ class CP_Case_Management {
 
 
         /*
+         * Save case category
+         * field name: case_category
+         */
+        if (isset($_REQUEST['case_category']) && isset($_REQUEST['case_id'])) {
+
+			$post_id = $_REQUEST['case_id'];
+            $term = $_REQUEST['case_category'];
+            $taxonomy = "functions";
+            $append = false;
+            wp_set_post_terms( $post_id, $term, $taxonomy, $append );
+            
+
+            echo $term;
+            exit;
+        }
+        
+        
+        /*
          * save deadline
          */
         if (isset($_REQUEST['deadline']) && isset($_REQUEST['case_id'])) {
@@ -539,6 +557,33 @@ class CP_Render_Fields {
                 'hierarchical' => 1,
                 'taxonomy' => 'functions'
             )) ; ?>
+            <div id="cp_field_case_category_edit" style="display: none">
+                <a href="#ok" class="cp_button" id="cp_field_case_category_button_save">OK</a>
+            </div>
+            <script type="text/javascript">
+                (function($) {
+                    $("#cp_case_category_select").change(function(){
+                        $("#cp_field_case_category_edit").show();
+                    });
+
+                    $("#cp_field_case_category_button_save").click(function(){
+                        //alert("!!!");
+                        
+                        $.ajax({
+                            data: ({
+                                case_category: $("#cp_case_category_select").val(),
+                                case_id: <?php echo $post->ID?>,
+                                action: 'save_data_post'
+                            }),
+                            url: "<?php echo admin_url('admin-ajax.php') ?>",
+                            success: function(data) {
+                                $("#cp_field_case_category_edit").hide();
+                            }                                
+                         });
+                    });
+
+                })(jQuery);   
+            </script>
         </div>
         <?php
     }
@@ -617,7 +662,7 @@ class CP_Render_Fields {
         <div id="cp_prioritet_div"  <?php //echo $hide; ?>>
             <label for="cp_prioritet_select">Приоритет</label><br/>
             <select id="cp_prioritet_select" name="cp_prioritet">
-                <option <?php if($value=="") echo "selected='selected'" ?> >Выберите приоритет</option>
+                <option <?php if($value=="") echo "selected='selected'" ?> >Без приоритета</option>
                 <option <?php if($value=="1") echo "selected='selected'" ?> value="1">Критичный</option>
                 <option <?php if($value=="2") echo "selected='selected'" ?> value="2">Высокий</option>
                 <option <?php if($value=="3") echo "selected='selected'" ?> value="3">Нормальный</option>
@@ -649,7 +694,7 @@ class CP_Render_Fields {
                     'id' => 'cp_field_result_select',
                     'echo' => 1,
                     'hide_empty' => 0, 
-                    'show_option_none' => 'Выберите результат',
+                    'show_option_none' => 'Без результата',
                     'option_none_value' => '0',
                     'selected' => $case_result_id,
                     'hierarchical' => 1,
@@ -659,7 +704,7 @@ class CP_Render_Fields {
             <div id="cp_field_result_edit" style="display: none">
                 <a href="#ok" class="cp_button" id="cp_field_result_button_save">OK</a>
             </div>
-            <script>
+            <script type="text/javascript">
                 (function($) {
                     $("#cp_field_result_select").change(function(){
                         $("#cp_field_result_edit").show();
@@ -698,7 +743,7 @@ class CP_Render_Fields {
                                 <input type="hidden" id="cp_case_responsible_input" name="cp_responsible" class="cp_select2_single" />
                             </p>
             </div>
-            <script>
+            <script type="text/javascript">
 								jQuery(document).ready(function($) {
 
 									$("#cp_case_responsible_input").select2({
