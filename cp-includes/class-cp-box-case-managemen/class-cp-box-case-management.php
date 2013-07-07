@@ -239,14 +239,39 @@ class CP_Case_Management {
     function save_data_ajax() {
         error_log ("go ajax");
 
+
+         /** Save date end
+         * field name: cp_case_result
+         */
+		if (isset($_REQUEST['date_end']) && isset($_REQUEST['case_id'])) {
+            $key = 'cp_date_end';
+            $timestamp = strtotime($_REQUEST['date_end']);
+			$post_id = $_REQUEST['case_id'];
+
+            if ($timestamp > 0) {
+                $value = date('Y-m-d H:i:s', $timestamp);
+    			update_post_meta( $post_id, $key, $value);
+
+                $date_end = $value;
+                $date_end = strtotime($date_end);
+                $date_end = date('d.m.Y', $timestamp);
+
+            } else { //if date end is null or delete
+                delete_post_meta( $post_id, $key);
+                $date_end ="";
+            }
+            
+            echo $date_end;
+            exit;               
+        }	
+
+        
         /*
          * Save case result
          * field name: cp_case_result
          */
         if (isset($_REQUEST['result']) && isset($_REQUEST['case_id'])) {
-//            error_log ("go ajax 2");
-			//$key = 'cp_date_deadline';
-            //$timestamp = strtotime($_REQUEST['deadline']);
+
 			$post_id = $_REQUEST['case_id'];
             $term = $_REQUEST['result'];
             $taxonomy = "results";
@@ -350,21 +375,21 @@ class CP_Case_Management {
 		$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
 		if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
 		
-		if (isset($_REQUEST['cp_date_end'])) {
-            $key = 'cp_date_end';
-
-            if ($_REQUEST['cp_date_end'] === "") {
-                $term = get_the_terms( $post_id, "results" );
-                
-                //delete only if not result
-                if (is_object($term) && !($term[0]->count > 0)) 
-                    delete_post_meta($post_id, $key);
-            } else {
-               $timestamp = strtotime($_REQUEST['cp_date_end']);
-               $value = date('Y-m-d H:i:s', $timestamp);
-               update_post_meta( $post_id, $key, $value);                
-            }
-        }	
+//		if (isset($_REQUEST['cp_date_end'])) {
+//            $key = 'cp_date_end';
+//
+//            if ($_REQUEST['cp_date_end'] === "") {
+//                $term = get_the_terms( $post_id, "results" );
+//                
+//                //delete only if not result
+//                if (is_object($term) && !($term[0]->count > 0)) 
+//                    delete_post_meta($post_id, $key);
+//            } else {
+//               $timestamp = strtotime($_REQUEST['cp_date_end']);
+//               $value = date('Y-m-d H:i:s', $timestamp);
+//               update_post_meta( $post_id, $key, $value);                
+//            }
+//        }	
                 
         
             
@@ -522,13 +547,58 @@ class CP_Render_Fields {
         global $post;
 
         //convert date
+        $date_end = "";
         $timestamp = strtotime(get_post_meta($post->ID, "cp_date_end", true));
-        if ($timestamp > 0) $value = date('Y-m-d\TH:i', $timestamp); // format: 2013-12-31T23:55
+        if ($timestamp > 0) {
+            $value = date('Y-m-d\TH:i', $timestamp); // format: 2013-12-31T23:55
+            $date_end = date('d.m.Y H:i', $timestamp);
+        }
 
         ?>
         <div id="cp_date_end_div" <?php //echo $hide; ?>>
-            <label for="cp_date_end_input">Дата завершения</label>
-            <input type="datetime-local" id="cp_date_end_input" name="cp_date_end" class="cp_full_width cp_input_datepicker" value="<?php echo $value ?>"/>
+            <label for="cp_date_end_input" id="cp_field_date_end_label">Дата завершения:</label>
+            <span id="cp_field_date_end_view" class="cp_forms"><?php echo $date_end ?></span>
+            <div id="cp_field_date_end_edit" style="display: none">
+                <input type="datetime-local" id="cp_date_end_input" name="cp_date_end" class="cp_full_width cp_input_datepicker" value="<?php echo $value ?>"/>
+                <p>
+                    <a href="#ok" id="cp_action_save_date_end" class="button">OK</a>
+                    <a href="#cancel" id="cp_action_cancel_date_end">Отмена</a>
+                </p>
+            </div>
+            <script type="text/javascript">
+                (function($) {
+                    $("#cp_field_date_end_label").click(function(){
+                        $("#cp_field_date_end_edit").show();
+                        $("#cp_field_date_end_view").hide();
+                    });
+
+                    $("#cp_action_cancel_date_end").click(function(){
+                        $("#cp_field_date_end_edit").hide();
+                        $("#cp_field_date_end_view").show();
+
+                    });
+
+                    $("#cp_action_save_date_end").click(function(){
+                        date_end = $("#cp_date_end_input").val();
+                        $.ajax({
+                            data: ({
+                                date_end: date_end,
+                                case_id: <?php echo $post->ID?>,
+                                action: 'save_data_post'
+                            }),
+                            url: "<?php echo admin_url('admin-ajax.php') ?>",
+                            success: function(data, str) {
+                                $("#cp_field_date_end_view").text(data);
+                                $("#cp_field_date_end_edit").hide();
+                                $("#cp_field_date_end_view").show();                                     }
+                         });
+
+                    });
+
+
+
+                })(jQuery);
+            </script>
         </div>
         <?php
     }
@@ -589,31 +659,32 @@ class CP_Render_Fields {
             <div id="cp_field_result_edit" style="display: none">
                 <a href="#ok" class="cp_button" id="cp_field_result_button_save">OK</a>
             </div>
+            <script>
+                (function($) {
+                    $("#cp_field_result_select").change(function(){
+                        $("#cp_field_result_edit").show();
+                    });
+
+                    $("#cp_field_result_button_save").click(function(){
+                        //alert("!!!");
+                        result = $("#cp_field_result_select").val();
+                        $.ajax({
+                            data: ({
+                                result: result,
+                                case_id: <?php echo $post->ID?>,
+                                action: 'save_data_post'
+                            }),
+                            url: "<?php echo admin_url('admin-ajax.php') ?>",
+                            success: function(data) {
+                                $("#cp_field_result_edit").hide();
+                            }                                
+                         });
+                    });
+
+                })(jQuery);   
+            </script>
         </div>
-        <script>
-            (function($) {
-                $("#cp_field_result_select").change(function(){
-                    $("#cp_field_result_edit").show();
-                });
 
-                $("#cp_field_result_button_save").click(function(){
-                    //alert("!!!");
-                    result = $("#cp_field_result_select").val();
-                    $.ajax({
-                        data: ({
-                            result: result,
-                            case_id: <?php echo $post->ID?>,
-                            action: 'save_data_post'
-                        }),
-                        url: "<?php echo admin_url('admin-ajax.php') ?>",
-                        success: function(data) {
-                            $("#cp_field_result_edit").hide();
-                        }                                
-                     });
-                });
-
-            })(jQuery);   
-        </script>
         <?php
     }
         
