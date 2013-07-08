@@ -8,7 +8,7 @@
   Author URI: http://casepress.org
   Version: 0.5beta20130708-02
 */
-	 
+	//include_once 'cp-includes/restrict-access.php';
 	include_once 'cp-includes/load.php';
 	include_once 'cp-core/core-includes.php';
 	include_once 'cp-components/components-includes.php';

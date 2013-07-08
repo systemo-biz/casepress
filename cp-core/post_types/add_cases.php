@@ -47,14 +47,7 @@ function gf_register_cases_posttype() {
   add_rewrite_rule('^cases/(\d+)/[^/]+/?$', 'index.php?post_type=cases&p=$matches[1]', 'top');
 } 
 
-add_action( 'admin_menu', 'remove_cases_metabox' );
-function remove_cases_metabox($param) {
-  remove_meta_box('functionsdiv', 'cases', 'side');
-  remove_meta_box('tagsdiv-navigation', 'cases', 'side');
-  remove_meta_box('tagsdiv-results', 'cases', 'side');
-  remove_meta_box('tagsdiv-state', 'cases', 'side');  
-  remove_meta_box('commentsdiv', 'cases', 'side');  
-}
+
 
 add_filter('post_type_link', 'gf_fix_permalink', 1, 2);
 function gf_fix_permalink( $post_link, $id = 0 ) {
@@ -64,13 +57,27 @@ function gf_fix_permalink( $post_link, $id = 0 ) {
   return home_url(user_trailingslashit("cases/$post->ID"));
 } 
 
-
-
-
-//add_action('init', 'gf_cases_rewrite');
+add_action('init', 'gf_cases_rewrite');
 function gf_cases_rewrite(){
   global $wp_rewrite;
   $wp_rewrite->add_rewrite_tag('%cases_id%', '([^/]+)', 'post_type=cases&p=');
   $wp_rewrite->add_permastruct('cases', '/cases/%cases_id%', false);
+  
 } 
 
+add_action('init', 'gf_cases_flush_rules');
+function gf_cases_flush_rules(){
+  //global $wp_rewrite;
+  //$wp_rewrite->flush_rules();
+  flush_rewrite_rules(false);
+} 
+
+
+add_action( 'admin_menu', 'remove_cases_metabox' );
+function remove_cases_metabox($param) {
+  remove_meta_box('functionsdiv', 'cases', 'side');
+  remove_meta_box('tagsdiv-navigation', 'cases', 'side');
+  remove_meta_box('tagsdiv-results', 'cases', 'side');
+  remove_meta_box('tagsdiv-state', 'cases', 'side');  
+  remove_meta_box('commentsdiv', 'cases', 'side');  
+}
