@@ -1,5 +1,6 @@
 <?php
 
+add_action('init', 'gf_register_cases_posttype');
 function gf_register_cases_posttype() {
   global $cpanel;
   $n = array('Дело', 'Дела', 'Дел');//in next versions this variable need move to options WP
@@ -46,17 +47,30 @@ function gf_register_cases_posttype() {
   add_rewrite_rule('^cases/(\d+)/[^/]+/?$', 'index.php?post_type=cases&p=$matches[1]', 'top');
 } 
 
-add_action('init', 'gf_register_cases_posttype');
+add_action( 'admin_menu', 'remove_cases_metabox' );
+function remove_cases_metabox($param) {
+  remove_meta_box('functionsdiv', 'cases', 'side');
+  remove_meta_box('tagsdiv-navigation', 'cases', 'side');
+  remove_meta_box('tagsdiv-results', 'cases', 'side');
+  remove_meta_box('tagsdiv-state', 'cases', 'side');  
+  remove_meta_box('commentsdiv', 'cases', 'side');  
+}
 
+add_filter('post_type_link', 'gf_fix_permalink', 1, 2);
 function gf_fix_permalink( $post_link, $id = 0 ) {
   $post = get_post($id);
   if(is_wp_error($post) || $post->post_type != 'cases') return $post_link;
   empty($post->slug) and $post->slug = sanitize_title_with_dashes($post->post_title);
   return home_url(user_trailingslashit("cases/$post->ID"));
-} add_filter('post_type_link', 'gf_fix_permalink', 1, 2);
+} 
 
+
+
+
+//add_action('init', 'gf_cases_rewrite');
 function gf_cases_rewrite(){
   global $wp_rewrite;
   $wp_rewrite->add_rewrite_tag('%cases_id%', '([^/]+)', 'post_type=cases&p=');
   $wp_rewrite->add_permastruct('cases', '/cases/%cases_id%', false);
-} add_action('init', 'gf_cases_rewrite');
+} 
+
