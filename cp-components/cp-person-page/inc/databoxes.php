@@ -21,7 +21,7 @@
 		}
 		
 		
-		$cp_components_url = plugin_dir_url().'casepress/cp-components/';
+		$cp_components_url = plugin_dir_url(__FILE__).'../../../../casepress/cp-components/';
 		wp_enqueue_script('datatable', $cp_components_url.'cp-datatable/assets/dt.js', array('jquery'));
 		wp_enqueue_script('datatable.tt', $cp_components_url.'cp-datatable/assets/dt.tableTools.js', array('datatable'));
 		wp_enqueue_script('datatable.rg', $cp_components_url.'cp-datatable/assets/dt.rowGrouping.js', array('datatable'));
@@ -32,10 +32,10 @@
 		
 		
 		//$parent = current($myterm)->parent;
-		$org_str = get_term_by( 'id', $parent, 'organization_structure' );
-		$org = get_field( 'org' );
-		$org = ( is_numeric( $org[0]->ID ) ) ? '<a href="' . get_permalink( $org[0]->ID ) . '">' . $org[0]->post_title . '</a>'
-				: __( '- no data -', $ckpp->textdomain );
+		//$org_str = get_term_by( 'id', $parent, 'organization_structure' );
+		//$org = get_field( 'org' );
+		//$org = ( is_numeric( $org[0]->ID ) ) ? '<a href="' . get_permalink( $org[0]->ID ) . '">' . $org[0]->post_title . '</a>': __( '- no data -', $ckpp->textdomain );
+        $org = "";
 		?>
 		<div id="ckpp-box-data" class="cases-box cases-box-open">
 			<div class="cases-box-header">
