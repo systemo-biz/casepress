@@ -16,7 +16,7 @@ include_once 'cp-members/members.php';
 include_once 'cp-person-page/cp-person-page.php';
 //include_once 'cp-person_header/person_header.php';             not work
 include_once 'cp-sql_reports/sql_reports.php';
-include_once 'cp-cases/cases.php';
+//include_once 'cp-cases/cases.php';
 include_once 'cp-hailer/hailer.php';
 include_once 'cp-flexo/cp-flexo.php';
 include_once 'cp-acf-functions-select/cp-acf-functions-select.php';

@@ -36,30 +36,33 @@
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
 				<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 			</header>
-            <?php do_action('case-sidebar'); ?>
-            <div class="after-case-sidebar">
-                <div class="entry-content">
-                    <?php roots_entry_content_before(); ?>
-                    <?php do_action('cp_entry_content_before'); ?>
+            <div id="main-case-box">
+                </br>
+                <?php do_action('case-sidebar'); ?>
+                <div class="after-case-sidebar">
+                    <div class="entry-content">
+                        <?php roots_entry_content_before(); ?>
+                        <?php do_action('cp_entry_content_before'); ?>
 
-                    <div class="entry-content-inner">
-                        <?php the_content(); ?>
+                        <div class="entry-content-inner">
+                            <?php the_content(); ?>
+                        </div>
+                        <?php roots_entry_content_after(); ?>
+                        <?php do_action('cp_entry_content_after'); ?>
                     </div>
-                    <?php roots_entry_content_after(); ?>
-                    <?php do_action('cp_entry_content_after'); ?>
+                    <footer>
+                        <?php roots_entry_footer_before(); ?>
+                        <?php do_action('cp_entry_footer_before'); ?>
+                        <?php wp_link_pages( array( 'before' => '<nav id="page-nav"><p>' . __( 'Pages:', 'roots' ), 'after' => '</p></nav>' ) ); ?>
+                        <?php $tags = get_the_tags();
+                        if ( $tags ) {
+                            ?><p><?php the_tags(); ?></p><?php } ?>
+                        <?php roots_entry_footer_after(); ?>
+                        <?php do_action('cp_entry_footer_after'); ?>
+                    </footer>
                 </div>
-                <footer>
-                    <?php roots_entry_footer_before(); ?>
-                    <?php do_action('cp_entry_footer_before'); ?>
-                    <?php wp_link_pages( array( 'before' => '<nav id="page-nav"><p>' . __( 'Pages:', 'roots' ), 'after' => '</p></nav>' ) ); ?>
-                    <?php $tags = get_the_tags();
-                    if ( $tags ) {
-                        ?><p><?php the_tags(); ?></p><?php } ?>
-                    <?php roots_entry_footer_after(); ?>
-                    <?php do_action('cp_entry_footer_after'); ?>
-                </footer>
             </div>
-            <div>
+            <div id="cp_before_comment">
                 <?php do_action('cp_post_before_comments'); ?>
             </div>
             <div id="cp_comments">

@@ -80,6 +80,7 @@ function cases_display_childs() {
 	}
 
 	add_action( 'cp_post_before_comments', 'cases_display_childs', 60 );
+    
 	function get_case_dossier_datatable(){
 	
 	

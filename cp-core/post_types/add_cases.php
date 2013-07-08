@@ -44,7 +44,9 @@ function gf_register_cases_posttype() {
 
   register_post_type('cases',$args);
   add_rewrite_rule('^cases/(\d+)/[^/]+/?$', 'index.php?post_type=cases&p=$matches[1]', 'top');
-} add_action('init', 'gf_register_cases_posttype');
+} 
+
+add_action('init', 'gf_register_cases_posttype');
 
 function gf_fix_permalink( $post_link, $id = 0 ) {
   $post = get_post($id);
