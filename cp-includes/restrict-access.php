@@ -7,7 +7,7 @@ class Private_Site {
 
 	public function init() {
 		if ( ! is_user_logged_in() && ! $this->is_login() ) {
-			wp_redirect( admin_url() );
+			wp_redirect( wp_login_url() );
 			exit;
 		}
 	}
