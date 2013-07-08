@@ -16,7 +16,7 @@
 	include_once 'cp-includes/class-cp-box-case-managemen/class-cp-box-case-management.php';
 	include_once 'cp-includes/function-redirect-onsave.php';
 	include_once 'cp-includes/user_person_link.php';
-	include_once 'cp-includes/dosie.php';
+	include_once 'cp-includes/dossier.php';
 	
 
 	register_activation_hook( __FILE__, 'cp_activation' );
