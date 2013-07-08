@@ -21,13 +21,13 @@
 
 	register_activation_hook( __FILE__, 'cp_activation' );
 	function cp_activation() {
-		do_action( 'cp_activate', $func );
+		do_action( 'cp_activate' );
 		flush_rewrite_rules(false);
 	}
 
 	register_deactivation_hook( __FILE__, 'cp_deactivation' );
 	function cp_deactivation() {
-		do_action( 'cp_deactivate', $func );
+		do_action( 'cp_deactivate' );
 		flush_rewrite_rules(false);
 	}
 ?>
