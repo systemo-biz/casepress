@@ -11,7 +11,7 @@
 				'fields' => 'ID:link, post_title:link, prioritet, state:tax, post_date, functions:tax',
 				'tax' => 'results',
 				'meta' => $_POST['meta'],
-				'view' => 'id:dt_person_' . str_replace( ':', '_', $_POST['filter'] )
+                'view' => 'id:dt_person_' . str_replace( ':', '_', $_POST['filter'] )
 			);
 			if ( isset( $_POST['group'] ) && $_POST['group'] == 'true' )
 				$params['group'] = 'prioritet';

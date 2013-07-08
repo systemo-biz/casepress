@@ -23,7 +23,6 @@
 		<?php roots_loop_before(); ?>
 		<?php do_action('cp_loop_before'); ?>
 		<?php get_template_part( 'loop', 'single' ); ?>
-		<?php// get_template_part( 'template', 'acf-form' ); ?>
 		<?php roots_loop_after(); ?>
 		<?php do_action('cp_loop_after'); ?>
 	</div><!-- /#main -->
