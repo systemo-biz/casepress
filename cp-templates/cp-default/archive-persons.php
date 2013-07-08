@@ -42,9 +42,8 @@
 				if ( function_exists( 'datatable_generator' ) )
 					datatable_generator( array(
 						'type' => 'persons',
-						'fields' => 'ID, post_title:link, email, tel_general, tel_add, position, org:serialize_org',
-						'titles' => 'post_title:Организация, email:Email, tel_general:Основной телефон, tel_add:Добавочные телефоны, position:Должность, org:Организация',
-						'view' => 'rows:25, nowrap'
+						'fields' => 'ID, post_title:link, email',
+						'titles' => 'post_title:Организация, email:Email'
 					) );
 				?>
 				<?php do_action('cp_post_inside_after'); ?>
