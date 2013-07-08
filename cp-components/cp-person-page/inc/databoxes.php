@@ -99,9 +99,9 @@
 				</h3>
 				<div class="cases-box-actions btn-toolbar">
 					<div id="ckpp-box-dossier-roles" class="btn-group">
-						<button class="btn btn-mini btn-primary" data-role="responsible"><?php _e( 'Responsible', $ckpp->textdomain ); ?></button>
-						<button class="btn btn-mini" data-role="initiator"><?php _e( 'Initiator', $ckpp->textdomain ); ?></button>
-						<button class="btn btn-mini" data-role="participant"><?php _e( 'Participant', $ckpp->textdomain ); ?></button>
+						<button class="btn btn-mini btn-primary" data-role="members-cp-posts-sql"><?php _e( 'Participant', $ckpp->textdomain ); ?></button>
+						<button class="btn btn-mini" data-role="responsible-cp-posts-sql"><?php _e( 'Responsible', $ckpp->textdomain ); ?></button>
+						<button class="btn btn-mini" data-role="member_from-cp-posts-sql"><?php _e( 'Initiator', $ckpp->textdomain ); ?></button>
 					</div>
 					<div id="ckpp-box-dossier-states" class="btn-group">
 						<button class="btn btn-mini btn-primary" data-state="open"><?php _e( 'Open', $ckpp->textdomain ); ?></button>
