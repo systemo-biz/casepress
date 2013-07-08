@@ -82,10 +82,7 @@ class CP_Case_Management {
 
         $fields_render = new CP_Render_Fields;
         echo "<fieldset><legend>Действия:</legend><div id=\"form_actions_case_parameters\">";
-        //$this->field_action_add();
-        //$fields_render->field_action_delegate();
-        //$fields_render->field_action_close();
-        //$fields_render->field_action_accept();
+
         echo "</div></fieldset>";
     }
 

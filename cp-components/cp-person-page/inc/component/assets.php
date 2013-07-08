@@ -7,5 +7,6 @@
 		wp_enqueue_style( $this->slug . '-frontend' );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( $this->slug . '-frontend' );
+        wp_localize_script($this->slug . '-frontend', 'cp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 ?>

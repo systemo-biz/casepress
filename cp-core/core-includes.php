@@ -35,10 +35,11 @@ include_once 'taxs/tax_notify_template_action.php';
 */
 add_action( 'wp_enqueue_scripts', 'cp_load_ss' );
 function cp_load_ss(){
-	$url_js=WP_PLUGIN_URL."/".dirname( plugin_basename( __FILE__ ) );
-	wp_enqueue_script('jquery', $url_js.'/js/jquery.js', array('jquery'));
+	wp_enqueue_script( 'jquery' ); 
+	wp_localize_script( 'jquery', 'cp-core', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );  
 		
-		
-	wp_enqueue_style( 'acf_fix', $url_js.'/css/acf_fix.css', false, false, 'all' );
+	$path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
+    
+	wp_enqueue_style( 'acf_fix', $path_to_plugin.'css/acf_fix.css', false, false, 'all' );
 }
 ?>

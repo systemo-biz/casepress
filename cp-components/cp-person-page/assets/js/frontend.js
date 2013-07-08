@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
 		// Insert person data into form
 		$.ajax({
 			type: 'POST',
-			url: ajaxurl,
+			url: cp_ajax.ajaxurl,
 			data: {
 				action: 'get_dossier_datatable',
 				meta: meta_query,
