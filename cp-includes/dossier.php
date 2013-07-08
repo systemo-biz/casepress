@@ -15,8 +15,8 @@ function cases_display_childs() {
 				global $post;
 
 				?>
-				<div class="cases-box">
-					<div class="cases-box-header">
+				<div class="cases-box-dossier">
+					<div class="cases-box-header-dossier">
 						<h3>
 							<a href="#" class="cases-box-toggle">Досье  </a>
 							<? /*echo count($childs)*/?>

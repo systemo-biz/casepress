@@ -27,8 +27,8 @@ class CP_Add_ACF_Form_On_Pages {
 		if (is_singular("cases")) {
 			if (function_exists('acf_form')){
                 ?>
-                <div class="cases-bo2x">
-                    <div class="cases-box-head">
+                <div class="cases-box">
+                    <div class="cases-box-header">
 						<h3>
 							<a href="#" class="cases-box-toggle">Дополнительные данные</a>
 							<a href="#add_data" name="add_data" class="cases-box-anchor">#</a>
