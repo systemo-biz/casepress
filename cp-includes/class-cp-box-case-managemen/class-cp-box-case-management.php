@@ -26,10 +26,7 @@ class CP_Case_Management {
         add_action( 'wp_ajax_get_member_from', array($this, 'get_member_from_callback') );
 		add_action( 'wp_ajax_get_responsible', array($this, 'get_responsible_callback') );
         add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
-        
-        
-  
-        
+   
     }
 	
 
@@ -130,7 +127,7 @@ class CP_Case_Management {
                     'title' => get_the_title($post_id)
                     );
             }
-
+			
             $data[] = array(
                 "total" => (int)$query->found_posts, 
                 'elements' => $elements);
@@ -319,8 +316,84 @@ class CP_Case_Management {
             echo $date_deadline;
             exit;
         }
-    }
+		
+		/*
+         * Field "Members"
+		*/
+		
+		if (isset($_REQUEST['cp_case_members']) && isset($_REQUEST['case_id'])) {
+			
+            $key = 'members-cp-posts-sql';
+            $data = trim($_REQUEST['cp_case_members']);
+			$post_id = $_REQUEST['case_id'];
+            
+			delete_post_meta($post_id, $key);
+			
+			if ($_REQUEST['cp_case_members'] != '') {
+				foreach (explode(',', $data) as $value ){
+					add_post_meta( $post_id, $key, $value);
+				}
+			}
+			$out = array();
+			$ids = get_post_meta($post_id, $key);
+			foreach ($ids as $id) {
+				$out[] = array('id' => $id, 'title' => get_the_title($id));
+			}
+			echo json_encode($out);
+            exit;
+		}
 
+        /*
+         * Field "From"
+		*/
+		
+		if (isset($_REQUEST['cp_member_from']) && isset($_REQUEST['case_id'])) {
+		
+			$key = 'member_from-cp-posts-sql';
+			$data = trim( $_REQUEST['cp_member_from'] );
+			$post_id = $_REQUEST['case_id'];
+
+			delete_post_meta($post_id, $key);
+
+			if ($_REQUEST['cp_member_from'] != '') {
+			
+				foreach (explode(',', $data) as $value){
+					add_post_meta($post_id, $key, $value, true);
+				}
+			}
+			$out = array();
+			$id = get_post_meta($post_id, $key, true);
+			$out[] = array('id' => $id, 'title' => get_the_title($id));
+			echo json_encode($out);
+            exit;
+		}
+	
+        /*
+         * Field "Responsible"
+        */
+		
+		if (isset($_REQUEST['cp_responsible']) && isset($_REQUEST['case_id'])) {
+			
+			$key = 'responsible-cp-posts-sql';
+			$data = trim( $_REQUEST['cp_responsible'] );
+			$post_id = $_REQUEST['case_id'];
+			
+			delete_post_meta($post_id, $key);
+
+			if ($_REQUEST['cp_responsible'] != '') {
+				
+				foreach (explode(',', $data) as $value){
+					add_post_meta($post_id, $key, $value, true); 
+				}	
+			}
+			$out = array();
+			$id = get_post_meta($post_id, $key, true);
+			$out[] = array('id' => $id, 'title' => get_the_title($id));
+			echo json_encode($out);
+			exit;
+		}
+    }
+	
 		
 	function save_data_post(){
 		global $post;
@@ -588,7 +661,7 @@ class CP_Render_Fields {
     
     function field_date_end_render(){
         global $post;
-
+		
         //convert date
         $date_end = "";
         $timestamp = strtotime(get_post_meta($post->ID, "cp_date_end", true));
@@ -733,15 +806,66 @@ class CP_Render_Fields {
         
     function field_member_responsible_render(){
         global $post;
-
+		$id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
+		$data[] = array('id' => $id, 'title' => get_the_title($id));
+		foreach ($data as $link){
+			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+		} 
+		$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                             <p>
                                 <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
-                                <input type="hidden" id="cp_case_responsible_input" name="cp_responsible" class="cp_select2_single" />
+								<span id="cp_case_responsible_view" class="cp_forms">
+								<? echo $out ?>
+								</span>
+								<div id="cp_case_responsible_edit" style="display: none">
+									<div id="cp_case_responsible_edit_input">
+										<input type="hidden" id="cp_case_responsible_input" name="cp_responsible" class="cp_select2_single" />
+									</div>  
+									<p>
+										<a href="#ok" id="cp_action_save_responsible" class="button">OK</a>
+										<a href="#cancel" id="cp_action_cancel_responsible">Отмена</a>
+									</p>
+								</div>
                             </p>
             </div>
             <script type="text/javascript">
+			(function($) {
+							url = "<?php echo get_site_url() ?>";
+							$("#cp_case_responsible_label").click(function(){
+                                $("#cp_case_responsible_edit").show();
+                                $("#cp_case_responsible_view").hide();
+                            });
+                            
+                            $("#cp_action_cancel_responsible").click(function(){
+                                $("#cp_case_responsible_edit").hide();
+                                $("#cp_case_responsible_view").show();
+
+                            });
+							
+                            $("#cp_action_save_responsible").click(function(){
+								cp_responsible = $("#cp_case_responsible_input").val();
+                                $.ajax({
+                                    data: ({
+                                        cp_responsible: cp_responsible,
+                                        case_id: <?php echo $post->ID?>,
+                                        action: 'save_data_post'
+                                    }),
+                                    url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                    success: function(data) {
+										data = $.parseJSON(data);
+										links = '';
+                                        $("#cp_case_responsible_input").select2('data', data);
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
+										$("#cp_case_responsible_edit").hide();
+										$("#cp_case_responsible_view").show();                                     }
+									});
+								});
+                           
+
+                })(jQuery);
 								jQuery(document).ready(function($) {
 
 									$("#cp_case_responsible_input").select2({
@@ -798,17 +922,69 @@ class CP_Render_Fields {
     
     function field_members_render(){
         global $post;
+		$ids = get_post_meta($post->ID, 'members-cp-posts-sql');
+		foreach ($ids as $id) {
+			$data[] = array('id' => $id, 'title' => get_the_title($id));
+		}
+		foreach ($data as $link){
+			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+		} 
+		$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                 <p>
-                    <label for="cp_case_members_input">Участники</label>
-                    <input type="hidden" id="cp_case_members_input" name="cp_case_members" class="cp_select2" />
+                    <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
+					<span id="cp_case_members_view" class="cp_forms">
+						<? echo $out ?>
+					</span>
+					<div id="cp_case_members_edit" style="display: none">
+						<div id="cp_case_members_edit_input">
+							<input type="hidden" id="cp_case_members_input" name="cp_case_members" class="cp_select2" />
+						</div>  
+						<p>
+							<a href="#ok" id="cp_action_save_members" class="button">OK</a>
+							<a href="#cancel" id="cp_action_cancel_members">Отмена</a>
+						</p>
+					</div>
                 </p>
             </div>
+						
             <script type="text/javascript">
-                function auto_save_data_members(){
-                    //action: save_data_post
-                }
+                (function($) {
+							url = "<?php echo get_site_url() ?>";
+							$("#cp_case_members_label").click(function(){
+                                $("#cp_case_members_edit").show();
+                                $("#cp_case_members_view").hide();
+                            });
+                            
+                            $("#cp_action_cancel_members").click(function(){
+                                $("#cp_case_members_edit").hide();
+                                $("#cp_case_members_view").show();
+
+                            });
+							
+                            $("#cp_action_save_members").click(function(){
+								cp_case_members = $("#cp_case_members_input").val();
+                                $.ajax({
+                                    data: ({
+                                        cp_case_members: cp_case_members,
+                                        case_id: <?php echo $post->ID?>,
+                                        action: 'save_data_post'
+                                    }),
+                                    url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                    success: function(data) {
+										data = $.parseJSON(data);
+										links = '';
+										$("#cp_case_members_input").select2('data', data);
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										$("#cp_case_members_view").html(links.substr(0,links.length-2));
+										$("#cp_case_members_edit").hide();
+										$("#cp_case_members_view").show();                                     }
+                                 });
+								});
+                        
+
+                })(jQuery);
                 jQuery(document).ready(function($) {
                     $("#cp_case_members_input").select2({
                         placeholder: "",
@@ -857,6 +1033,7 @@ class CP_Render_Fields {
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
                             members = $.parseJSON(data);
+							console.log(members);
                             $('#cp_case_members_input').select2('data',  members);
                         }
                     });
@@ -867,14 +1044,66 @@ class CP_Render_Fields {
     
     function field_member_from_render(){
         global $post;
+		$id = get_post_meta($post->ID, 'member_from-cp-posts-sql', true);
+		$data[] = array('id' => $id, 'title' => get_the_title($id));
+		foreach ($data as $link){
+			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+		} 
+		$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                     <p>
-                            <label for="cp_member_from_input" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
-                            <input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
+                            <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
+							<span id="cp_member_from_view" class="cp_forms">
+							<? echo $out ?>
+							</span>
+							<div id="cp_member_from_edit" style="display: none">
+								<div id="cp_member_from_edit_input">
+										<input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
+								</div>  
+								<p>
+									<a href="#ok" id="cp_action_save_member_from" class="button">OK</a>
+									<a href="#cancel" id="cp_action_cancel_member_from">Отмена</a>
+								</p>
+							</div>
                     </p>
             </div>
             <script type="text/javascript">
+				(function($) {
+							url = "<?php echo get_site_url() ?>";
+							$("#cp_member_from_label").click(function(){
+                                $("#cp_member_from_edit").show();
+                                $("#cp_member_from_view").hide();
+                            });
+                            
+                            $("#cp_action_cancel_member_from").click(function(){
+                                $("#cp_member_from_edit").hide();
+                                $("#cp_member_from_view").show();
+
+                            });
+							
+                            $("#cp_action_save_member_from").click(function(){
+								cp_member_from = $("#cp_member_from_input").val();
+                                $.ajax({
+                                    data: ({
+                                        cp_member_from: cp_member_from,
+                                        case_id: <?php echo $post->ID?>,
+                                        action: 'save_data_post'
+                                    }),
+                                    url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                    success: function(data) {
+										data = $.parseJSON(data);
+										links = '';
+                                        $("#cp_member_from_input").select2('data', data);
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										$("#cp_member_from_view").html(links.substr(0,links.length-2));
+										$("#cp_member_from_edit").hide();
+										$("#cp_member_from_view").show();                                     }
+                                 });
+
+                            });
+							
+                })(jQuery);
                 jQuery(document).ready(function($) {
                     var placeholder = "";
 
@@ -990,8 +1219,6 @@ class CP_Render_Fields {
                                  });
 
                             });
-
-
 
                         })(jQuery);
                     </script>
