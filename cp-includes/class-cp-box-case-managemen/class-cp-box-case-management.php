@@ -190,11 +190,13 @@ class CP_Case_Management {
         } else if(count($ids) == 0)  {
             //get person by current user id as default
             $member_id = get_person_by_user($user_id);
-            $out[] = array(
-                'id' => $member_id,
-                'title' => get_the_title( $member_id )
-            );    
-            $out = $out[0];
+			if ($member_id != 0) {
+				$out[] = array(
+					'id' => $member_id,
+					'title' => get_the_title( $member_id )
+				);    
+				$out = $out[0];
+			}
         }
 
 
@@ -334,11 +336,15 @@ class CP_Case_Management {
 					add_post_meta( $post_id, $key, $value);
 				}
 			}
+			
 			$out = array();
 			$ids = get_post_meta($post_id, $key);
-			foreach ($ids as $id) {
-				$out[] = array('id' => $id, 'title' => get_the_title($id));
-			}
+			
+			if ($ids != '')
+				foreach ($ids as $id) {
+					$out[] = array('id' => $id, 'title' => get_the_title($id));
+				}
+				
 			echo json_encode($out);
             exit;
 		}
@@ -361,9 +367,13 @@ class CP_Case_Management {
 					add_post_meta($post_id, $key, $value, true);
 				}
 			}
+			
 			$out = array();
 			$id = get_post_meta($post_id, $key, true);
-			$out[] = array('id' => $id, 'title' => get_the_title($id));
+			
+			if ($id != '')
+				$out[] = array('id' => $id, 'title' => get_the_title($id));
+				
 			echo json_encode($out);
             exit;
 		}
@@ -386,9 +396,13 @@ class CP_Case_Management {
 					add_post_meta($post_id, $key, $value, true); 
 				}	
 			}
+			
 			$out = array();
 			$id = get_post_meta($post_id, $key, true);
-			$out[] = array('id' => $id, 'title' => get_the_title($id));
+			
+			if ($id != '')
+				$out[] = array('id' => $id, 'title' => get_the_title($id));
+				
 			echo json_encode($out);
 			exit;
 		}
@@ -444,7 +458,7 @@ class CP_Case_Management {
                 add_post_meta($post_id, $key, $value, true);
             }
         }
-
+		print_r($data);
         /*
          * Field "Responsible"
          */
@@ -459,9 +473,9 @@ class CP_Case_Management {
             }	
         }
 		
-		$meta_responsible = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
-		$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
-		if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
+		//$meta_responsible = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
+		//$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
+		//if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
 		
 //		if (isset($_REQUEST['cp_date_end'])) {
 //            $key = 'cp_date_end';
@@ -806,18 +820,27 @@ class CP_Render_Fields {
         
     function field_member_responsible_render(){
         global $post;
+		
 		$id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
-		$data[] = array('id' => $id, 'title' => get_the_title($id));
-		foreach ($data as $link){
-			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
-		} 
-		$out = substr($out,0,-2);
+		$data = array();
+		$out = '';
+		
+		if ($id != '')
+			$data[] = array('id' => $id, 'title' => get_the_title($id));
+		
+		if (!empty($data))
+			foreach ($data as $link){
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+			} 
+		
+		if ($out != '')
+			$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                             <p>
                                 <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
 								<span id="cp_case_responsible_view" class="cp_forms">
-								<? echo $out ?>
+								<? echo $out; ?>
 								</span>
 								<div id="cp_case_responsible_edit" style="display: none">
 									<div id="cp_case_responsible_edit_input">
@@ -849,7 +872,7 @@ class CP_Render_Fields {
                                 $.ajax({
                                     data: ({
                                         cp_responsible: cp_responsible,
-                                        case_id: <?php echo $post->ID?>,
+                                        case_id: <?php echo $post->ID ?>,
                                         action: 'save_data_post'
                                     }),
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -922,20 +945,29 @@ class CP_Render_Fields {
     
     function field_members_render(){
         global $post;
+		
 		$ids = get_post_meta($post->ID, 'members-cp-posts-sql');
-		foreach ($ids as $id) {
-			$data[] = array('id' => $id, 'title' => get_the_title($id));
-		}
-		foreach ($data as $link){
-			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
-		} 
-		$out = substr($out,0,-2);
+		$data = array();
+		$out = '';
+		
+		if ($ids != '')
+			foreach ($ids as $id) {
+				$data[] = array('id' => $id, 'title' => get_the_title($id));
+			}
+		
+		if (!empty($data))
+			foreach ($data as $link){
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+			}
+		
+		if ($out != '')
+			$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                 <p>
                     <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
 					<span id="cp_case_members_view" class="cp_forms">
-						<? echo $out ?>
+						<? echo $out; ?>
 					</span>
 					<div id="cp_case_members_edit" style="display: none">
 						<div id="cp_case_members_edit_input">
@@ -968,7 +1000,7 @@ class CP_Render_Fields {
                                 $.ajax({
                                     data: ({
                                         cp_case_members: cp_case_members,
-                                        case_id: <?php echo $post->ID?>,
+                                        case_id: <?php echo $post->ID ?>,
                                         action: 'save_data_post'
                                     }),
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -1044,18 +1076,27 @@ class CP_Render_Fields {
     
     function field_member_from_render(){
         global $post;
+		
 		$id = get_post_meta($post->ID, 'member_from-cp-posts-sql', true);
-		$data[] = array('id' => $id, 'title' => get_the_title($id));
-		foreach ($data as $link){
-			$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
-		} 
-		$out = substr($out,0,-2);
+		$data = array();
+		$out = '';
+		
+		if ($id != '')
+			$data[] = array('id' => $id, 'title' => get_the_title($id));
+		
+		if (!empty($data))
+			foreach ($data as $link){
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+			} 
+		
+		if ($out != '')		
+			$out = substr($out,0,-2);
         ?>
             <div class="cp_field">
                     <p>
                             <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
 							<span id="cp_member_from_view" class="cp_forms">
-							<? echo $out ?>
+							<? echo $out; ?>
 							</span>
 							<div id="cp_member_from_edit" style="display: none">
 								<div id="cp_member_from_edit_input">
@@ -1087,7 +1128,7 @@ class CP_Render_Fields {
                                 $.ajax({
                                     data: ({
                                         cp_member_from: cp_member_from,
-                                        case_id: <?php echo $post->ID?>,
+                                        case_id: <?php echo $post->ID ?>,
                                         action: 'save_data_post'
                                     }),
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -1141,7 +1182,7 @@ class CP_Render_Fields {
                             dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                             escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                     });
-
+					//alert("<?php echo get_current_user_id() ?>");
                     $.ajax({
                         data: ({
                             action: 'get_member_from',
@@ -1154,7 +1195,7 @@ class CP_Render_Fields {
                             data = $.parseJSON(data);
                             $('#cp_member_from_input').select2('data', data);
                         }
-                    });
+                    }); 
 					
                 });
 
