@@ -190,6 +190,7 @@ class CP_Case_Management {
         } else if(count($ids) == 0)  {
             //get person by current user id as default
             $member_id = get_person_by_user($user_id);
+			
 			if ($member_id != 0) {
 				$out[] = array(
 					'id' => $member_id,
@@ -821,7 +822,7 @@ class CP_Render_Fields {
     function field_member_responsible_render(){
         global $post;
 		
-		$id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
+	/*	$id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
 		$data = array();
 		$out = '';
 		
@@ -830,17 +831,17 @@ class CP_Render_Fields {
 		
 		if (!empty($data))
 			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
 			} 
 		
 		if ($out != '')
-			$out = substr($out,0,-2);
+			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                             <p>
                                 <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
 								<span id="cp_case_responsible_view" class="cp_forms">
-								<? echo $out; ?>
+								<?// echo $out; ?>
 								</span>
 								<div id="cp_case_responsible_edit" style="display: none">
 									<div id="cp_case_responsible_edit_input">
@@ -880,7 +881,7 @@ class CP_Render_Fields {
 										data = $.parseJSON(data);
 										links = '';
                                         $("#cp_case_responsible_input").select2('data', data);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 										$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
 										$("#cp_case_responsible_edit").hide();
 										$("#cp_case_responsible_view").show();                                     }
@@ -934,7 +935,11 @@ class CP_Render_Fields {
 										url: "<?php echo admin_url('admin-ajax.php') ?>",
 										success: function(data) {
 											data = $.parseJSON(data);
+											links = '';
 											$('#cp_case_responsible_input').select2('data', data);
+											data = [data];
+											jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
+											$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
 										}
 									});
 								});
@@ -946,7 +951,7 @@ class CP_Render_Fields {
     function field_members_render(){
         global $post;
 		
-		$ids = get_post_meta($post->ID, 'members-cp-posts-sql');
+		/*$ids = get_post_meta($post->ID, 'members-cp-posts-sql');
 		$data = array();
 		$out = '';
 		
@@ -957,17 +962,17 @@ class CP_Render_Fields {
 		
 		if (!empty($data))
 			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
 			}
 		
 		if ($out != '')
-			$out = substr($out,0,-2);
+			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                 <p>
                     <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
 					<span id="cp_case_members_view" class="cp_forms">
-						<? echo $out; ?>
+						<?// echo $out; ?>
 					</span>
 					<div id="cp_case_members_edit" style="display: none">
 						<div id="cp_case_members_edit_input">
@@ -1008,7 +1013,7 @@ class CP_Render_Fields {
 										data = $.parseJSON(data);
 										links = '';
 										$("#cp_case_members_input").select2('data', data);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 										$("#cp_case_members_view").html(links.substr(0,links.length-2));
 										$("#cp_case_members_edit").hide();
 										$("#cp_case_members_view").show();                                     }
@@ -1065,8 +1070,10 @@ class CP_Render_Fields {
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
                             members = $.parseJSON(data);
-							console.log(members);
+							links = '';
                             $('#cp_case_members_input').select2('data',  members);
+							jQuery.each(members, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
+							$("#cp_case_members_view").html(links.substr(0,links.length-2));
                         }
                     });
                 });
@@ -1077,7 +1084,7 @@ class CP_Render_Fields {
     function field_member_from_render(){
         global $post;
 		
-		$id = get_post_meta($post->ID, 'member_from-cp-posts-sql', true);
+		/*$id = get_post_meta($post->ID, 'member_from-cp-posts-sql', true);
 		$data = array();
 		$out = '';
 		
@@ -1086,17 +1093,17 @@ class CP_Render_Fields {
 		
 		if (!empty($data))
 			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'" class="button">'.$link['title'].'</a>, ';
+				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
 			} 
 		
 		if ($out != '')		
-			$out = substr($out,0,-2);
+			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                     <p>
                             <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
 							<span id="cp_member_from_view" class="cp_forms">
-							<? echo $out; ?>
+							<?// echo $out; ?>
 							</span>
 							<div id="cp_member_from_edit" style="display: none">
 								<div id="cp_member_from_edit_input">
@@ -1136,7 +1143,7 @@ class CP_Render_Fields {
 										data = $.parseJSON(data);
 										links = '';
                                         $("#cp_member_from_input").select2('data', data);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'" class="button">'+(this).title+'</a>, '; });
+										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 										$("#cp_member_from_view").html(links.substr(0,links.length-2));
 										$("#cp_member_from_edit").hide();
 										$("#cp_member_from_view").show();                                     }
@@ -1193,7 +1200,11 @@ class CP_Render_Fields {
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
                             data = $.parseJSON(data);
+							links = '';
                             $('#cp_member_from_input').select2('data', data);
+							data = [data];
+							jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
+							$("#cp_member_from_view").html(links.substr(0,links.length-2));
                         }
                     }); 
 					

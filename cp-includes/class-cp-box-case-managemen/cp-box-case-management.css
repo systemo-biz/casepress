@@ -1,3 +1,10 @@
+label {
+	display:block;
+	margin-bottom:5px;
+}
+.cp_forms a {
+	text-decoration:none;
+}
 #form_actions_case_parameters > div{
     display: inline;
     padding: 1px;
