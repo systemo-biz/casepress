@@ -971,10 +971,10 @@ class CP_Render_Fields {
             <div class="cp_field">
                 <p>
                     <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
-					<span id="cp_case_members_view" class="cp_forms">
+					<span id="cp_case_members_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
 						<?// echo $out; ?>
 					</span>
-					<div id="cp_case_members_edit" style="display: none">
+					<div id="cp_case_members_edit" <?php  if (!is_admin()) echo 'style="display: none"' ?>>
 						<div id="cp_case_members_edit_input">
 							<input type="hidden" id="cp_case_members_input" name="cp_case_members" class="cp_select2" />
 						</div>  
