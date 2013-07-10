@@ -848,7 +848,7 @@ class CP_Render_Fields {
 										<input type="hidden" id="cp_case_responsible_input" name="cp_responsible" class="cp_select2_single" />
 									</div>  
 									<p>
-										<a href="#ok" id="cp_action_save_responsible" class="button">OK</a>
+										<a href="#ok" id="cp_action_save_responsible">OK</a>
 										<a href="#cancel" id="cp_action_cancel_responsible">Отмена</a>
 									</p>
 								</div>
@@ -979,7 +979,7 @@ class CP_Render_Fields {
 							<input type="hidden" id="cp_case_members_input" name="cp_case_members" class="cp_select2" />
 						</div>  
 						<p>
-							<a href="#ok" id="cp_action_save_members" class="button">OK</a>
+							<a href="#ok" id="cp_action_save_members">OK</a>
 							<a href="#cancel" id="cp_action_cancel_members">Отмена</a>
 						</p>
 					</div>
@@ -1110,7 +1110,7 @@ class CP_Render_Fields {
 										<input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
 								</div>  
 								<p>
-									<a href="#ok" id="cp_action_save_member_from" class="button">OK</a>
+									<a href="#ok" id="cp_action_save_member_from">OK</a>
 									<a href="#cancel" id="cp_action_cancel_member_from">Отмена</a>
 								</p>
 							</div>
