@@ -112,7 +112,7 @@ class CP_Case_Management {
         ?>	
                 <div id="cp_case_managment_div" class="postbox">
                         <div id="cp_case_members_div">
-								<?php $fields_render->field_add_person_button_render() ?>
+								<?php $fields_render->field_add_person_button() ?>
                                 <?php $fields_render->field_members_render() ?>
                                 <?php $fields_render->field_member_responsible_render() ?>
                                 <?php $fields_render->field_member_from_render() ?>
@@ -832,8 +832,8 @@ class CP_Render_Fields {
 
         <?php
     }
-       
-	function field_add_person_button_render(){
+	
+    function field_add_person_button(){
 		
         ?>
 		<div id="add_person_wrap">
@@ -845,7 +845,6 @@ class CP_Render_Fields {
         <?php
 
     }    
-		
     function field_member_responsible_render(){
         global $post;
 		
@@ -1017,9 +1016,11 @@ class CP_Render_Fields {
                 (function($) {
 							$("#cp_case_members_label").parent().parent().mouseenter(function(){
 								$("#cp_action_add_person").parent().parent().show();
-							}).mouseleave(function(){
+							})
+							$("#add_person_wrap").mouseleave(function(){
 								$("#cp_action_add_person").parent().parent().hide();
 							});
+
 							url = "<?php echo get_site_url() ?>";
 							$("#cp_case_members_label").click(function(){
                                 $("#cp_case_members_edit").show();
