@@ -1123,6 +1123,7 @@ class CP_Render_Fields {
 										<input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
 								</div>  
 								<p>
+									<a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_cancel_member_from_add">Добавить персону</a>
 									<a href="#ok" id="cp_action_save_member_from">OK</a>
 									<a href="#cancel" id="cp_action_cancel_member_from">Отмена</a>
 								</p>
