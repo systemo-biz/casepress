@@ -14,6 +14,7 @@ class PersonPage {
     }
     
 	function ckpp_ajax_get_dossier_datatable() {
+
 		// Params is sent
 		if ( ( isset( $_POST['meta'] ) && $_POST['meta'] ) && ( isset( $_POST['tax'] ) && $_POST['tax'] ) ) {
 			// Define params
@@ -50,6 +51,9 @@ class PersonPage {
 	
 
     function load_ss() {
+        global $post;
+        if (!(is_singular('persons'))) return;
+        
         wp_register_style( 'person-page-frontend', plugins_url( 'assets/css/frontend.css',__FILE__ ), false, "1", 'all' );
         wp_register_script( 'person-page-frontend', plugins_url( 'assets/js/frontend.js' ,__FILE__), array( 'jquery' ), '1', false );
 
@@ -63,6 +67,8 @@ class PersonPage {
     
     
     function add_datatable_to_page_person() {
+        global $post;
+        if (!(is_singular('persons'))) return;
         ?>
 	<!-- Action priority: 30, <?php echo __FILE__; ?> -->
 		<div id="ckpp-box-dossier" class="cases-box cases-box-open" data-person="<?php the_ID(); ?>" data-loading-text="Загрузка...">
