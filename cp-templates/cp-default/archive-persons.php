@@ -43,7 +43,8 @@
 					datatable_generator( array(
 						'type' => 'persons',
 						'fields' => 'ID, post_title:link, email',
-						'titles' => 'post_title:Организация, email:Email'
+						'titles' => 'post_title:Организация, email:Email',
+                        'view' => 'rows:25'
 					) );
 				?>
 				<?php do_action('cp_post_inside_after'); ?>

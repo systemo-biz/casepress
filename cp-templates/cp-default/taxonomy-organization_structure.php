@@ -37,7 +37,8 @@
 					'tax' => 'organization_structure:' . $term->term_id,
 					'type' => 'persons',
 					'fields' => 'ID, post_title:link, email',
-					'titles' => 'post_title:Организация, email:Email'
+					'titles' => 'post_title:Организация, email:Email',
+                    'view' => 'rows:25'
 				) );
 		?>
 		<?php roots_loop_after(); ?>
