@@ -1101,10 +1101,10 @@ class CP_Render_Fields {
             <div class="cp_field">
                     <p>
                             <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
-							<span id="cp_member_from_view" class="cp_forms">
+							<span id="cp_member_from_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
 							<?// echo $out; ?>
 							</span>
-							<div id="cp_member_from_edit" style="display: none">
+							<div id="cp_member_from_edit" <?php  if (!is_admin()) echo 'style="display: none"' ?>>
 								<div id="cp_member_from_edit_input">
 										<input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
 								</div>  
