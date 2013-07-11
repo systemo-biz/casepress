@@ -1201,7 +1201,7 @@ class CP_Render_Fields {
                             data = $.parseJSON(data);
 							links = '';
                             $('#cp_member_from_input').select2('data', data);
-							if (data.length > 0) {
+							if (data.id != 0) {
 								data = [data];
 								jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 								$("#cp_member_from_view").html(links.substr(0,links.length-2));
