@@ -2,6 +2,7 @@
 
 	// Create component instance
 	$ckpp = new CasePress_Component( __FILE__ );
+	
 	// AJAX actions
 	require_once 'inc/datatable.ajax.php';
 	// DataTable box

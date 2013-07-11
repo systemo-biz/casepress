@@ -31,8 +31,8 @@ class CP_Case_Management {
 	
 
     function form_case_members_render_to_site() {
-
-        
+        global $post;
+        if (!($post->post_type == 'cases')) return;
         $this->form_case_members_render();
 
     }

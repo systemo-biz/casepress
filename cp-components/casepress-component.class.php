@@ -60,7 +60,8 @@
 			 * @param string $file Put here actual __FILE__ const
 			 * @param string $base Relative path from main plugin directory. Default is 'CasePress/cp-components'
 			 */
-			function __construct( $file, $base = 'casepress/cp-components' ) {
+			//function __construct( $file, $base = 'cp-components' ) {
+			function __construct( $file, $base = 'cp-components' ) {
 				// Save recieved file path and base
 				$this->file = trim( $file, '\\/' );
 				$this->base = trim( $base, '\\/' );
@@ -69,14 +70,15 @@
 				// Initialize component data
 				$this->textdomain = $this->slug;
 				//$this->url = plugins_url( '', $this->file );
-				$this->url = plugins_url() . '/' . $this->base . '/' . $this->slug;
+				//$this->url = plugins_url() . '/' . $this->base . '/' . $this->slug;
+				$this->url = plugin_dir_url(__FILE__);// . '/' . $this->base . '/' . $this->slug;
 				$this->option = str_replace( '-', '_', $this->slug ) . '_options';
 				$this->includes = implode( '/', array( WP_PLUGIN_DIR, $this->base, $this->slug, trim( $this->includes, '/' ) ) );
 				$this->assets_dir = trim( $this->assets_dir, '/' );
 				// Setup version
 				$this->version = $this->class_version;
 				// Make component translatable
-				load_plugin_textdomain( $this->textdomain, false, $this->base . '/' . $this->slug . '/languages/' );
+				load_plugin_textdomain( $this->textdomain, false, $this->slug . '/languages/' );
 				// Enqueue assets
 				add_action( 'wp_head', array( &$this, 'enqueue_assets' ) );
 				add_action( 'admin_head', array( &$this, 'enqueue_assets' ) );

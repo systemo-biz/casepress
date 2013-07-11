@@ -13,7 +13,7 @@ include_once 'cp-datatable/dt.php'; // <---------------------------- JS errors
 //include_once 'cp-instant-post/cp-instant-post.php';
 //include_once 'cp-workflow/cp-workflow.php';
 include_once 'cp-members/members.php';
-include_once 'cp-person-page/cp-person-page.php';
+//include_once 'cp-person-page/cp-person-page.php';
 //include_once 'cp-person_header/person_header.php';             not work
 include_once 'cp-sql_reports/sql_reports.php';
 include_once 'cp-hailer/hailer.php';

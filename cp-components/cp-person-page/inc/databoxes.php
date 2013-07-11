@@ -21,7 +21,7 @@
 		}
 		
 		
-		$cp_components_url = plugin_dir_url(__FILE__).'../../../cp-components/';
+		$cp_components_url = $ckpp->url;//plugin_dir_url(__FILE__).'../../../cp-components/';
 		wp_enqueue_script('datatable', $cp_components_url.'cp-datatable/assets/dt.js', array('jquery'));
 		wp_enqueue_script('datatable.tt', $cp_components_url.'cp-datatable/assets/dt.tableTools.js', array('datatable'));
 		wp_enqueue_script('datatable.rg', $cp_components_url.'cp-datatable/assets/dt.rowGrouping.js', array('datatable'));
@@ -90,7 +90,7 @@
 				<div class="ckpp-data-clear"></div>
 			</div>
 		</div>
-		<!-- Action priority: 30, <?php echo __FILE__; ?> -->
+		<!-- Action priority: 30, <?php echo __FILE__; ?> + <?php echo $ckpp->base . '/' . $ckpp->slug . '/languages/'; ?>-->
 		<div id="ckpp-box-dossier" class="cases-box cases-box-open" data-person="<?php the_ID(); ?>" data-loading-text="<?php _e( 'Loading data', $ckpp->textdomain ); ?>&hellip;">
 			<div class="cases-box-header">
 				<h3>

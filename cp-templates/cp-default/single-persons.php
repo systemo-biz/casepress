@@ -20,11 +20,30 @@
 	<?php roots_main_before(); ?>
 	<?php do_action('cp_main_before'); ?>
 	<div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
-		<?php roots_loop_before(); ?>
-		<?php do_action('cp_loop_before'); ?>
-		<?php get_template_part( 'loop', 'single' ); ?>
-		<?php roots_loop_after(); ?>
-		<?php do_action('cp_loop_after'); ?>
+	<article <?php post_class() ?> id="post-<?php the_ID(); ?>">	
+		<header>
+			<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
+			<h1><?php the_title();	?></h1>
+			<hr/>
+		</header>
+
+		<div class="entry-content">
+		<?php do_action('cp_entry_content_before'); ?>
+			<div class="entry-content-inner">
+			<?php
+				the_post();
+				the_content();
+			?>
+			</div>
+		<?php do_action('cp_entry_content_after'); ?>
+		<hr/>
+		</div>
+
+		<footer>
+			<?php do_action('cp_entry_footer_before'); ?>
+			<?php do_action('cp_entry_footer_after'); ?>
+		</footer>
+	</article>
 	</div><!-- /#main -->
 	<?php roots_main_after(); ?>
 	<?php do_action('cp_main_after'); ?>
