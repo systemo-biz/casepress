@@ -27,12 +27,12 @@ class CP_Case_Management {
 		add_action( 'wp_ajax_get_responsible', array($this, 'get_responsible_callback') );
         add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
    
-		add_action( 'added_post_meta', array($this, 'add_member_from_after_add_post_meta'), 10, 4 );
-		add_action( 'deleted_post_meta', array($this, 'add_member_from_after_del_post_meta'), 10, 4);
+		//add_action( 'added_post_meta', array($this, 'add_member_from_after_add_post_meta'), 10, 4 );
+		//add_action( 'deleted_post_meta', array($this, 'add_member_from_after_del_post_meta'), 10, 4);
     }
 
 		
-	function add_member_from_after_add_post_meta($meta_id, $post_id, $meta_key, $meta_value) {
+	/*function add_member_from_after_add_post_meta($meta_id, $post_id, $meta_key, $meta_value) {
 		if ($meta_key == 'member_from-cp-posts-sql'){
 			$meta_member_from = get_post_meta($post_id, 'member_from-cp-posts-sql', true);
 			$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
@@ -46,7 +46,7 @@ class CP_Case_Management {
 			$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
 			if(!in_array($meta_member_from, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_member_from);
 		}
-	}
+	}*/
 	
 
     function form_case_members_render_to_site() {
@@ -352,7 +352,7 @@ class CP_Case_Management {
 			
 			if ($_REQUEST['cp_case_members'] != '') {
 				foreach (explode(',', $data) as $value ){
-					update_post_meta($post_id, $key, $value, $value);
+					add_post_meta($post_id, $key, $value);
 				}
 			}
 			
@@ -459,7 +459,7 @@ class CP_Case_Management {
             
 			delete_post_meta($post_id, $key);
             foreach (explode(',', $data) as $value ){
-               update_post_meta($post_id, $key, $value, $value);
+				add_post_meta($post_id, $key, $value);
             }
 		}
  
