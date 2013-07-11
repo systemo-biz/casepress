@@ -459,7 +459,6 @@ class CP_Case_Management {
                 add_post_meta($post_id, $key, $value, true);
             }
         }
-		print_r($data);
         /*
          * Field "Responsible"
          */
