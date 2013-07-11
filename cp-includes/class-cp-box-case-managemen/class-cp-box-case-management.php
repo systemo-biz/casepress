@@ -112,6 +112,7 @@ class CP_Case_Management {
         ?>	
                 <div id="cp_case_managment_div" class="postbox">
                         <div id="cp_case_members_div">
+								<?php $fields_render->field_add_person_button_render() ?>
                                 <?php $fields_render->field_members_render() ?>
                                 <?php $fields_render->field_member_responsible_render() ?>
                                 <?php $fields_render->field_member_from_render() ?>
@@ -831,7 +832,20 @@ class CP_Render_Fields {
 
         <?php
     }
-        
+       
+	function field_add_person_button_render(){
+		
+        ?>
+		<div id="add_person_wrap">
+            <div class="cp_field" style="display:none">
+                            <p>
+                                <a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_add_person">Добавить персону</a>
+                            </p>
+            </div>
+        <?php
+
+    }    
+		
     function field_member_responsible_render(){
         global $post;
 		
@@ -998,9 +1012,14 @@ class CP_Render_Fields {
 					</div>
                 </p>
             </div>
-						
+		</div>		
             <script type="text/javascript">
                 (function($) {
+							$("#cp_case_members_label").parent().parent().mouseenter(function(){
+								$("#cp_action_add_person").parent().parent().show();
+							}).mouseleave(function(){
+								$("#cp_action_add_person").parent().parent().hide();
+							});
 							url = "<?php echo get_site_url() ?>";
 							$("#cp_case_members_label").click(function(){
                                 $("#cp_case_members_edit").show();
@@ -1123,7 +1142,6 @@ class CP_Render_Fields {
 										<input type="hidden" id="cp_member_from_input" name="cp_member_from" class="cp_select2_single" />
 								</div>  
 								<p>
-									<a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_cancel_member_from_add">Добавить персону</a>
 									<a href="#ok" id="cp_action_save_member_from">OK</a>
 									<a href="#cancel" id="cp_action_cancel_member_from">Отмена</a>
 								</p>
