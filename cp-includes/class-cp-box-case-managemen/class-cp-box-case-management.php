@@ -200,8 +200,7 @@ class CP_Case_Management {
 			}
         }
 
-
-        echo json_encode($out);
+		echo json_encode($out);
         exit;     
     }
 
@@ -472,10 +471,6 @@ class CP_Case_Management {
 				add_post_meta($post_id, $key, $value, true);
             }	
         }
-		
-		//$meta_responsible = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
-		//$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
-		//if(!in_array($meta_responsible, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_responsible);
 		
 //		if (isset($_REQUEST['cp_date_end'])) {
 //            $key = 'cp_date_end';
@@ -879,7 +874,7 @@ class CP_Render_Fields {
                                     success: function(data) {
 										data = $.parseJSON(data);
 										links = '';
-                                        $("#cp_case_responsible_input").select2('data', data);
+                                        $("#cp_case_responsible_input").select2('data', data[0]);
 										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 										$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
 										$("#cp_case_responsible_edit").hide();
@@ -1141,7 +1136,7 @@ class CP_Render_Fields {
                                     success: function(data) {
 										data = $.parseJSON(data);
 										links = '';
-                                        $("#cp_member_from_input").select2('data', data);
+                                        $("#cp_member_from_input").select2('data', data[0]);
 										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 										$("#cp_member_from_view").html(links.substr(0,links.length-2));
 										$("#cp_member_from_edit").hide();
@@ -1200,13 +1195,13 @@ class CP_Render_Fields {
                         success: function(data) {
                             data = $.parseJSON(data);
 							links = '';
-                            $('#cp_member_from_input').select2('data', data);
-							if (data.id != 0) {
+							$('#cp_member_from_input').select2('data', data);
+							if (data.length != 0){
 								data = [data];
 								jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
 								$("#cp_member_from_view").html(links.substr(0,links.length-2));
+							}							
 							}
-                        }
                     }); 
 					
                 });
