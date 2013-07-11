@@ -21,7 +21,7 @@
 		}
 		
 		
-		$cp_components_url = plugin_dir_url(__FILE__).'../../../../casepress/cp-components/';
+		$cp_components_url = plugin_dir_url(__FILE__).'../../../cp-components/';
 		wp_enqueue_script('datatable', $cp_components_url.'cp-datatable/assets/dt.js', array('jquery'));
 		wp_enqueue_script('datatable.tt', $cp_components_url.'cp-datatable/assets/dt.tableTools.js', array('datatable'));
 		wp_enqueue_script('datatable.rg', $cp_components_url.'cp-datatable/assets/dt.rowGrouping.js', array('datatable'));
