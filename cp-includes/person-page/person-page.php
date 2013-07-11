@@ -84,12 +84,9 @@ class PersonPage {
 		<div id="ckpp-box-dossier" class="cases-box cases-box-open" data-person="<?php the_ID(); ?>" data-loading-text="Загрузка...">
 			<div class="cases-box-header">
                 <div>
-                    <h3>
-                        <a href="#" class="cases-box-toggle">Досье</a>
-                        <a href="#dossier" name="dossier" class="cases-box-anchor">#</a>
-                    </h3>
+                    <h1>Досье</h1>
                 </div>
-				<div class="cases-box-actions btn-toolbar">
+				<div class="person-box-actions btn-toolbar">
 					<div id="ckpp-box-dossier-roles" class="btn-group">
 						<button class="btn btn-mini btn-primary" data-role="members-cp-posts-sql">Участник</button>
 						<button class="btn btn-mini" data-role="responsible-cp-posts-sql">Ответственный</button>

@@ -1,7 +1,7 @@
 /* Frontend styles */
 
 #ckpp-box-dossier {}
-#ckpp-box-dossier .cases-box-actions { margin-top: 0 }
+#ckpp-box-dossier .cases-box-actions { !margin-top: 0 }
 #ckpp-box-dossier .cases-box-content .actions { display: none }
 #ckpp-box-dossier-loading-text {
 	padding-top: 70px;

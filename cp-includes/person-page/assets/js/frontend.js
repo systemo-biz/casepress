@@ -4,13 +4,13 @@ jQuery(document).ready(function($) {
 	 * Load default table
 	 */
 	window.setTimeout(function() {
-		$('#ckpp-box-dossier .cases-box-actions button.btn-primary:first').removeClass('btn-primary').click();
+		$('#ckpp-box-dossier .person-box-actions button.btn-primary:first').removeClass('btn-primary').click();
 	}, 1000);
 
 	/**
 	 * Dossier, person
 	 */
-	$('#ckpp-box-dossier .cases-box-actions button').on('click', function(event) {
+	$('#ckpp-box-dossier .person-box-actions button').on('click', function(event) {
 
 		// Group button
 		var is_groupby = $(this).is('#ckpp-groupby');
@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 		group = $('#ckpp-groupby').data('groupby');
 
 		// Disable buttons
-		$('#ckpp-box-dossier .cases-box-actions button').attr('disabled', true);
+		$('#ckpp-box-dossier .person-box-actions button').attr('disabled', true);
 
 		// Empty container
 		container.html(loading_text);
@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
 				container.removeClass('ckpp-loading-boxed');
 
 				// Unblock buttons
-				$('#ckpp-box-dossier .cases-box-actions button').attr('disabled', false);
+				$('#ckpp-box-dossier .person-box-actions button').attr('disabled', false);
 			},
 			dataType: 'html'
 		});
