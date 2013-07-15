@@ -25,7 +25,7 @@ include_once 'cp-new-content-menu/new-content-menu.php';
 include_once 'cp-overdue-sc/overdue-sc.php';
 include_once 'cp-shortcodes/cp-shortcodes.php';
 //include_once 'cp-tasks-contextual-menus/cp-tasks-contextual-menus.php';
-include_once 'cp-term-meta/cp-term-meta.php';
+//include_once 'cp-term-meta/cp-term-meta.php';
 include_once 'cp-acf-integration/class-cp-add-acf-form-to-pages.php';
 
 include_once 'cp-life-cycle/cp-life-cycle.php';
