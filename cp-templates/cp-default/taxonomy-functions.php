@@ -37,9 +37,10 @@
 		<?php /* Start loop */ ?>
 		<?php
 			// DataTable
-			$ctmeta_datable_params = ( array ) ( function_exists( 'ctmeta_get_formatted_datatable_params' ) && ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) ) ? ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) : array(
-				'fields' => 'ID:int, post_title:link, initiator:post, responsible:post, prioritet:int, date_deadline:date, state:tax, functions:tax'
-				);
+//			$ctmeta_datable_params = ( array ) ( function_exists( 'ctmeta_get_formatted_datatable_params' ) && ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) ) ? ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) : array(
+//				'fields' => 'ID:int, post_title:link, initiator:post, responsible:post, prioritet:int, date_deadline:date, state:tax, functions:tax'
+//				);
+            $ctmeta_datable_params['fields'] = 'ID:int, post_title:link, initiator:post, responsible:post, prioritet:int, date_deadline:date, state:tax, functions:tax';
 			$ctmeta_datable_params['class'] = 'tax-open';
 			$ctmeta_datable_params['tax'] = 'results:NONE, functions:' . $term->term_id;
 			if ( function_exists( 'datatable_generator' ) )
