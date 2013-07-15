@@ -844,7 +844,7 @@ class CP_Render_Fields {
 		<div id="add_person_wrap">
             <div class="cp_field" style="visibility:hidden">
                             <p>
-                                <a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_add_person">Добавить персону</a>
+                                <a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_add_person" target="_blank">Добавить персону</a>
                             </p>
             </div>
         <?php

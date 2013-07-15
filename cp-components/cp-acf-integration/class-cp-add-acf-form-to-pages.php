@@ -10,6 +10,8 @@ class CP_Add_ACF_Form_On_Pages {
 		add_action('cp_post_after', array($this, 'add_acf_form_to_page_organizaton'));
 		add_action('cp_entry_footer_after', array($this, 'add_acf_form_to_page_person'), 40);
 		add_action('cp_entry_footer_before', array($this, 'add_acf_form_to_page_case'));
+		add_action('cp_entry_footer_after', array($this, 'add_acf_form_to_page_object'), 40);
+        
         
 		add_action('get_header', array($this, 'load_acf_components'));
 	}
@@ -57,9 +59,19 @@ class CP_Add_ACF_Form_On_Pages {
     
 	function add_acf_form_to_page_person(){
 		global $post;
-		if (is_single() && $post->post_type == 'persons') {
+		if (is_singular('persons')) {
 			if (function_exists('acf_form')){
     			echo '<br/><h1>Данные</h1>';
+				acf_form();
+			}
+		}
+	}
+    
+	function add_acf_form_to_page_object(){
+		global $post;
+		if (is_singular('objects')) {
+			if (function_exists('acf_form')){
+    			echo '<h1>Данные</h1>';
 				acf_form();
 			}
 		}
