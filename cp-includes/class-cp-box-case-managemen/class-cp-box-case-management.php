@@ -20,6 +20,7 @@ class CP_Case_Management {
 
         //load and save data
         add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
+		add_action( 'wp_ajax_persons_links', array($this, 'persons_links_callback') );
         add_action( 'wp_ajax_get_members', array($this, 'get_members_callback') );
         add_action( 'save_post', array($this, 'save_data_post'), 9);
         add_action( 'wp_ajax_save_data_cp_members', array($this, 'save_data_cp_members') );
@@ -30,7 +31,21 @@ class CP_Case_Management {
 		add_action( 'added_post_meta', array($this, 'add_member_from_after_add_post_meta'), 10, 4 );
 		add_action( 'deleted_post_meta', array($this, 'add_member_from_after_del_post_meta'), 10, 4);
     }
-
+	
+	function persons_links_callback() {
+		$out = '';
+		if (isset($_REQUEST['data']) && is_array($_REQUEST['data'])) {
+			if(!empty($_REQUEST['data']) && !empty($_REQUEST['data'][0])){
+				$array = $_REQUEST['data'];
+				if (!isset($array[0]['id']) || $array[0]['id'] == '' || $array[0]['id'] == 0) exit;
+				foreach ($array as $subarray){
+					$out .= '<a href="'.get_permalink($subarray['id']).'">'.$subarray['title'].'</a>, ';
+				}
+			}
+		}
+		echo substr($out, 0, -2);
+		exit;
+	}
 		
 	function add_member_from_after_add_post_meta($meta_id, $post_id, $meta_key, $meta_value) {
 		if ($meta_key == 'member_from-cp-posts-sql'){
@@ -171,14 +186,15 @@ class CP_Case_Management {
         $out = array();
 
         //get member From by data metafield
-        foreach ($ids as $member_id){
-            $out[] = array(
-                'id' => $member_id,
-                'title' => get_the_title( $member_id )
-            );			
-        }
-        $out = $out[0];
-
+		if ($ids != '' && $ids != 0){
+			foreach ($ids as $member_id){
+				$out[] = array(
+					'id' => $member_id,
+					'title' => get_the_title( $member_id )
+				);			
+			}
+			$out = $out[0];
+		}
         echo json_encode($out);
         exit;     
     }
@@ -852,21 +868,6 @@ class CP_Render_Fields {
     }    
     function field_member_responsible_render(){
         global $post;
-		
-	/*	$id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
-		$data = array();
-		$out = '';
-		
-		if ($id != '')
-			$data[] = array('id' => $id, 'title' => get_the_title($id));
-		
-		if (!empty($data))
-			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
-			} 
-		
-		if ($out != '')
-			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                             <p>
@@ -910,14 +911,22 @@ class CP_Render_Fields {
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
                                     success: function(data) {
 										data = $.parseJSON(data);
-										links = '';
                                         $("#cp_case_responsible_input").select2('data', data[0]);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-										$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
-										$("#cp_case_responsible_edit").hide();
-										$("#cp_case_responsible_view").show();                                     }
-									});
+										$.ajax({
+											data: ({
+												action: 'persons_links',
+												data: data
+											}),
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											success: function(links){
+												$("#cp_case_responsible_view").html(links);
+												$("#cp_case_responsible_edit").hide();
+												$("#cp_case_responsible_view").show();
+											}
+										});
+									}
 								});
+							});
                            
 
                 })(jQuery);
@@ -966,11 +975,18 @@ class CP_Render_Fields {
 										url: "<?php echo admin_url('admin-ajax.php') ?>",
 										success: function(data) {
 											data = $.parseJSON(data);
-											links = '';
 											$('#cp_case_responsible_input').select2('data', data);
 											data = [data];
-											jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-											$("#cp_case_responsible_view").html(links.substr(0,links.length-2));
+											$.ajax({
+												data: ({
+													action: 'persons_links',
+													data: data
+												}),
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												success: function(links){
+													$("#cp_case_responsible_view").html(links);
+												}
+											});
 										}
 									});
 								});
@@ -981,23 +997,6 @@ class CP_Render_Fields {
     
     function field_members_render(){
         global $post;
-		
-		/*$ids = get_post_meta($post->ID, 'members-cp-posts-sql');
-		$data = array();
-		$out = '';
-		
-		if ($ids != '')
-			foreach ($ids as $id) {
-				$data[] = array('id' => $id, 'title' => get_the_title($id));
-			}
-		
-		if (!empty($data))
-			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
-			}
-		
-		if ($out != '')
-			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                 <p>
@@ -1049,12 +1048,19 @@ class CP_Render_Fields {
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
                                     success: function(data) {
 										data = $.parseJSON(data);
-										links = '';
 										$("#cp_case_members_input").select2('data', data);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-										$("#cp_case_members_view").html(links.substr(0,links.length-2));
-										$("#cp_case_members_edit").hide();
-										$("#cp_case_members_view").show();                                     }
+										$.ajax({
+											data: ({
+												action: 'persons_links',
+												data: data
+											}),
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											success: function(links){
+												$("#cp_case_members_view").html(links);
+												$("#cp_case_members_edit").hide();
+												$("#cp_case_members_view").show();
+											}
+										});                                    }
                                  });
 								});
                         
@@ -1108,10 +1114,17 @@ class CP_Render_Fields {
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
                             members = $.parseJSON(data);
-							links = '';
                             $('#cp_case_members_input').select2('data',  members);
-							jQuery.each(members, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-							$("#cp_case_members_view").html(links.substr(0,links.length-2));
+										$.ajax({
+											data: ({
+												action: 'persons_links',
+												data: members
+											}),
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											success: function(links){
+												$("#cp_case_members_view").html(links);
+											}
+										});
                         }
                     });
                 });
@@ -1121,21 +1134,6 @@ class CP_Render_Fields {
     
     function field_member_from_render(){
         global $post;
-		
-		/*$id = get_post_meta($post->ID, 'member_from-cp-posts-sql', true);
-		$data = array();
-		$out = '';
-		
-		if ($id != '')
-			$data[] = array('id' => $id, 'title' => get_the_title($id));
-		
-		if (!empty($data))
-			foreach ($data as $link){
-				$out .= '<a href="'.get_site_url().'/cases/'.$link['id'].'">'.$link['title'].'</a>, ';
-			} 
-		
-		if ($out != '')		
-			$out = substr($out,0,-2);*/
         ?>
             <div class="cp_field">
                     <p>
@@ -1179,13 +1177,21 @@ class CP_Render_Fields {
                                     url: "<?php echo admin_url('admin-ajax.php') ?>",
                                     success: function(data) {
 										data = $.parseJSON(data);
-										links = '';
                                         $("#cp_member_from_input").select2('data', data[0]);
-										jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-										$("#cp_member_from_view").html(links.substr(0,links.length-2));
-										$("#cp_member_from_edit").hide();
-										$("#cp_member_from_view").show();                                     }
-                                 });
+										$.ajax({
+											data: ({
+												action: 'persons_links',
+												data: data
+											}),
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											success: function(links){
+												$("#cp_member_from_view").html(links);
+												$("#cp_member_from_edit").hide();
+												$("#cp_member_from_view").show();
+											}                                   
+										});
+									}
+                                });
 
                             });
 							
@@ -1227,7 +1233,6 @@ class CP_Render_Fields {
                             dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                             escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                     });
-					//alert("<?php echo get_current_user_id() ?>");
                     $.ajax({
                         data: ({
                             action: 'get_member_from',
@@ -1238,13 +1243,18 @@ class CP_Render_Fields {
                         url: "<?php echo admin_url('admin-ajax.php') ?>",
                         success: function(data) {
                             data = $.parseJSON(data);
-							links = '';
 							$('#cp_member_from_input').select2('data', data);
-							if (data.length != 0){
-								data = [data];
-								jQuery.each(data, function(){ links +='<a href="'+url+'/cases/'+(this).id+'">'+(this).title+'</a>, '; });
-								$("#cp_member_from_view").html(links.substr(0,links.length-2));
-							}							
+							data = [data];
+								$.ajax({
+									data: ({
+										action: 'persons_links',
+										data: data
+									}),
+									url: "<?php echo admin_url('admin-ajax.php') ?>",
+									success: function(links){
+										$("#cp_member_from_view").html(links);
+									}
+								});					
 							}
                     }); 
 					
@@ -1295,7 +1305,6 @@ class CP_Render_Fields {
                             });
                             
                             $("#cp_action_save_deadline").click(function(){
-                                //alert($("#cp_field_date_deadline_input").val());
                                 deadline = $("#cp_field_date_deadline_input").val();
                                 $.ajax({
                                     data: ({
@@ -1307,9 +1316,9 @@ class CP_Render_Fields {
                                     success: function(data, str) {
                                         $("#cp_field_date_deadline_view").text(data);
                                         $("#cp_field_date_deadline_edit").hide();
-                                        $("#cp_field_date_deadline_view").show();                                     }
-                                 });
-
+                                        $("#cp_field_date_deadline_view").show();
+									}
+                                });
                             });
 
                         })(jQuery);
