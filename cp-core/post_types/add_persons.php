@@ -41,7 +41,7 @@ function register_persons_posttype() {
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Персона',
 		'public' 			=> true,
-		'show_ui' 			=> ((current_user_can('manage_options')) OR (has_term('kadrovic', 'persons_post',core_get_person_by_user(get_current_user_id())))) ? true : false,
+		'show_ui' 			=> true,
 		'publicly_queryable'=> true,
 		'query_var'			=> true,
 		'capability_type' 	=> 'post',	
