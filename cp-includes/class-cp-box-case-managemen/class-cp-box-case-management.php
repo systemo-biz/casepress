@@ -51,7 +51,12 @@ class CP_Case_Management {
 		if ($meta_key == 'member_from-cp-posts-sql'){
 			$meta_member_from = get_post_meta($post_id, $meta_key, true);
 			$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
-			if(!in_array($meta_member_from, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_member_from);
+			if($meta_member_from != '' && $meta_member_from != 0 && !in_array($meta_member_from, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_member_from);
+		}
+		if ($meta_key == 'responsible-cp-posts-sql'){
+			$meta_member_from = get_post_meta($post_id, $meta_key, true);
+			$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
+			if($meta_member_from != '' && $meta_member_from != 0 && !in_array($meta_member_from, $meta_members)) add_post_meta($post_id, 'members-cp-posts-sql', $meta_member_from);
 		}
 	}
 	
@@ -59,7 +64,11 @@ class CP_Case_Management {
 		if ($meta_key == 'members-cp-posts-sql'){
 			$meta_member_from = get_post_meta($post_id, 'member_from-cp-posts-sql', true);
 			$meta_members = get_post_meta($post_id, $meta_key);
-			if(!in_array($meta_member_from, $meta_members)) add_post_meta($post_id, $meta_key, $meta_member_from);
+			if($meta_member_from != '' && $meta_member_from != 0 && !in_array($meta_member_from, $meta_members)) add_post_meta($post_id, $meta_key, $meta_member_from);
+			
+			$meta_member_from = get_post_meta($post_id, 'responsible-cp-posts-sql', true);
+			$meta_members = get_post_meta($post_id, $meta_key);
+			if($meta_member_from != '' && $meta_member_from != 0 && !in_array($meta_member_from, $meta_members)) add_post_meta($post_id, $meta_key, $meta_member_from);
 		}
 	}
 	
@@ -371,7 +380,7 @@ class CP_Case_Management {
 			
 			if ($_REQUEST['cp_case_members'] != '') {
 				foreach (explode(',', $data) as $value ){
-					if(!in_array($value, $meta_array)) add_post_meta($post_id, $key, $value);
+					if($value != '' && $value != 0 && !in_array($value, $meta_array)) add_post_meta($post_id, $key, $value);
 				}
 			}
 			
@@ -481,7 +490,7 @@ class CP_Case_Management {
 			$meta_array = get_post_meta($post_id, $key);
 			
             foreach (explode(',', $data) as $value ){
-				if(!in_array($value, $meta_array)) add_post_meta($post_id, $key, $value);
+				if($value != '' && $value != 0 && !in_array($value, $meta_array)) add_post_meta($post_id, $key, $value);
             }
 		}
  
