@@ -857,8 +857,8 @@ class CP_Render_Fields {
     function field_add_person_button(){
 		
         ?>
-		<div id="add_person_wrap">
-            <div class="cp_field" style="visibility:hidden">
+		
+            <div class="cp_field" id="cp_action_add_person" style="visibility:hidden">
                             <p>
                                 <a href="<?php echo admin_url( 'post-new.php?post_type=persons' ) ?>" id="cp_action_add_person" target="_blank">Добавить персону</a>
                             </p>
@@ -1015,14 +1015,14 @@ class CP_Render_Fields {
 					</div>
                 </p>
             </div>
-		</div>		
+	
             <script type="text/javascript">
                 (function($) {
-							$("#cp_case_members_label").parent().parent().mouseenter(function(){
-								$("#cp_action_add_person").parent().parent().css('visibility','visible');
+							$("#cp_case_managment_div").mouseenter(function(){
+								$("#cp_action_add_person").css('visibility','visible');
 							})
-							$("#add_person_wrap").mouseleave(function(){
-								$("#cp_action_add_person").parent().parent().css('visibility','hidden');
+							$("#cp_case_managment_div").mouseleave(function(){
+								$("#cp_action_add_person").css('visibility','hidden');
 							});
 
 							url = "<?php echo get_site_url() ?>";
