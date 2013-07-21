@@ -1,1 +1,0 @@
-<input type="hidden" value="<?php echo $settings[$option['id']]; ?>" name="<?php echo $option['id']; ?>" id="cp-component-field-<?php echo $option['id']; ?>" class="cp-component-hidden" />
