@@ -33,13 +33,9 @@ include_once 'taxs/tax_notify_template_action.php';
 /*
 * load basic scripts and styles for CasePress
 */
-add_action( 'wp_enqueue_scripts', 'cp_load_ss' );
-function cp_load_ss(){
+add_action( 'wp_enqueue_scripts', 'cp_load_core_ss' );
+function cp_load_core_ss(){
 	wp_enqueue_script( 'jquery' ); 
 	wp_localize_script( 'jquery', 'cp-core', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );  
-		
-	$path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
-    
-	wp_enqueue_style( 'acf_fix', $path_to_plugin.'css/acf_fix.css', false, false, 'all' );
 }
 ?>
