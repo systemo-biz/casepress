@@ -18,7 +18,7 @@
 	include_once 'cp-includes/function-redirect-onsave.php';
 	include_once 'cp-includes/user_person_link.php';
 	include_once 'cp-includes/dossier.php';
-	include_once 'cp-includes/person-page/person-page.php';	
+	include_once 'cp-includes/persons/persons.php';	
 	include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
 
 	register_activation_hook( __FILE__, 'cp_activation' );
