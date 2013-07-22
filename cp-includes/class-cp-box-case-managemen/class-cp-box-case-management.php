@@ -166,9 +166,16 @@ class CP_Case_Management {
 
             $elements = array();
             foreach ($query->posts as $post_id){
+                //try get organization
+                $organization = "без организации";
+                if ($organization_id = get_post_meta($post_id, 'organization-cp-posts-array', true)) {
+                    $organization = get_the_title($organization_id[0]);
+                }
+                
                 $elements[] = array(
                     'id' => $post_id,
-                    'title' => get_the_title($post_id)
+                    'title' => get_the_title($post_id),
+                    'organization' => $organization
                     );
             }
 			
