@@ -477,7 +477,7 @@ class CP_Case_Management {
          * Save case category
          * field name: cp_case_category
          */
-        if ($_REQUEST['cp_case_category'] != ''){
+        if (isset($_REQUEST['cp_case_category']) && $_REQUEST['cp_case_category'] != ''){
             $terms = $_REQUEST['cp_case_category'];
             $taxonomy = "functions";
             $append = false;
@@ -487,7 +487,7 @@ class CP_Case_Management {
         /*
          * Field "Members"
          */
-		if ($_REQUEST['cp_case_members'] != '') {
+		if (isset($_REQUEST['cp_case_members']) && $_REQUEST['cp_case_members'] != '') {
 			
             $key = 'members-cp-posts-sql';
             $data = trim( $_REQUEST['cp_case_members'] );
@@ -504,13 +504,13 @@ class CP_Case_Management {
         /*
          * Field "From"
          */
-        $key = 'member_from-cp-posts-sql';
-        $data = trim( $_REQUEST['cp_member_from'] );
-
-        delete_post_meta($post_id, $key);
-
-        if ($_REQUEST['cp_member_from'] != '') {
+		if (isset($_REQUEST['cp_member_from']) && $_REQUEST['cp_member_from'] != '') {
 		
+			$key = 'member_from-cp-posts-sql';
+			$data = trim( $_REQUEST['cp_member_from'] );
+
+			delete_post_meta($post_id, $key);
+	
             foreach (explode(',', $data) as $value){
                 add_post_meta($post_id, $key, $value, true);
             }
@@ -518,12 +518,13 @@ class CP_Case_Management {
         /*
          * Field "Responsible"
          */
-		$key = 'responsible-cp-posts-sql';
-        $data = trim( $_REQUEST['cp_responsible'] );
-        delete_post_meta($post_id, $key);
-
-        if ($_REQUEST['cp_responsible'] != '') {
+		if (isset($_REQUEST['cp_responsible']) && $_REQUEST['cp_responsible'] != '') {
+		
+			$key = 'responsible-cp-posts-sql';
+			$data = trim( $_REQUEST['cp_responsible'] );
 			
+			delete_post_meta($post_id, $key);
+
 			foreach (explode(',', $data) as $value){
 				add_post_meta($post_id, $key, $value, true);
             }	
