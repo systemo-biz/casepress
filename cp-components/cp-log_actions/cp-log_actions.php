@@ -65,7 +65,7 @@ class Cases_Log_User_Actions {
 			'old_status' => isset( $data['old_status'] ) ? $data['old_status'] : '',
 			'new_status' => isset( $data['new_status'] ) ? $data['new_status'] : '',
 			'meta_key' => isset( $data['meta_key'] ) ? $data['meta_key'] : '',
-			'meta_value' => isset( $data['meta_value'] ) ? $data['meta_value'] : '',
+			'meta_value' => isset( $data['meta_value'] ) ? maybe_serialize( $data['meta_value'] ) : '',
 			'comment' => isset( $data['comment'] ) ? $data['comment'] : '',
 		) );
 	}
