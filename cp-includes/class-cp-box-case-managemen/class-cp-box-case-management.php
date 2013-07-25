@@ -701,6 +701,18 @@ class CP_Render_Fields {
                 (function($) {
                     $("#cp_case_category_select").change(function(){
                         $("#cp_field_case_category_edit").show();
+						// SNIPPET FROM  CP-ACF-INTEGRATION\ASSETS\JS\BACKEND.JS
+						var values = [];
+						
+						$(this).find(':selected').each(function(){
+							values.push( $(this).val() );
+						});
+
+						acf.screen.post_category = values;
+						acf.screen.taxonomy = values;
+
+						
+						$(document).trigger('acf/update_field_groups');
                     });
 
                     $("#cp_field_case_category_button_save").click(function(){

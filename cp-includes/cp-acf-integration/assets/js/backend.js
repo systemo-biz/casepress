@@ -15,8 +15,8 @@
 		
 	});
 
-	$('select#cp_case_category_select').live('change', function(){
-		// vars
+	/*$('select#cp_case_category_select').live('change', function(){
+		 //vars
 		var values = [];
 		
 		$(this).find(':selected').each(function(){
@@ -28,6 +28,6 @@
 
 		$(document).trigger('acf/update_field_groups');
 		
-	});
+	});*/
 	
 })(jQuery);
