@@ -7,10 +7,10 @@
 class CP_Add_ACF_Form_On_Pages {
 
 	function __construct(){
-		add_action('cp_post_after', array($this, 'add_acf_form_to_page_organizaton'));
-		add_action('cp_entry_footer_after', array($this, 'add_acf_form_to_page_person'), 40);
-		add_action('cp_entry_footer_before', array($this, 'add_acf_form_to_page_case'));
-		add_action('cp_entry_footer_after', array($this, 'add_acf_form_to_page_object'), 40);
+		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_organizaton'));
+		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_person'), 40);
+		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_case'));
+		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_object'), 40);
         
         
 		add_action('get_header', array($this, 'load_acf_components'));

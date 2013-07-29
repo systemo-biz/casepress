@@ -88,8 +88,8 @@
 			die;
 		}
 		// reports single
-		if (is_singular('reports')) {
-			$tmpl_file_name = 'single-reports.php';
+		if (is_singular('report')) {
+			$tmpl_file_name = 'single-report.php';
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {

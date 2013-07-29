@@ -67,7 +67,7 @@
 
 
 <script type='text/javascript'>
-$(document).ready(function(){
+jQuery(document).ready(function(){
   var params = {
     <?php if ( $params['server-side'] && strlen( $sql ) <= 10 ) : ?>
 	'bProcessing':true,
@@ -176,7 +176,7 @@ $(document).ready(function(){
     };
   <?php }?>
 
-  var dt = $("#<?php echo $dt_id?>").dataTable(params);
+  var dt = jQuery("#<?php echo $dt_id?>").dataTable(params);
   // dt.columnFilter(filters);
   if(typeof(groups)!='undefined') dt.rowGrouping(groups);
   else if(typeof(tree)!='undefined') dt.rowTree(tree);

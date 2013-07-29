@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-  $('.dataTable').find("tbody tr").live('click', function(e){
+  jQuery('.dataTable').find("tbody tr").live('click', function(e){
     var tr = $(this);
     if(tr.is('.group') || tr.find('.dataTables_empty').length>0) return;
     if(!tr.hasClass('row_selected')) $(this).parents('.dataTable').dataTable().find('tr.row_selected').removeClass('row_selected');
@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
   });
 */
 
-  $('.datatable_wrapper .filters .filter-button').click(function(e){
+  jQuery('.datatable_wrapper .filters .filter-button').click(function(e){
     var cb = $(this);
     cb.parents('.filters').find('.filter-button').removeClass('ui-state-hover');
     var foot = cb.parents('.datatable_wrapper').find('.dataTables_scrollFoot .dataTable tfoot').first();

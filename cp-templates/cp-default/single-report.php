@@ -1,18 +1,45 @@
 <?php
-	acf_form_head();
+	the_post();
 	get_header();
 ?>
-<?php roots_content_before(); ?>
-<div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
-	<?php roots_main_before(); ?>
-	<div id="main" class="span12" role="main">
-		<?php roots_loop_before(); ?>
-		<?php get_template_part( 'loop', 'single' ); ?>
-		<?php get_template_part( 'template', 'acf-form' ); ?>
-		<?php roots_loop_after(); ?>
+
+<div id="content" class="clearfix row-fluid">
+	<?php do_action('cp_main_before'); ?>	
+	<div id="main" class="span12 clearfix" role="main">
+		<?php do_action('cp_loop_before'); ?>
+		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">	
+			<header>
+				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
+				<h1><?php the_title();	?></h1>
+				<?php echo get_the_term_list( get_the_ID(), 'report_cat', 'Категории: ', ', ', '' ); ?> 
+				<hr/>
+			</header>
+
+			<div class="entry-content">
+			<?php do_action('cp_entry_content_before'); ?>
+				<div class="entry-content-inner">
+				<?php
+					the_content();
+				?>
+				</div>
+			<?php do_action('cp_entry_content_after'); ?>
+			<hr/>
+			</div>
+			<footer>
+				<?php do_action('cp_entry_footer_before'); ?>
+				<div id="cp_before_comment">
+					<?php do_action('cp_post_before_comments'); ?>
+				</div>
+				<div id="cp_comments">
+					<?php comments_template(); ?>
+				</div>
+				<?php do_action('cp_entry_footer_after'); ?>
+			</footer>
+		</article>
+		<?php do_action('cp_post_after'); ?>
 	</div><!-- /#main -->
-	<?php roots_main_after(); ?>
+	<?php do_action('cp_main_after'); ?>
 </div><!-- /#content -->
-<?php roots_content_after(); ?>
+<?php do_action('cp_content_after'); ?>
+
 <?php get_footer(); ?>
-<!-- <?php echo basename( __FILE__ ); ?> -->

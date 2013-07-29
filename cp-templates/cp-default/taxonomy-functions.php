@@ -7,23 +7,20 @@
 ?>
 
 <?php do_action('cp_content_before'); ?>
-<div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
-	<?php roots_sidebar_before(); ?>
+<div id="content" class="clearfix row-fluid">
 	<?php do_action('cp_sidebar_before'); ?>
-	<aside id="sidebar" class="<?php echo SIDEBAR_CLASSES; ?>" role="complementary">
-		<?php roots_sidebar_inside_before(); ?>
+	<aside id="sidebar" class="fluid-sidebar sidebar span3" role="complementary">
 		<?php do_action('cp_sidebar_inside_before'); ?>
 		<div class="well">
 			<?php dynamic_sidebar( 'cases' ); ?>
 		</div>
-		<?php roots_sidebar_inside_after(); ?>
 		<?php do_action('cp_sidebar_inside_after'); ?>
 	</aside><!-- /#sidebar -->
-	<?php roots_sidebar_after(); ?>
 	<?php do_action('cp_sidebar_after'); ?>
-	<?php roots_main_before(); ?>
+
 	<?php do_action('cp_main_before'); ?>
-	<div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
+	<div id="main" class="span9 clearfix" role="main">
+		<?php do_action('cp_loop_before'); ?>
 		<?php
 			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 			echo "<h1>". $term->name ."</h1>";
@@ -33,7 +30,6 @@
 			if ( !empty( $category_description ) )
 				echo apply_filters( 'category_archive_meta', '<div class="page-header">' . $category_description . '</div>' );
 		?>
-		<?php roots_loop_before(); ?>
 		<?php /* Start loop */ ?>
 		<?php
 			// DataTable
@@ -47,12 +43,9 @@
 			if ( function_exists( 'datatable_generator' ) )
 				datatable_generator( $ctmeta_datable_params );
 		?>
-		<?php roots_loop_after(); ?>
+		<?php do_action('cp_loop_after'); ?>
 	</div><!-- /#main -->
-	<?php roots_main_after(); ?>
+	<?php do_action('cp_main_after'); ?>
 </div><!-- /#content -->
-<?php
-	roots_content_after();
-	get_footer();
-?>
-<!-- <?php echo basename( __FILE__ ); ?> -->
+<?php do_action('cp_content_after'); ?>
+<?php get_footer(); ?>

@@ -25,17 +25,18 @@ function register_persons_posttype() {
 	$taxonomies = array();
 	
 	$supports = array(
-		'title',
+
 		'editor',
+		'comments',
+//		'revisions',
 //		'author',
 //		'thumbnail',
 //		'excerpt',
 //		'custom-fields',
-//		'comments',
-//		'revisions',
 //		'post-formats',
 //		'page-attributes'
-	);
+		'title'
+		);
 			
 	$args = array(
 		'labels' 			=> $labels,

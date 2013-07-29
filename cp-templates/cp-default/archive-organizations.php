@@ -10,9 +10,9 @@
 	global $post;
 ?>
 <?php do_action('cp_content_before'); ?>
-<div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
+<div id="content" class="clearfix row-fluid">
 	<?php do_action('cp_sidebar_before'); ?>
-	<aside id="sidebar" class="<?php echo SIDEBAR_CLASSES; ?>" role="complementary">
+	<aside id="sidebar" class="fluid-sidebar sidebar span3" role="complementary">
 		<?php do_action('cp_sidebar_inside_before'); ?>
 		<div class="well">
 			<?php dynamic_sidebar( 'organizations' ); ?>
@@ -21,7 +21,7 @@
 	</aside><!-- /#sidebar -->
 	<?php do_action('cp_sidebar_after'); ?>
 	<?php do_action('cp_main_before'); ?>
-	<div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
+	<div id="main" class="span9 clearfix" role="main">
 		<?php do_action('cp_loop_before'); ?>
 		<?php /* Start loop */ ?>
 		<?php if ( have_posts() ) : the_post(); ?>
