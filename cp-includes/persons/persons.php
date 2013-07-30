@@ -5,7 +5,7 @@ class PersonPage {
     function __construct() {
         add_action('wp_enqueue_scripts', array($this, 'load_ss'));
         add_action('admin_enqueue_scripts', array($this, 'load_ss'));
-    	add_action('cp_entry_footer_after', array($this, 'add_datatable_to_page_person'), 9 );
+    	add_action('cp_entry_content_after', array($this, 'add_datatable_to_page_person'), 9 );
         add_action('wp_ajax_get_dossier_datatable', array($this, 'ckpp_ajax_get_dossier_datatable') );
     }
     
