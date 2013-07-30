@@ -1,7 +1,4 @@
-<?php
-	the_post();
-	get_header();
-?>
+<?php get_header(); ?>
 
 <?php do_action('cp_content_before'); ?>
 <div id="content" class="clearfix row-fluid">

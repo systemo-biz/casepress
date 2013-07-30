@@ -1,7 +1,4 @@
-<?php
-	the_post();
-	get_header();
-?>
+<?php get_header(); ?>
 
 <div id="content" class="clearfix row-fluid">
 	<?php do_action('cp_sidebar_before'); ?>
