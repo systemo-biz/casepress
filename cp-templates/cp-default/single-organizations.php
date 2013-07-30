@@ -35,16 +35,13 @@
 		<hr/>
 		</div>
 
-			<footer>
-				<?php do_action('cp_entry_footer_before'); ?>
-				<div id="cp_before_comment">
-					<?php do_action('cp_post_before_comments'); ?>
-				</div>
-				<div id="cp_comments">
-					<?php comments_template(); ?>
-				</div>
-				<?php do_action('cp_entry_footer_after'); ?>
-			</footer>
+        <footer>
+            <?php do_action('cp_entry_footer_before'); ?>
+            <?php do_action('cp_post_before_comments'); ?>
+            <?php comments_template('', true); ?>
+            <?php do_action('cp_post_after_comments'); ?>
+            <?php do_action('cp_entry_footer_after'); ?>
+        </footer>
 	</article>
 	<?php do_action('cp_post_after'); ?>
     <?php endwhile; /* End loop */ ?>

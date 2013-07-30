@@ -38,19 +38,14 @@
                     </div>
                     <footer>
                         <?php do_action('cp_entry_footer_before'); ?>
-                        <?php $tags = get_the_tags();
-                        if ( $tags ) {
-                            ?><p><?php the_tags(); ?></p><?php } ?>
+                        <?php do_action('cp_post_before_comments'); ?>
+                        <?php comments_template('', true); ?>
+                        <?php do_action('cp_post_after_comments'); ?>
                         <?php do_action('cp_entry_footer_after'); ?>
                     </footer>
                 </div>
             </div>
-            <div id="cp_before_comment">
-                <?php do_action('cp_post_before_comments'); ?>
-            </div>
-            <div id="cp_comments">
-                <?php comments_template(); ?>
-            </div>
+
 		<?php do_action('cp_post_inside_after'); ?>
 		</article>
 		<?php do_action('cp_post_after'); ?>
