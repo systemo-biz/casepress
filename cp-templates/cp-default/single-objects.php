@@ -1,8 +1,4 @@
-<?php
-	the_post();
-	get_header();
-?>
-
+<?php get_header(); ?>
 <?php do_action('cp_content_before'); ?>
 <div id="content" class="clearfix row-fluid">
 	<?php do_action('cp_sidebar_before'); ?>
@@ -18,6 +14,7 @@
 	<?php do_action('cp_main_before'); ?>	
 	<div id="main" class="span9 clearfix" role="main">
 		<?php do_action('cp_loop_before'); ?>
+		<?php while ( have_posts() ) : the_post(); ?>
 		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">	
 			<header>
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
@@ -47,6 +44,8 @@
 				<?php do_action('cp_entry_footer_after'); ?>
 			</footer>
 		</article>
+        <?php endwhile; /* End loop */ ?>
+
 		<?php do_action('cp_post_after'); ?>
 	</div><!-- /#main -->
 	<?php do_action('cp_main_after'); ?>

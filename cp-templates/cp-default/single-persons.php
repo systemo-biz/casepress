@@ -18,6 +18,8 @@
 	<?php do_action('cp_main_before'); ?>	
 	<div id="main" class="span9 clearfix" role="main">
 		<?php do_action('cp_loop_before'); ?>
+        <?php while ( have_posts() ) : the_post(); ?>
+
 		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">	
 			<header>
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
@@ -48,6 +50,8 @@
 			</footer>
 		</article>
 		<?php do_action('cp_post_after'); ?>
+        <?php endwhile; /* End loop */ ?>
+
 	</div><!-- /#main -->
 	<?php do_action('cp_main_after'); ?>
 </div><!-- /#content -->

@@ -1,6 +1,4 @@
 <?php
-    global $tabs;
-    $template_name = (isset($tabs) && $tabs) ? 'single-tabs' : 'single';
 	get_header();
 ?>
 <?php do_action('cp_content_before'); ?>
