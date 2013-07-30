@@ -107,7 +107,7 @@ class Cases_Widget_User extends WP_Widget {
 							alert('myalert');
 						}
 						function saveform(data){
-							$('#create_user').html('');
+							jQuery('#create_user').html('');
 							var aj_name = data.name.value;
 							var aj_email = data.email.value;
 							var aj_password = data.password.value;
@@ -129,7 +129,7 @@ class Cases_Widget_User extends WP_Widget {
 								},
 								success: function(result) 
 								{						
-									$('#create_user').html('<span>'+result+'</span>');
+									jQuery('#create_user').html('<span>'+result+'</span>');
 								},
 								dataType: 'html'													
 							});				
