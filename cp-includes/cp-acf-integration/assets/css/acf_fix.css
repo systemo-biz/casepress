@@ -12,12 +12,8 @@ float: none;
 
 .label, .badge {
 background: none!important;
+text-transform:capitalize!important;
 }
-
-.acf_postbox .field input[type="text"], .acf_postbox .field input[type="number"], .acf_postbox .field input[type="password"], .acf_postbox .field textarea {
-width: 80%!important;
-}
-
 
 ul.acf-radio-list {
 	padding: 0!important;
