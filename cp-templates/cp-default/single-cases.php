@@ -24,25 +24,28 @@
 				<h1 class="entry-title"><?php the_title(); ?></h1>
 				<hr/>
 			</header>
-            <div id="main-case-box">
+            <section class="cases_box_main">
                 <div class="case-sidebar">
 					<?php do_action('case-sidebar'); ?>
-				</div>
-				<div class="entry-content">
-					<?php do_action('cp_entry_content_before'); ?>
+                </div>
+                <div class="entry-content">
+                    <?php do_action('cp_entry_content_before'); ?>
+                    <div class="entry-content-inner">
+                        <?php the_content(); ?>
+                    </div>
+                    <?php do_action('cp_entry_content_after'); ?>
+                </div>
 
-					<div class="entry-content-inner">
-						<?php the_content(); ?>
-					</div>
-					<?php do_action('cp_entry_content_after'); ?>
-				</div>
-            </div>
+            </section>
+			<?php do_action('cp_entry_sections'); ?>
 			<footer>
 				<?php do_action('cp_entry_footer_before'); ?>
-				<?php do_action('cp_post_before_comments'); ?>
-				<?php comments_template('', true); ?>
-				<?php do_action('cp_post_after_comments'); ?>
-				<?php do_action('cp_entry_footer_after'); ?>
+				<div id="commentsdiv">
+                    <?php do_action('cp_post_before_comments'); ?>
+                    <?php comments_template('', true); ?>
+                    <?php do_action('cp_post_after_comments'); ?>
+				</div>
+                <?php do_action('cp_entry_footer_after'); ?>
 			</footer>
 
 			<?php do_action('cp_post_inside_after'); ?>

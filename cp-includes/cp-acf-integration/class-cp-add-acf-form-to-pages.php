@@ -9,7 +9,7 @@ class CP_Add_ACF_Form_On_Pages {
 	function __construct(){
 		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_organizaton'));
 		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_person'), 40);
-		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_case'));
+		add_action('cp_entry_sections', array($this, 'add_acf_form_to_page_case'));
 		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_object'), 40);
         
         
@@ -29,7 +29,7 @@ class CP_Add_ACF_Form_On_Pages {
 		if (is_singular("cases")) {
 			if (function_exists('acf_form')){
                 ?>
-                <div class="cases-box">
+                <section class="cases-box">
                     <div class="cases-box-header">
 						<h1>Данные</h1>
 						<hr />
@@ -37,7 +37,7 @@ class CP_Add_ACF_Form_On_Pages {
                     <div class="cases-box-content" id="cases_add_data">
                         <?php acf_form(); ?>
                     </div>
-                </div>
+                </section>
                 <?php
 			}
 		}

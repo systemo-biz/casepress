@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'cp_entry_content_after', 'cases_display_childs', 60 );
+add_action( 'cp_entry_sections', 'cases_display_childs', 60 );
 
 function cases_display_childs() {
 
@@ -18,7 +18,7 @@ function cases_display_childs() {
 				global $post;
 
 				?>
-				<div class="cases-box-dossier">
+				<section class="cases-box-dossier">
 					<div class="cases-box-header-dossier">
 						<h1>Досье</h1>
 						<hr />
@@ -42,7 +42,7 @@ function cases_display_childs() {
 							});						
 						});
 					</script>
-				</div>
+				</section>
 				
 				<!-- Action priority: 60 -->
 				<?php
