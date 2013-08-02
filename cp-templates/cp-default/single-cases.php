@@ -14,7 +14,6 @@
 	<?php do_action('cp_main_before'); ?>
 	<div id="main" class="span9 clearfix" role="main">
 		<?php do_action('cp_loop_before'); ?>
-		
 		<?php /* Start loop */ ?>
 		<?php while ( have_posts() ) : the_post(); ?>
 		<?php do_action('cp_post_before'); ?>
@@ -22,31 +21,31 @@
 			<?php do_action('cp_post_inside_before'); ?>
 			<header>
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
-				<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+				<h1 class="entry-title"><?php the_title(); ?></h1>
+				<hr/>
 			</header>
             <div id="main-case-box">
-                </br>
-                <?php do_action('case-sidebar'); ?>
-                <div class="after-case-sidebar">
-                    <div class="entry-content">
-                        <?php do_action('cp_entry_content_before'); ?>
+                <div class="case-sidebar">
+					<?php do_action('case-sidebar'); ?>
+				</div>
+				<div class="entry-content">
+					<?php do_action('cp_entry_content_before'); ?>
 
-                        <div class="entry-content-inner">
-                            <?php the_content(); ?>
-                        </div>
-                        <?php do_action('cp_entry_content_after'); ?>
-                    </div>
-                    <footer>
-                        <?php do_action('cp_entry_footer_before'); ?>
-                        <?php do_action('cp_post_before_comments'); ?>
-                        <?php comments_template('', true); ?>
-                        <?php do_action('cp_post_after_comments'); ?>
-                        <?php do_action('cp_entry_footer_after'); ?>
-                    </footer>
-                </div>
+					<div class="entry-content-inner">
+						<?php the_content(); ?>
+					</div>
+					<?php do_action('cp_entry_content_after'); ?>
+				</div>
             </div>
+			<footer>
+				<?php do_action('cp_entry_footer_before'); ?>
+				<?php do_action('cp_post_before_comments'); ?>
+				<?php comments_template('', true); ?>
+				<?php do_action('cp_post_after_comments'); ?>
+				<?php do_action('cp_entry_footer_after'); ?>
+			</footer>
 
-		<?php do_action('cp_post_inside_after'); ?>
+			<?php do_action('cp_post_inside_after'); ?>
 		</article>
 		<?php do_action('cp_post_after'); ?>
 	<?php endwhile; /* End loop */ ?>

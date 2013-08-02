@@ -1,4 +1,7 @@
 <?php
+
+add_action( 'cp_entry_content_after', 'cases_display_childs', 60 );
+
 function cases_display_childs() {
 
 		if ( is_single() && get_post_type() == 'cases' ) {
@@ -17,16 +20,10 @@ function cases_display_childs() {
 				?>
 				<div class="cases-box-dossier">
 					<div class="cases-box-header-dossier">
-						<h3>
-							<a href="#" class="cases-box-toggle">Досье  </a>
-							<? /*echo count($childs)*/?>
-							<a href="#childs" name="childs" class="cases-box-anchor">#</a>
-						</h3>
-
+						<h1>Досье</h1>
+						<hr />
 					</div>
 					<div class="cases-box-content" id="cases_dossie">
-						<?php //$childss=datatable_generator( array( 'src' => 'global', 'tree' => 'ID:post_parent', 'view' => 'id:dt_case_childs' ) ); ?>
-						
 					</div>
 					<script type='text/javascript'>						
 						jQuery(document).ready(function(){							
@@ -54,7 +51,6 @@ function cases_display_childs() {
 		}
 	}
 
-	add_action( 'cp_post_before_comments', 'cases_display_childs', 60 );
     
 	function get_case_dossier_datatable(){
 	

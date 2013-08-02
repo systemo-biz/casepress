@@ -23,7 +23,6 @@
 				<?php echo get_the_term_list( get_the_ID(), 'objects_category', 'Категории: ', ', ', '' ); ?> 
 				<hr/>
 			</header>
-
 			<div class="entry-content">
 			<?php do_action('cp_entry_content_before'); ?>
 				<div class="entry-content-inner">
@@ -32,11 +31,11 @@
 				?>
 				</div>
 			<?php do_action('cp_entry_content_after'); ?>
-			<hr/>
 			</div>
             <footer>
                 <?php do_action('cp_entry_footer_before'); ?>
                 <?php do_action('cp_post_before_comments'); ?>
+				<hr />
                 <?php comments_template('', true); ?>
                 <?php do_action('cp_post_after_comments'); ?>
                 <?php do_action('cp_entry_footer_after'); ?>

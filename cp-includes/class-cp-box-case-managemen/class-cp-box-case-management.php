@@ -82,9 +82,7 @@ class CP_Case_Management {
 	
 
     function form_case_parameters_render_to_site() {
-        echo "<div class=\"case-sidebar\">";
         $this->form_case_parameters_render();
-        echo "</div>";
     }
 	
  	

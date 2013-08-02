@@ -31,10 +31,8 @@ class CP_Add_ACF_Form_On_Pages {
                 ?>
                 <div class="cases-box">
                     <div class="cases-box-header">
-						<h3>
-							<a href="#" class="cases-box-toggle">Дополнительные данные</a>
-							<a href="#add_data" name="add_data" class="cases-box-anchor">#</a>
-						</h3>
+						<h1>Данные</h1>
+						<hr />
                     </div>
                     <div class="cases-box-content" id="cases_add_data">
                         <?php acf_form(); ?>

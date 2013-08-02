@@ -82,7 +82,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				//include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'cp-default/'.$tmpl_file_name, true );
 			}
 			die;
@@ -104,7 +104,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
 			}
 			die;
@@ -126,7 +126,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
 			}
 			die;
@@ -149,7 +149,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
 			}
 			die;
@@ -172,7 +172,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
 			}
 			die;
@@ -184,7 +184,7 @@
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
-				include_once 'hooks-roots.php';
+				
 				load_template( plugin_dir_path(__FILE__).'/cp-default/'.$tmpl_file_name, true );
 			}
 			die;
