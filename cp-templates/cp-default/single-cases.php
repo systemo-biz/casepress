@@ -24,14 +24,17 @@
 				<h1 class="entry-title"><?php the_title(); ?></h1>
 				<hr/>
 			</header>
-            <section class="cases_box_main">
+            <section class="desciption">
                 <div class="case-sidebar">
 					<?php do_action('case-sidebar'); ?>
                 </div>
                 <div class="entry-content">
                     <?php do_action('cp_entry_content_before'); ?>
                     <div class="entry-content-inner">
-                        <?php the_content(); ?>
+                        <?php 
+                        if (!(get_the_content() == ""))
+                            echo "<h1>Описание</h1>";    
+                            the_content(); ?>
                     </div>
                     <?php do_action('cp_entry_content_after'); ?>
                 </div>

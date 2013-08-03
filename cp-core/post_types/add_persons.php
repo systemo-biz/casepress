@@ -37,6 +37,8 @@ function register_persons_posttype() {
 //		'page-attributes'
 		'title'
 		);
+	
+	if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
 			
 	$args = array(
 		'labels' 			=> $labels,
