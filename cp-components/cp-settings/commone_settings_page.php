@@ -72,7 +72,7 @@ class cpAdd_Section_For_Pages {
 		//указываем инструкцию и меняем Select на Select2 
 		?>
 		<p>Укажите ID страницы, на которой нужно будет выводить список.</p>
-		<p>Можно добавить новые страницы в <a href="<?php admin_url('edit-tags.php?taxonomy=persons_category&post_type=persons')?>">соответствующем разделе</a></p>
+		<p>Можно добавить новые страницы в <a href="<?php echo admin_url( 'edit.php?post_type=page' ); ?>">соответствующем разделе</a></p>
 		<?php
 	}
 
