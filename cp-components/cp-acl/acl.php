@@ -885,24 +885,15 @@ function acl_posts_results( $posts ) {
 					$find.=' or accesses LIKE \''.$usr.'\'';
 				}
 			
-			$in = '';
+			$in = array( 0 );
 			
 			$allows=$wpdb->get_results('SELECT object_id FROM '.$acl_table.' '.$find.' ');
 			//update_post_meta(2696,'test_sql','SELECT object_id FROM '.$acl_table.' '.$find.' ');
-			foreach ($allows as $allow)
-			{
-	
-				if ($in == '')
-				{
-					$in = $allow->object_id;
-				}
-				else
-				{
-					$in .= ', '.$allow->object_id;
-				}
+			foreach ($allows as $allow) {
+				$in []= $allow->object_id;
 			}
-		
-			
+
+			$in = implode( ',', $in );
 			
 			$where .= ' AND if(wp_posts.post_type = \'cases\',wp_posts.ID IN ( '.$in.' ),3=3)=1 ';
 			return $where;
