@@ -363,7 +363,7 @@
 
 	function get_common_roles( $object_type ) {
 		$roles = get_option( 'cp_common_roles' );
-		$roles_this = $roles[$object_type];
+		$roles_this = isset( $roles[$object_type] ) ? $roles[$object_type] : array();
 		return $roles_this;
 	}
 
