@@ -18,7 +18,14 @@
         <?php while ( have_posts() ) : the_post(); ?>
 
 		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">	
-			<header>
+            <div class="profilePicThumb" style="float: right;">
+                <?php 
+                if ( has_post_thumbnail() ) { // Проверка на наличие миниатюры для записи
+                  the_post_thumbnail('thumbnail', 'class=img-circle');
+                } 
+                ?>
+            </div>
+            <header>
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
 				<h1><?php the_title();	?></h1>
 				<?php echo get_the_term_list( get_the_ID(), 'persons_category', 'Категории: ', ', ', '' ); ?> 
@@ -27,11 +34,14 @@
 
 			<div class="entry-content">
 			<?php do_action('cp_entry_content_before'); ?>
-				<div class="entry-content-inner">
+			<div>	
+
+                <div class="entry-content-inner">
 				<?php
 					the_content();
 				?>
 				</div>
+            </div>
 			<?php do_action('cp_entry_content_after'); ?>
 			<hr/>
 			</div>

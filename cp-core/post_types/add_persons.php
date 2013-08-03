@@ -30,7 +30,7 @@ function register_persons_posttype() {
 		'comments',
 //		'revisions',
 //		'author',
-//		'thumbnail',
+		'thumbnail',
 //		'excerpt',
 //		'custom-fields',
 //		'post-formats',
