@@ -5,7 +5,7 @@
 	 */
 	function cmmngt_onsave_redirect( $post_id ) {
 		// Prepare data
-		global $post;
+		$post = get_post( $post_id );
 		$post_status = '';
 		if (isset($_POST['post_status'])) {
             $post_status = $_POST['post_status'];
