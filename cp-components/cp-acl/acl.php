@@ -112,7 +112,7 @@
 		<div id="convert_acl"></div>
 	
 	
-	<?
+	<?php
 	}
 	add_shortcode( 'test_acl_shortcode', 'test_acl_shortcode' );
 	
@@ -1079,7 +1079,7 @@ wp_localize_script('admin_acl_load', 'aclajax', array( 'ajaxurl' => admin_url( '
 
   ?>
   <h2><?php echo get_admin_page_title()?></h2>
-  <?
+  <?php
   echo '<div id="substitution_table">';
   echo '</br>';
   $subs=get_all_subs();

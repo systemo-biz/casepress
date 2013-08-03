@@ -24,7 +24,7 @@
 		?><table width="100%" cellspacing="2" cellpadding="5" class="form-table">
         <tbody><tr valign="baseline">
 			<th scope="row">
-			<?
+			<?php
 			foreach ($post_types as $type) {  
 				echo '<a class="cp_common_options_settings" style="cursor:pointer;" id="'.$type->post_type.'">'.$type->post_type.'</a><br/>';
 			 
@@ -32,7 +32,7 @@
 			?>
 			</th>
 			<td id="options_content">
-			<?
+			<?php
 			echo 'options';
 			
 			?>
@@ -41,7 +41,7 @@
 		</tbody>
 		</table>
 	
-	<?
+	<?php
 
 	}
 	
@@ -68,8 +68,8 @@
 		?>
 		<input style="position: relative; float: left;" type="text" id="role_name" value="" />
 		<textarea style="position: relative; float: left;" id="role_desc"></textarea>
-		<input style="position: relative; float: left;" alt=<? echo $type; ?> type="button" id="role_add" value="Добавить" />
-		<?
+		<input style="position: relative; float: left;" alt=<?php echo $type; ?> type="button" id="role_add" value="Добавить" />
+		<?php
 		echo '</div>';
 		die;
 	}

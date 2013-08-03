@@ -900,7 +900,7 @@ class CP_Render_Fields {
                             <p>
                                 <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
 								<span id="cp_case_responsible_view" class="cp_forms">
-								<?// echo $out; ?>
+								<?php // echo $out; ?>
 								</span>
 								<div id="cp_case_responsible_edit" style="display: none">
 									<div id="cp_case_responsible_edit_input">
@@ -1029,7 +1029,7 @@ class CP_Render_Fields {
                 <p>
                     <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
 					<span id="cp_case_members_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
-						<?// echo $out; ?>
+						<?php // echo $out; ?>
 					</span>
 					<div id="cp_case_members_edit" <?php  if (!is_admin()) echo 'style="display: none"' ?>>
 						<div id="cp_case_members_edit_input">
@@ -1166,7 +1166,7 @@ class CP_Render_Fields {
                     <p>
                             <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
 							<span id="cp_member_from_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
-							<?// echo $out; ?>
+							<?php // echo $out; ?>
 							</span>
 							<div id="cp_member_from_edit" <?php  if (!is_admin()) echo 'style="display: none"' ?>>
 								<div id="cp_member_from_edit_input">

@@ -56,7 +56,7 @@ function datatable_generator($params, $sql=null){
   if ( strlen( $sql ) > 10 )
     $posts = get_data_from_sql( $sql, $datatable['sql'] == 'validate', $params['base'] );
   elseif ( cases_datatable_is_ajax_request() || ! $params['server-side'] )
-    $posts = get_data_from_wpquery( &$params );
+    $posts = get_data_from_wpquery( $params );
 
   $posts = apply_filters('cases_datatable_data', $posts);
   $posts = apply_filters('cases_datatable_posts', $posts, $sql);
@@ -172,7 +172,7 @@ function get_data_from_sql($sql, $validate=false, $dbname=null){
   return $posts;
 }
 
-function get_data_from_wpquery($params){
+function get_data_from_wpquery(&$params){
   global $wpdb;
 
   $args = array(
