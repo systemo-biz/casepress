@@ -62,9 +62,9 @@ function head_csv(){
 	{
 		?>
 		<script type="text/javascript">
-			document.location.href = '/save_report.php?keys=<?=$keys?>&values=<?=$values?>&post_id=<?=$post_id?>';
+			document.location.href = '/save_report.php?keys=<?php echo $keys?>&values=<?php echo $values?>&post_id=<?php echo $post_id?>';
 		</script>
-		<?
+		<?php
 	}
 
 
@@ -142,9 +142,9 @@ function head_csv(){
 	echo '</div>';*/
 		?>
 		<script type="text/javascript">
-			document.location.href = '/save_report.php?sql="<?=urlencode($sql)?>"';
+			document.location.href = '/save_report.php?sql="<?php echo urlencode($sql)?>"';
 		</script>
-		<?
+		<?php
 	//echo $data;
 		//echo $sql;
 
