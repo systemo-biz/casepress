@@ -698,7 +698,7 @@ class CP_Render_Fields {
             <script type="text/javascript">
                 (function($) {
 				
-					$(document).ready(function(){
+					/*$(document).ready(function(){
 						// vars
 						var values = [];
 						
@@ -727,7 +727,7 @@ class CP_Render_Fields {
 
 						
 						$(document).trigger('acf/update_field_groups');
-                    });
+                    });*/
 
                     $("#cp_field_case_category_button_save").click(function(){
                         //alert("!!!");

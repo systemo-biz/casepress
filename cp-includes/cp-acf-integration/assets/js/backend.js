@@ -1,6 +1,6 @@
 (function($){
 	
-	/*$(document).ready(function(){
+	$(document).ready(function(){
 		// vars
 		var values = [];
 		
@@ -13,9 +13,9 @@
 
 		$(document).trigger('acf/update_field_groups');
 		
-	});*/
+	});
 
-	/*$('select#cp_case_category_select').live('change', function(){
+	$('select#cp_case_category_select').live('change', function(){
 		 //vars
 		var values = [];
 		
@@ -28,6 +28,6 @@
 
 		$(document).trigger('acf/update_field_groups');
 		
-	});*/
+	});
 	
 })(jQuery);

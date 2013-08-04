@@ -1,6 +1,7 @@
 <?php
 
 add_action( 'wp_enqueue_scripts', 'cp_load_css_acf_fix_ss' );
+add_action( 'admin_enqueue_scripts', 'cp_load_css_acf_fix_ss' );
 function cp_load_css_acf_fix_ss(){
 	$path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
     

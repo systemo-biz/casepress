@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', 'cp_load_acf_fs_ss' );
+add_action( 'admin_enqueue_scripts', 'cp_load_acf_fs_ss' );
 function cp_load_acf_fs_ss(){
 	global $pagenow;
 	
