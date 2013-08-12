@@ -21,10 +21,10 @@ function register_organizations_category_tax() {
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Категория организаций',
 		'public' 			=> true,
-		'show_ui' 			=> true,
+		'show_ui' 			=> false,
 		'hierarchical' 		=> true,
 		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => true,
+		'show_in_nav_menus' => false,
 		'rewrite' 			=> array('slug' => 'organizations_category', 'with_front' => false ),
 	 );
 	register_taxonomy('organizations_category', $pages, $args);

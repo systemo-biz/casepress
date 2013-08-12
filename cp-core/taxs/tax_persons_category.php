@@ -21,10 +21,10 @@ function register_persons_category_tax() {
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Категории персон',
 		'public' 			=> true,
-		'show_ui' 			=> true,
+		'show_ui' 			=> false,
 		'hierarchical' 		=> false,
 		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => true,
+		'show_in_nav_menus' => false,
 		'rewrite' 			=> array('slug' => 'persons_category', 'with_front' => false ),
 	 );
 	register_taxonomy('persons_category', $pages, $args);
