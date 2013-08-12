@@ -21,6 +21,7 @@ include_once 'taxs/tax_functions.php';
 include_once 'taxs/tax_navigation.php';
 include_once 'taxs/tax_objects_category.php';
 include_once 'taxs/tax_organizations_category.php';
+include_once 'taxs/tax_subject_category.php';
 include_once 'taxs/tax_organizations_structure.php';
 include_once 'taxs/tax_persons_category.php';
 
