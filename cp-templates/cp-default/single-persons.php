@@ -28,7 +28,7 @@
             <header>
 				<a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a>
 				<h1><?php the_title();	?></h1>
-				<?php echo get_the_term_list( get_the_ID(), 'persons_category', 'Категории: ', ', ', '' ); ?> 
+				<?php echo get_the_term_list( get_the_ID(), 'subjects_category', 'Категории: ', ', ', '' ); ?> 
 				<hr/>
 			</header>
 
