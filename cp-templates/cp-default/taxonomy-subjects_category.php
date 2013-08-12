@@ -35,10 +35,9 @@
 
 			if ( function_exists( 'datatable_generator' ) )
 				datatable_generator( array(
-					'tax' => 'organizations_category:' . $term->term_id,
-					'type' => 'organizations',
+					'tax' => 'subjects_category:' . $term->term_id,
 					'fields' => 'ID:int, post_title:link',
-					'titles' => 'post_title:Организация'
+					'titles' => 'post_title:Наименование'
 				) );
 		?>
 		<?php do_action('cp_loop_after'); ?>

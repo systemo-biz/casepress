@@ -15,10 +15,10 @@
 			die;
 		}
 
-		// organizations category
-		if (is_tax('organizations_category')){
+		// subjects_category
+		if (is_tax('subjects_category')){
 			
-			$tmpl_file_name = 'taxonomy-organizations_category.php';
+			$tmpl_file_name = 'taxonomy-subjects_category.php';
 			if ( $overridden_template = locate_template( 'cp-default/'.$tmpl_file_name ) ) {
 				load_template( $overridden_template );
 			} else {
