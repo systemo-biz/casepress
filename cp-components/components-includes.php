@@ -6,8 +6,6 @@ include_once 'cp-visits/visits.php';
 include_once 'cp-labels/labels.php';
 include_once 'cp-datatable/dt.php';
 include_once 'cp-members/members.php';
-include_once 'cp-sql_reports/sql_reports.php';
-//include_once 'cp-hailer/hailer.php';
 include_once 'cp-flexo/cp-flexo.php';
 include_once 'cp-drafts-shorcodes/drafts-shorcodes.php';
 include_once 'cp-new-content-menu/new-content-menu.php';
