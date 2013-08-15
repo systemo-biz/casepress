@@ -105,7 +105,7 @@ class CP_Case_Management {
             $The_CP_Render_Fields->field_result_render();
             $The_CP_Render_Fields->field_date_end_render();
             //$The_CP_Render_Fields->field_prioritet_render();
-            
+            do_action('add_field_for_case_aside_parameters', $post);
             echo "</div>";
     }
 
