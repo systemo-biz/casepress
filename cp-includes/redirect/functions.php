@@ -238,7 +238,8 @@ function redirect_is_this_page_uri($link) {
 	}
 	elseif((get_site_url().$_SERVER['REQUEST_URI']) != $link)
 	{
-		wp_redirect($link);die;//ставим тут die для того, чтобы корректно отрабатывать переход
+		wp_redirect($link);
+		die;//ставим тут die для того, чтобы корректно отрабатывать переход
 	}
 }
 

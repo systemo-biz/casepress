@@ -60,13 +60,13 @@ add_action('admin_menu', 'redirect_plugin_create_menu');
 function redirect_plugin_create_menu() {
 
 	//create new top-level menu
-	add_options_page('Redirect Plugin Settings', 'Redirect Settings', 'administrator', __FILE__, 'redirect_plugin_settings_page');
-
-	//call register settings function
-	add_action( 'admin_init', 'register_redirect_settings' );
+	//add_options_page('Redirect Plugin Settings', 'Redirect Settings', 'administrator', __FILE__, 'redirect_plugin_settings_page');
+    add_submenu_page( 'casepress_menu_settings', 'Redirect Plugin Settings', 'Redirect Settings', 'manage_options', 'redirect_settings', 'redirect_plugin_settings_page');
 }
 
+//call register settings function
 
+add_action( 'admin_init', 'register_redirect_settings' );
 function register_redirect_settings() {
 	//register our settings
 	register_setting( 'redirect-settings-group', 'redirect_link_guest' );
