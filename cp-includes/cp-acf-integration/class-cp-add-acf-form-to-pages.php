@@ -11,17 +11,26 @@ class CP_Add_ACF_Form_On_Pages {
 		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_person'), 40);
 		add_action('cp_entry_sections', array($this, 'add_acf_form_to_page_case'));
 		add_action('cp_entry_content_after', array($this, 'add_acf_form_to_page_object'), 40);
-        
-        
+        add_action('wp_print_styles', array($this, 'acf_deregister_styles'), 100 );
 		add_action('get_header', array($this, 'load_acf_components'));
 	}
-	
+    
+    
+    function acf_deregister_styles() {
+        wp_deregister_style( 'wp-admin' );
+    }
+
 	function load_acf_components(){
 		global $post;
 		if (is_single() && ($post->post_type == 'organizations' || 
 							$post->post_type == 'objects' || 
 							$post->post_type == 'persons' || 
-							$post->post_type == 'cases')) acf_form_head();
+							$post->post_type == 'cases')) 
+            {
+                acf_form_head();
+                $path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
+                wp_enqueue_style( 'acf_fix', $path_to_plugin.'assets/css/acf_fix.css', false, false, 'all' );
+            }
 	}
 
 	function add_acf_form_to_page_case(){
