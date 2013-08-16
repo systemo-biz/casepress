@@ -22,6 +22,7 @@
     include_once 'cp-includes/persons/change_person_for_user.php';
 	include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
 	include_once 'cp-includes/cp-reports/cp-reports.php';
+	include_once 'cp-includes/redirect/redirect.php';
 
 	register_activation_hook( __FILE__, 'cp_activation' );
 	function cp_activation() {
