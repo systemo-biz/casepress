@@ -20,12 +20,15 @@ class CP_Case_Management {
 
         //load and save data
         add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
+		add_action( 'wp_ajax_query_posts_cases', array($this, 'query_posts_cases_callback') );
 		add_action( 'wp_ajax_persons_links', array($this, 'persons_links_callback') );
+		//add_action( 'wp_ajax_posts_links', array($this, 'posts_links_callback') );
         add_action( 'wp_ajax_get_members', array($this, 'get_members_callback') );
         add_action( 'save_post', array($this, 'save_data_post'), 9);
         add_action( 'wp_ajax_save_data_cp_members', array($this, 'save_data_cp_members') );
         add_action( 'wp_ajax_get_member_from', array($this, 'get_member_from_callback') );
 		add_action( 'wp_ajax_get_responsible', array($this, 'get_responsible_callback') );
+		add_action( 'wp_ajax_get_post_parent', array($this, 'get_post_parent_callback') );
         add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
    
 		add_action( 'added_post_meta', array($this, 'add_member_from_after_add_post_meta'), 10, 4 );
@@ -100,6 +103,7 @@ class CP_Case_Management {
             $The_CP_Render_Fields = new CP_Render_Fields();
 
             echo "<div class=\"misc-pub-section\">";
+			$The_CP_Render_Fields->field_post_parent_render();
             $The_CP_Render_Fields->field_case_category_render();
             $The_CP_Render_Fields->field_date_deadline();
             $The_CP_Render_Fields->field_result_render();
@@ -184,6 +188,34 @@ class CP_Case_Management {
             echo json_encode($data[0]);
             exit;
     }
+	
+	function query_posts_cases_callback(){
+			$args = array(
+                'fields' => 'ids',
+                's' => $_GET['q'],
+                'paged' => $_GET['page'],
+                'posts_per_page' => $_GET['page_limit'],
+                'post_type' => 'cases'
+                );
+
+            $query = new WP_Query( $args );
+
+            $elements = array();
+            foreach ($query->posts as $post_id){
+                
+                $elements[] = array(
+                    'id' => $post_id,
+                    'title' => get_the_title($post_id)
+                    );
+            }
+			
+            $data[] = array(
+                "total" => (int)$query->found_posts, 
+                'elements' => $elements);
+            //$data[] = $query;
+            echo json_encode($data[0]);
+            exit;
+    }
     /*
      * Get member "Responsible" for case
      * 
@@ -209,6 +241,30 @@ class CP_Case_Management {
 			}
 			$out = $out[0];
 		}
+        echo json_encode($out);
+        exit;     
+    }
+	/*
+     * Get member "Post Parent" for case
+     * 
+     * @return "json"
+     */
+   function get_post_parent_callback(){
+        $post_id = $_REQUEST['case_id'];
+
+        //get Members IDs from Case metafield by key
+        if (isset($post_id)) $parent_id = get_post($post_id)->post_parent;
+
+        //Create array for save out data
+        $out = array();
+
+        //get member From by data metafield
+
+		$out[] = array(
+			'id' => $parent_id,
+			'title' => get_the_title( $parent_id )
+		);			
+
         echo json_encode($out);
         exit;     
     }
@@ -329,7 +385,36 @@ class CP_Case_Management {
             exit;
         }
 
+		/*
+         * Save case post parent
+         * field name: cp_post_parent
+         */
+        if (isset($_REQUEST['cp_post_parent']) && isset($_REQUEST['case_id'])) {
 
+			$post_id = $_REQUEST['case_id'];
+            $post_parent = $_REQUEST['cp_post_parent'];
+
+            wp_update_post(
+				array(
+					'ID' => $post_id, 
+					'post_parent' => $post_parent
+				)
+			);
+			
+            $out = array();
+
+			//get member From by data metafield
+
+			$out[] = array(
+				'id' => $post_parent,
+				'title' => get_the_title( $post_parent )
+			);			
+
+			echo json_encode($out);
+           // echo $post_parent;
+            exit;
+        }
+		
         /*
          * Save case category
          * field name: case_category
@@ -482,6 +567,19 @@ class CP_Case_Management {
             wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
         }
         
+        /*
+         * Field "Post Parent"
+         */
+/*		if (isset($_REQUEST['cp_case_post_parent']) && $_REQUEST['cp_case_post_parent'] != '') {
+
+            $post_parent = trim( $_REQUEST['cp_case_post_parent'] );
+
+            wp_update_post(array(
+				'ID' => $post_id, 
+				'post_parent' => $post_parent
+			));	
+        } */
+		        
         /*
          * Field "Members"
          */
@@ -697,37 +795,6 @@ class CP_Render_Fields {
             </div>
             <script type="text/javascript">
                 (function($) {
-				
-					/*$(document).ready(function(){
-						// vars
-						var values = [];
-						
-						$('select#cp_case_category_select').find(':selected').each(function(){
-							values.push( $(this).val() );
-						});
-						
-						acf.screen.post_category = values;
-						acf.screen.taxonomy = values;
-
-						$(document).trigger('acf/update_field_groups');
-						
-					});
-					
-                    $("#cp_case_category_select").change(function(){
-                        $("#cp_field_case_category_edit").show();
-						// SNIPPET FROM  CP-ACF-INTEGRATION\ASSETS\JS\BACKEND.JS
-						var values = [];
-						
-						$(this).find(':selected').each(function(){
-							values.push( $(this).val() );
-						});
-
-						acf.screen.post_category = values;
-						acf.screen.taxonomy = values;
-
-						
-						$(document).trigger('acf/update_field_groups');
-                    });*/
 
                     $("#cp_field_case_category_button_save").click(function(){
                         //alert("!!!");
@@ -752,6 +819,132 @@ class CP_Render_Fields {
         <?php
     }
     
+	function field_post_parent_render(){
+		global $post;
+		?>
+		
+		<div id="cp_case_post_parent_div">
+			<label id="cp_case_post_parent_input_label" for="cp_case_post_parent_input">Основание</label>
+			<span id="cp_case_post_parent_view" class="cp_forms">
+			<?php // echo $out; ?>
+			</span>
+			<div id="cp_case_post_parent_edit" style="display: none">
+				<input type="hidden" id="cp_case_post_parent_input" name="cp_case_post_parent" class="cp_select2_single" />
+				<a href="#ok" class="cp_button" id="cp_field_case_post_parent_button_save">OK</a>
+				<a href="#cancel" class="cp_button" id="cp_field_case_post_parent_button_cancel">Отмена</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			(function($) {
+							url = "<?php echo get_site_url() ?>";
+							$("#cp_case_post_parent_input_label").click(function(){
+                                $("#cp_case_post_parent_edit").show();
+                                $("#cp_case_post_parent_view").hide();
+                            });
+                            
+                            $("#cp_field_case_post_parent_button_cancel").click(function(){
+                                $("#cp_case_post_parent_edit").hide();
+                                $("#cp_case_post_parent_view").show();
+
+                            });
+							
+                           $("#cp_field_case_post_parent_button_save").click(function(){
+								cp_post_parent = $("#cp_case_post_parent_input").val();
+								//console.log(cp_post_parent);
+                                $.ajax({
+                                    data: ({
+                                        cp_post_parent: cp_post_parent,
+                                        case_id: <?php echo $post->ID ?>,
+                                        action: 'save_data_post'
+                                    }),
+                                    url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                    success: function(data) {
+										data = $.parseJSON(data);
+										//console.log(data);
+                                        $("#cp_case_post_parent_input").select2('data', data[0]);
+										$.ajax({
+											data: ({
+												action: 'persons_links',
+												data: data
+											}),
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											success: function(links){
+												$("#cp_case_post_parent_view").html(links);
+												$("#cp_case_post_parent_edit").hide();
+												$("#cp_case_post_parent_view").show();
+											}
+										});
+									}
+								});
+							});
+                           
+
+                })(jQuery);
+								jQuery(document).ready(function($) {
+
+									$("#cp_case_post_parent_input").select2({
+                                        placeholder: "",
+                                        width: '100%',
+										allowClear: true,
+                                        minimumInputLength: 1,
+                                        ajax: {
+                                                url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                                dataType: 'json',
+                                                quietMillis: 100,
+                                                data: function (term, page) { // page is the one-based page number tracked by Select2
+                                                        return {
+                                                                action: 'query_posts_cases',
+                                                                page_limit: 10, // page size
+                                                                page: page, // page number
+                                                                //params: {contentType: "application/json;charset=utf-8"},
+                                                                q: term //search term
+                                                        };
+                                                },
+                                                results: function (data, page) {
+                                                        //alert(data.total);
+                                                        var more = (page * 10) < data.total; // whether or not there are more results available
+
+                                                        // notice we return the value of more so Select2 knows if more results can be loaded
+                                                        return {
+                                                                results: data.elements,
+                                                                more: more
+                                                                };
+                                                }
+                                        },
+                                        formatResult: elementFormatResult, // omitted for brevity, see the source of this page
+                                        formatSelection: elementFormatSelection, // omitted for brevity, see the source of this page
+                                        dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+                                        escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+									});
+									$.ajax({
+										data: ({
+											action: 'get_post_parent',
+											dataType: 'json',
+											case_id: <?php echo $post->ID ?>
+										}),
+										url: "<?php echo admin_url('admin-ajax.php') ?>",
+										success: function(data) {
+											data = $.parseJSON(data);
+											//console.log(data);
+											$('#cp_case_post_parent_input').select2('data', data[0]);
+											//data = [data];
+											$.ajax({
+												data: ({
+													action: 'persons_links',
+													data: data
+												}),
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												success: function(links){
+													$("#cp_case_post_parent_view").html(links);
+												}
+											});
+										}
+									});
+								});
+                        </script>
+        <?php
+    }
+	
     function field_date_end_render(){
         global $post;
 		
