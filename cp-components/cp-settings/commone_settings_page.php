@@ -116,13 +116,13 @@ class cpAdd_Section_For_Terms {
 	
 	function term_our_organizations_field_callback(){
 		$setting = esc_attr( get_option( 'term_our_organizations' ) );
-		wp_dropdown_categories( array( 'name' => 'term_our_organizations', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting, 'hierarchical' => 1, 'taxonomy' => 'organizations_category' )) ; 
+		wp_dropdown_categories( array( 'name' => 'term_our_organizations', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting, 'hierarchical' => 1, 'taxonomy' => 'subjects_category' )) ; 
 		echo "<p><small>Добавить новый термин можно в разделе: <a href=".admin_url('edit-tags.php?taxonomy=organizations_category&post_type=organizations').">Категории организаций</a></small></p>";
 	}
 	
 	function term_employees_field_callback(){
 		$setting = esc_attr( get_option( 'term_employees' ) );
-		wp_dropdown_categories( array( 'name' => 'term_employees', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting, 'hierarchical' => 1, 'taxonomy' => 'persons_category' )) ; 
+		wp_dropdown_categories( array( 'name' => 'term_employees', 'echo' => 1, 'show_option_none' => 'Не выбрано', 'option_none_value' => '0', 'selected' => $setting, 'hierarchical' => 1, 'taxonomy' => 'subjects_category' )) ; 
 		echo "<p><small>Добавить новый термин можно в разделе: <a href=".admin_url('edit-tags.php?taxonomy=persons_category&post_type=persons').">Категории персон</a></small></p>";
 	}
 	
