@@ -239,7 +239,10 @@ class CP_Case_Management {
 					'title' => get_the_title( $member_id )
 				);			
 			}
-			$out = $out[0];
+			if (isset($out[0])) {
+                $out = $out[0];
+            }
+            
 		}
         echo json_encode($out);
         exit;     
@@ -339,7 +342,7 @@ class CP_Case_Management {
 
 	
     function save_data_ajax() {
-        error_log ("go ajax");
+        //error_log ("go ajax");
 
 
          /** Save date end
@@ -967,6 +970,7 @@ class CP_Render_Fields {
 		
         //convert date
         $date_end = "";
+        $value = "";
         $timestamp = strtotime(get_post_meta($post->ID, "cp_date_end", true));
         if ($timestamp > 0) {
             $value = date('Y-m-d\TH:i', $timestamp); // format: 2013-12-31T23:55

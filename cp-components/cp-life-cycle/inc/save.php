@@ -21,7 +21,7 @@
 		
 		
 		// Save base life cicle
-		error_log('цикл по умолчанию: '.$_POST['cp_base_lc']);
+		//error_log('цикл по умолчанию: '.$_POST['cp_base_lc']);
 		if ($_POST['cp_base_lc'] != '') {
 			update_option( 'default_life_cycle_id', $_POST['cp_base_lc'] );
 		}
