@@ -821,6 +821,21 @@ class CP_Render_Fields {
     
 	function field_post_parent_render(){
 		global $post;
+		$case_parent_id = '0';
+            
+        if ($post->post_parent){
+            $case_parent_id = $post->post_parent;
+        } elseif (isset($_REQUEST['case_parent_id']) && is_numeric($_REQUEST['case_parent_id'])) {
+           $case_parent_id = $_REQUEST['case_parent_id'];
+        } else $case_parent_id = '0';
+		
+		wp_update_post(
+				array(
+					'ID' => $post->ID, 
+					'post_parent' => $case_parent_id
+				)
+			);
+		
 		?>
 		
 		<div id="cp_case_post_parent_div">
@@ -835,7 +850,9 @@ class CP_Render_Fields {
 			</div>
 		</div>
 		<script type="text/javascript">
+
 			(function($) {
+			
 							url = "<?php echo get_site_url() ?>";
 							$("#cp_case_post_parent_input_label").click(function(){
                                 $("#cp_case_post_parent_edit").show();
