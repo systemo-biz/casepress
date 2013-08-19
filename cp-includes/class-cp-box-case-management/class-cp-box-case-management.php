@@ -103,11 +103,11 @@ class CP_Case_Management {
             $The_CP_Render_Fields = new CP_Render_Fields();
 
             echo "<div class=\"misc-pub-section\">";
-			$The_CP_Render_Fields->field_post_parent_render();
             $The_CP_Render_Fields->field_case_category_render();
             $The_CP_Render_Fields->field_date_deadline();
             $The_CP_Render_Fields->field_result_render();
             $The_CP_Render_Fields->field_date_end_render();
+			$The_CP_Render_Fields->field_post_parent_render();
             //$The_CP_Render_Fields->field_prioritet_render();
             do_action('add_field_for_case_aside_parameters', $post);
             echo "</div>";
