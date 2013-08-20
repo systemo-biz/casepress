@@ -15,13 +15,22 @@ function register_cases_report_posttype(){
     'parent_item_colon'=>''
   );
 
+   $supports = array(
+    'editor',
+    'title'
+     );
+
+  //add custom-fields, if it is enable
+  if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
+  
+  
   register_post_type('report', array(
     'label'=>$labels['singular_name'],
     'labels'=>$labels,
     'public'=>true,
     'hierarchical'=>true,
 	'rewrite' => array('slug' => 'reports', 'with_front' => false ),
-    'supports'=>array('title', 'editor', 'author', 'excerpt', 'custom-fields', 'page-attributes'),
+    'supports'=> $supports,
     'taxonomies'=>array(),
     'query_var'=>true,
     'menu_position'=>10,

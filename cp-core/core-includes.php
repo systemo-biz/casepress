@@ -8,7 +8,6 @@ include_once 'post_types/add_notify_templates.php';
 include_once 'post_types/add_objects.php';
 include_once 'post_types/add_organizations.php';
 include_once 'post_types/add_persons.php';
-include_once 'post_types/add_report.php';
 include_once 'post_types/add_life_cycle.php';
 
 //include_once 'taxs/tax_functions.php';
@@ -26,7 +25,6 @@ include_once 'taxs/tax_organizations_structure.php';
 include_once 'taxs/tax_persons_category.php';
 
 include_once 'taxs/tax_labels.php';
-include_once 'taxs/tax_report_cat.php';
 
 include_once 'taxs/tax_notify_template_method.php';
 include_once 'taxs/tax_notify_template_action.php';
