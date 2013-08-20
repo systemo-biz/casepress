@@ -65,9 +65,17 @@ function cases_new_content_menu( $wp_admin_bar ) {
 	}
 }
 
+
+
 function cases_new_content_menu_init() {
-	remove_action( 'admin_bar_menu', 'wp_admin_bar_new_content_menu', 70 );
-	add_action( 'admin_bar_menu', 'cases_new_content_menu', 70 );
+
+	global $wp_admin_bar;
+	
+	remove_action( 'admin_bar_menu', array($wp_admin_bar, 'wp_admin_bar_new_content_menu'), 70 );
+	add_action( 'admin_bar_menu', 'cases_new_content_menu', 71 );
+	
 }
-add_action( 'init', 'cases_new_content_menu_init', 11 );
+add_action( 'template_redirect', 'cases_new_content_menu_init' );
+
+
 ?>
