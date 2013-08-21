@@ -1,7 +1,7 @@
 <?php
 include_once 'casepress-component.class.php';
 include_once 'cp-log_actions/cp-log_actions.php';
-include_once 'cp-acl/acl.php';
+//include_once 'cp-acl/acl.php';
 include_once 'cp-visits/visits.php';
 include_once 'cp-labels/labels.php';
 include_once 'cp-datatable/dt.php';
