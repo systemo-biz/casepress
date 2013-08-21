@@ -29,7 +29,7 @@ add_action('admin_enqueue_scripts', 'codemirror_enqueue_scripts');
 
 function codemirror_enqueue_scripts() {
     global $post;
-	if (! $post->post_type == 'report') return $post->ID;
+	if (isset($post) && ! $post->post_type == 'report') return $post->ID;
     
     wp_enqueue_script('codemirror', plugin_dir_url( __FILE__ ).'codemirror/codemirror.js');
 	wp_enqueue_style('codemirror', plugin_dir_url( __FILE__ ).'codemirror/codemirror.css');
@@ -48,12 +48,14 @@ function metabox_report_callback() {
     ?>
         <div>
             <div>
-            <label for="cp_sql">Запрос</label><br />
+            <label for="cp_sql"><strong>Запрос</strong></label><br />
             <textarea id="cp_sql" rows="7" cols="90" name="cp_sql"><?php echo $post->post_excerpt; // textarea_escaped ?></textarea>
+            <hr>
             </div>
             </div>
-            <label for="cp_parameters">Параметры отчета</label><br />
+            <label for="cp_parameters"><strong>Параметры отчета</strong></label><br />
             <textarea id="cp_parameters" rows="7" cols="90" name="datatable_parameters"><?php echo get_post_meta($post->ID, 'datatable', true) ?></textarea>
+            <hr>
             </div>
         </div>
         <script>
