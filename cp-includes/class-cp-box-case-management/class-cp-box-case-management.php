@@ -798,7 +798,9 @@ class CP_Render_Fields {
             </div>
             <script type="text/javascript">
                 (function($) {
-
+					$("#cp_case_category_select").change(function(){
+						$("#cp_field_case_category_edit").show();
+                    });
                     $("#cp_field_case_category_button_save").click(function(){
                         //alert("!!!");
                         
