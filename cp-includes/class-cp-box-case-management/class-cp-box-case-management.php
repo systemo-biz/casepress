@@ -661,7 +661,7 @@ class CP_Case_Management {
         
         //check right post type
 		global $post;
-        if ($post && !($post->post_type == 'cases')) return;
+        if (! isset($post) or $post->post_type != 'cases') return true;
         
         wp_enqueue_script( 'select2' );
         wp_enqueue_style( 'select2' );
