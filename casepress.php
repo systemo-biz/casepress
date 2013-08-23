@@ -26,7 +26,7 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
-include_once 'cp-includes/github-updater/github-updater.php';
+//include_once 'cp-includes/github-updater/github-updater.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
@@ -39,5 +39,11 @@ function cp_deactivation() {
 	do_action( 'cp_deactivate' );
 	flush_rewrite_rules(false);
 }
+
+require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
+$ExampleUpdateChecker = new PluginUpdateChecker(
+	'https://raw.github.com/casepress-studio/casepress/master/info.json',
+	__FILE__
+);
 
 ?>
