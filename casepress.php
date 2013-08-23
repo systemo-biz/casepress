@@ -6,7 +6,7 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: b20130823-02
+  Version: b20130823-03
 */
 
 //include_once 'cp-includes/restrict-access.php';
@@ -26,7 +26,6 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
-//include_once 'cp-includes/github-updater/github-updater.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
@@ -40,6 +39,10 @@ function cp_deactivation() {
 	flush_rewrite_rules(false);
 }
 
+
+/*
+Add function for chek update from GitHub
+*/
 require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
 $ExampleUpdateChecker = new PluginUpdateChecker(
 	'https://raw.github.com/casepress-studio/casepress/master/info.json',
