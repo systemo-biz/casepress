@@ -2,9 +2,9 @@
     "name" : "CasePress",
     "slug" : "casepress",
     "homepage" : "http://casepress.org",
-    "download_url" : "https://github.com/casepress-studio/casepress/archive/b20130823-01.zip",
+    "download_url" : "https://github.com/casepress-studio/casepress/archive/b20130823-02.zip",
     
-    "version" : "b20130823-01",
+    "version" : "b20130823-02",
     "requires" : "3.0",
     "tested" : "3.5",
     "last_updated" : "2012-10-29 11:09:00",
