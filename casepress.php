@@ -26,6 +26,7 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
+include_once 'cp-includes/github-updater/github-updater.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {

@@ -1,0 +1,22 @@
+{
+name: "CasePress",
+slug: "casepress",
+homepage: "http://casepress.org",
+download_url: "https://github.com/casepress-studio/casepress/archive/master.zip",
+version: "0.5",
+requires: "3.0",
+tested: "3.5",
+last_updated: "2012-10-29 11:09:00",
+upgrade_notice: "Here's why you should upgrade...",
+author: "Janis Elsts",
+author_homepage: "http://w-shadow.com/",
+sections: {
+description: "(Required) Plugin description. Basic HTML can be used in all sections.",
+installation: "(Recommended) Installation instructions.",
+changelog: "(Recommended) Changelog. <p>This section will be opened by default when the user clicks 'View version XYZ information'.</p>",
+custom_section: "This is a custom section labeled 'Custom Section'."
+},
+rating: 90,
+num_ratings: 123,
+downloaded: 1234
+}
