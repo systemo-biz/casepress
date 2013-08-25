@@ -171,7 +171,7 @@ function cases_insert_user(){
 		if ($added_id == 1) {echo "Ошибка код - 1, свяжитесь с администратором!"; die();}
 		add_user_meta($added_id, 'id_person',$linked_post_id);
 		add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-		wp_mail( $new_user_mail, 'Регистрация на сайте '.get_option('siteurl'), 'Добро пожаловать на сайт <a href="'. get_option('siteurl') .'">' . get_option('blogname') .'</a>. Ваш логин:'.$new_user_name.', пароль:'.$new_user_pass.', email: ' . $new_user_mail);
+		wp_new_user_notification($added_id, $user_data["user_pass"]);
 		echo "Пользователь успешно добавлен!";
 		die();
 	} 
