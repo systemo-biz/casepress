@@ -10,10 +10,6 @@ include_once 'post_types/add_organizations.php';
 include_once 'post_types/add_persons.php';
 include_once 'post_types/add_life_cycle.php';
 
-//include_once 'taxs/tax_functions.php';
-
-
-//include_once 'taxs/tax_reports_category.php';
 include_once 'taxs/tax_state.php';
 include_once 'taxs/tax_results.php';
 include_once 'taxs/tax_functions.php';
