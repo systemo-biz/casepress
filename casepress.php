@@ -27,6 +27,7 @@ include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
 include_once 'cp-includes/search-in-id/search-in-id.php';
+include_once 'cp-includes/meta-organizations/meta-organizations.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
