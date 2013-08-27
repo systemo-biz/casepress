@@ -396,13 +396,14 @@ class CP_Case_Management {
 
 			$post_id = $_REQUEST['case_id'];
             $post_parent = $_REQUEST['cp_post_parent'];
-
-            wp_update_post(
-				array(
-					'ID' => $post_id, 
-					'post_parent' => $post_parent
-				)
-			);
+			if ($post_parent > 0) {
+				wp_update_post(
+					array(
+						'ID' => $post_id, 
+						'post_parent' => $post_parent
+					)
+				);
+			}
 			
             $out = array();
 
@@ -569,19 +570,62 @@ class CP_Case_Management {
             $append = false;
             wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
         }
-        
+		
+		 /** Save date end
+         * field name: cp_date_end
+         */
+		if (isset($_REQUEST['cp_date_end'])) {
+            $key = 'cp_date_end';
+            $timestamp = strtotime($_REQUEST['cp_date_end']);
+
+            if ($timestamp > 0) {
+                $value = date('Y-m-d H:i:s', $timestamp);
+    			update_post_meta( $post_id, $key, $value);
+            }
+                         
+        }	
+		/*
+         * save result
+         */
+		if (isset($_REQUEST['cp_case_result'])) {
+            $term = $_REQUEST['cp_case_result'];
+            $taxonomy = "results";
+            $append = false;
+            wp_set_post_terms( $post_id, $term, $taxonomy, $append );
+        }
+		
+        /*
+         * save deadline
+         */
+        if (isset($_REQUEST['cp_date_deadline'])) {
+			$key = 'cp_date_deadline';
+            $timestamp = strtotime($_REQUEST['cp_date_deadline']);
+                    
+            if ($timestamp > 0) {
+                if (date('H:i:s', $timestamp) == "00:00:00") $timestamp = $timestamp + 86399;
+                $value = date('Y-m-d H:i:s', $timestamp);
+    			update_post_meta( $post_id, $key, $value);
+            }
+        }
+		
         /*
          * Field "Post Parent"
          */
-/*		if (isset($_REQUEST['cp_case_post_parent']) && $_REQUEST['cp_case_post_parent'] != '') {
+		// infinity loop  fixed
+		if (isset($_REQUEST['cp_case_post_parent'])) {
 
             $post_parent = trim( $_REQUEST['cp_case_post_parent'] );
-
-            wp_update_post(array(
-				'ID' => $post_id, 
-				'post_parent' => $post_parent
-			));	
-        } */
+			if ($post_parent > 0 && $post->post_parent != $post_parent){
+			//unhook
+				remove_action( 'save_post', array($this, 'save_data_post'), 9);
+				wp_update_post(array(
+					'ID' => $post_id, 
+					'post_parent' => $post_parent
+				));	
+			//rehook
+				add_action( 'save_post', array($this, 'save_data_post'), 9);
+			}
+        } 
 		        
         /*
          * Field "Members"
