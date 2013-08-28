@@ -34,7 +34,8 @@
 				
 				// DataTable
 				//if(function_exists('datatable_generator')) datatable_generator(array());
-                    $ctmeta_datable_params['fields'] = 'ID:link, post_title:link, member_from-cp-posts-sql:post, responsible-cp-posts-sql:post, cp_date_deadline:date, state:tax, functions:tax';
+                   // $ctmeta_datable_params['fields'] = 'ID:link, post_title:link, member_from-cp-posts-sql:post, responsible-cp-posts-sql:post, cp_date_deadline:date, state:tax, functions:tax';
+					$ctmeta_datable_params['fields'] = 'ID:link, post_title:link, prioritet, member_from-cp-posts-sql:post, responsible-cp-posts-sql:post, cp_date_deadline:date, state:tax, results:tax, post_date, functions:tax';
                     $ctmeta_datable_params['titles'] = 'post_title:Дело, member_from-cp-posts-sql:От, responsible-cp-posts-sql:Ответственный, cp_date_deadline:Срок';
                     if ( function_exists( 'datatable_generator' ) )
                         datatable_generator( $ctmeta_datable_params );
