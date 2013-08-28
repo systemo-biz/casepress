@@ -36,7 +36,7 @@
 //			$ctmeta_datable_params = ( array ) ( function_exists( 'ctmeta_get_formatted_datatable_params' ) && ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) ) ? ctmeta_get_formatted_datatable_params( 'ctmeta_datatable_params', 'functions', $term->term_id ) : array(
 //				'fields' => 'ID:int, post_title:link, initiator:post, responsible:post, prioritet:int, date_deadline:date, state:tax, functions:tax'
 //				);
-            $ctmeta_datable_params['fields'] = 'ID:link, post_title:link, prioritet, member_from-cp-posts-sql:post, responsible-cp-posts-sql:post, cp_date_deadline:date, results:tax, post_date, functions:tax';
+            $ctmeta_datable_params['fields'] = 'ID:link, post_title:link, prioritet, member_from-cp-posts-sql:post, responsible-cp-posts-sql:post, cp_date_deadline:date, state:tax, results:tax, post_date, functions:tax';
 			$ctmeta_datable_params['titles'] = 'post_title:Дело, member_from-cp-posts-sql:От, responsible-cp-posts-sql:Ответственный, cp_date_deadline:Срок';
             $ctmeta_datable_params['class'] = 'tax-open';
 			$ctmeta_datable_params['tax'] = 'functions:' . $term->term_id;
