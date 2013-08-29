@@ -383,6 +383,14 @@ class CP_Case_Management {
             $append = false;
             wp_set_post_terms( $post_id, $term, $taxonomy, $append );
             
+			$key = 'cp_date_end';
+				
+			if ($term > -1){
+				$value = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
+    			update_post_meta( $post_id, $key, $value);
+			} else {
+				delete_post_meta( $post_id, $key);
+			}
 
             echo $term;
             exit;
@@ -584,6 +592,7 @@ class CP_Case_Management {
             }
                          
         }	
+		
 		/*
          * save result
          */
@@ -592,6 +601,14 @@ class CP_Case_Management {
             $taxonomy = "results";
             $append = false;
             wp_set_post_terms( $post_id, $term, $taxonomy, $append );
+			if (!get_post_meta( $post_id, 'cp_date_end', true) && $term > -1){
+
+				$value = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
+    			update_post_meta( $post_id, $key, $value);
+			} 
+			if (get_post_meta( $post_id, 'cp_date_end', true) && $term == -1){ 
+				delete_post_meta( $post_id, $key);
+			}
         }
 		
         /*
