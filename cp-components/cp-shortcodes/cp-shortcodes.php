@@ -3,26 +3,30 @@
 	 * Functions Action Box
 	 */
 	function actions_box_shortcode(){
-		if(is_tax( 'functions' ) || is_singular('cases')){ 	
+		if(is_tax('functions') || is_singular('cases') || is_post_type_archive('cases')){ 	
 			$return = '<ul class="actions_box">';	
-			if (!is_singular('cases')){
-				global $wp_query;
-				$queried_object = get_queried_object();
-				$term_id = $queried_object->term_id; 
+			if (is_post_type_archive('cases')){
+				$return .= '<li><a href="http://cp.casepress.org/wp-admin/post-new.php?post_type=cases">Добавить задачу</a></li>';  
 			}else{
-				global $post;
-				$terms = get_the_terms( $post->id, 'functions' );
-				if (is_array($terms)) $term = array_shift($terms);
-				$term_id = $term->term_id;
-			}
-			if (is_numeric($term_id) && $term_id > 0){
-				$return .= '<li><a href="http://cp.casepress.org/wp-admin/post-new.php?post_type=cases&case_category_id='. $term_id .'">Добавить задачу</a></li>';  
+				if (!is_singular('cases')){
+					global $wp_query;
+					$queried_object = get_queried_object();
+					$term_id = $queried_object->term_id; 
+				}else{
+					global $post;
+					$terms = get_the_terms( $post->id, 'functions' );
+					if (is_array($terms)) $term = array_shift($terms);
+					$term_id = $term->term_id;
+				}
+				if (is_numeric($term_id) && $term_id > 0){
+					$return .= '<li><a href="http://cp.casepress.org/wp-admin/post-new.php?post_type=cases&case_category_id='. $term_id .'">Добавить задачу</a></li>';  
+				}
 			}
 		}
 		if (is_singular('cases')){
 			$return .= '<li><a href="http://cp.casepress.org/wp-admin/post-new.php?post_type=cases&case_parent_id='. get_the_ID() .'">Добавить подзадачу</a></li>';
 		}
-		if(is_tax( 'functions' ) || is_singular('cases')){ 
+		if(is_tax('functions') || is_singular('cases') || is_post_type_archive('cases')){ 
 			$return .= '</ul>';
 		}
 		return $return;
