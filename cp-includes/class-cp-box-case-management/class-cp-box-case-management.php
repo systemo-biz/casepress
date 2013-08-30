@@ -17,6 +17,7 @@ class CP_Case_Management {
         add_action( 'post_submitbox_start', array($this, 'form_actions_case_parameters_render') );
         add_action( 'cp_entry_content_before', array($this, 'form_case_members_render_to_site'));
         add_action( 'case-sidebar', array($this, 'form_case_parameters_render_to_site'));
+		add_action( 'added_term_relationship', array($this, 'auto_set_date_end'), 10, 2);
 
         //load and save data
         add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
@@ -383,14 +384,14 @@ class CP_Case_Management {
             $append = false;
             wp_set_post_terms( $post_id, $term, $taxonomy, $append );
             
-			$key = 'cp_date_end';
+		/*	$key = 'cp_date_end';
 				
 			if ($term > -1){
 				$value = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
     			update_post_meta( $post_id, $key, $value);
 			} else {
 				delete_post_meta( $post_id, $key);
-			}
+			}*/
 
             echo $term;
             exit;
@@ -601,14 +602,14 @@ class CP_Case_Management {
             $taxonomy = "results";
             $append = false;
             wp_set_post_terms( $post_id, $term, $taxonomy, $append );
-			if (!get_post_meta( $post_id, 'cp_date_end', true) && $term > -1){
+		/*	if (!get_post_meta( $post_id, 'cp_date_end', true) && $term > -1){
 
 				$value = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
     			update_post_meta( $post_id, $key, $value);
 			} 
 			if (get_post_meta( $post_id, 'cp_date_end', true) && $term == -1){ 
 				delete_post_meta( $post_id, $key);
-			}
+			}*/
         }
 		
         /*
