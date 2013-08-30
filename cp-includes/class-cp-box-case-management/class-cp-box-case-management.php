@@ -1643,8 +1643,12 @@ class CP_Automaton_Case {
     }
     
     function auto_del_date_end($object_id, $tt_id) {
-        //
-    }
+	
+		$post_id = $object_id;
+		$key = 'cp_date_end';
+		
+        delete_post_meta($post_id, $key);
+	}
 }
 
 $TheCP_Automaton_Case = new CP_Automaton_Case;
