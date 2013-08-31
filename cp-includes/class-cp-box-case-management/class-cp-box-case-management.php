@@ -330,7 +330,7 @@ class CP_Case_Management {
             $elements[] = array(
                 'id' => $member_id,
                 'title' => $post_member->post_title
-                );			
+                );
         }
 
         echo json_encode($elements);
