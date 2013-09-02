@@ -44,7 +44,7 @@
       <?php echo_datatable_head($fields)?>
     </thead>
     <tfoot>
-      <?php echo_datatable_foot($fields)?>
+      <?php //echo_datatable_foot($fields)?>
     </tfoot>
     <tbody>
       <?php foreach($posts as $p) echo_datatable_row($fields, $p)?>
