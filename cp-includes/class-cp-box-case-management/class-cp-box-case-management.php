@@ -797,7 +797,7 @@ class CP_Render_Fields {
         ?>
         <div id="cp_case_category_div">
             
-            <label for="cp_case_category_select">Категория дела</label>
+            <label class="cp_label" for="cp_case_category_select">Категория дела</label>
             <?php
             $case_category_id = '0';
             
@@ -870,7 +870,7 @@ class CP_Render_Fields {
 		?>
 		
 		<div id="cp_case_post_parent_div">
-			<label id="cp_case_post_parent_input_label" for="cp_case_post_parent_input">Основание</label>
+			<label class="cp_label" id="cp_case_post_parent_input_label" for="cp_case_post_parent_input">Основание</label>
 			<span id="cp_case_post_parent_view" class="cp_forms">
 			<?php // echo $out; ?>
 			</span>
@@ -1007,7 +1007,7 @@ class CP_Render_Fields {
 
         ?>
         <div id="cp_date_end_div" <?php //echo $hide; ?>>
-            <label for="cp_date_end_input" id="cp_field_date_end_label">Дата завершения:</label>
+            <label class="cp_label" for="cp_date_end_input" id="cp_field_date_end_label">Дата завершения:</label>
             <span id="cp_field_date_end_view" class="cp_forms"><?php echo $date_end ?></span>
             <div id="cp_field_date_end_edit" style="display: none">
                 <input type="datetime-local" id="cp_date_end_input" name="cp_date_end" class="cp_full_width cp_input_datepicker" value="<?php echo $value ?>"/>
@@ -1066,7 +1066,7 @@ class CP_Render_Fields {
 
         ?>
         <div id="cp_prioritet_div"  <?php //echo $hide; ?>>
-            <label for="cp_prioritet_select">Приоритет</label><br/>
+            <label class="cp_label" for="cp_prioritet_select">Приоритет</label><br/>
             <select id="cp_prioritet_select" name="cp_prioritet">
                 <option <?php if($value=="") echo "selected='selected'" ?> >Без приоритета</option>
                 <option <?php if($value=="1") echo "selected='selected'" ?> value="1">Критичный</option>
@@ -1092,7 +1092,7 @@ class CP_Render_Fields {
         } else $case_result_id = '0';
         ?>    
         <div id="cp_field_result_div">
-            <label for="cp_field_result_select">Результат</label>
+            <label for="cp_field_result_select" class="cp_label">Результат</label>
                 <?php
                 wp_dropdown_categories( array(
                     'name' => 'cp_case_result',
@@ -1156,7 +1156,7 @@ class CP_Render_Fields {
         ?>
             <div class="cp_field">
                             <p>
-                                <label id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
+                                <label class="cp_label" id="cp_case_responsible_label" for="cp_case_responsible_input" onclick="">Ответственный</label>
 								<span id="cp_case_responsible_view" class="cp_forms">
 								<?php // echo $out; ?>
 								</span>
@@ -1285,7 +1285,7 @@ class CP_Render_Fields {
         ?>
             <div class="cp_field">
                 <p>
-                    <label for="cp_case_members_input" id="cp_case_members_label">Участники</label>
+                    <label for="cp_case_members_input" id="cp_case_members_label class="cp_label"">Участники</label>
 					<span id="cp_case_members_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
 						<?php // echo $out; ?>
 					</span>
@@ -1422,7 +1422,7 @@ class CP_Render_Fields {
         ?>
             <div class="cp_field">
                     <p>
-                            <label for="cp_member_from_input" id="cp_member_from_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
+                            <label for="cp_member_from_input" id="cp_member_from_label" class="cp_label" title="Указываем инициатора дела (задачи, сообщения, приказа ...)">От кого</label>
 							<span id="cp_member_from_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
 							<?php // echo $out; ?>
 							</span>
@@ -1566,7 +1566,7 @@ class CP_Render_Fields {
 
         ?>
         <div id="cp_field_date_deadline_div" >
-                <label for="cp_field_date_deadline_input" class="cp_forms" id="cp_field_date_deadline_label">Срок:</label>
+                <label for="cp_field_date_deadline_input" class="cp_forms cp_label" id="cp_field_date_deadline_label">Срок:</label>
                 <span id="cp_field_date_deadline_view" class="cp_forms"><?php echo $date_deadline?></span>
                 <div id="cp_field_date_deadline_edit" style="display: none">
                     <div id="cp_field_date_deadline_edit_input">
