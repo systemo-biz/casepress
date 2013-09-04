@@ -1625,19 +1625,24 @@ class CP_Automaton_Case {
     }
 	function auto_set_date_end($object_id, $tt_id){
         //post
+
         $post_id = $object_id;
         $key = 'cp_date_end';
         $value = current_time("mysql");//date("Y-m-d H:i:s");
-			
-        
-        //receipt of the term and on-condition
+
         $field="id";
         $taxonomy = "results";
-        $term = get_term_by( $field, $tt_id, $taxonomy);
+		
+        $terms = get_terms('results', 'hide_empty=0');//get_term_by( $field, $tt_id, $taxonomy );
+		foreach ($terms as $term){
+			if ($term->term_taxonomy_id == $tt_id){
+				$this_term = get_term_by( $field, $term->term_id, $taxonomy );
+			}
+		}
 
         $current_date_end = get_post_meta($post_id, $key, true);
-        
-        if (is_object($term) && $term->taxonomy === "results" && !($current_date_end > 0)){
+
+        if (is_object($this_term) && $this_term->taxonomy === "results" && !($current_date_end > 0)){
                 update_post_meta( $post_id, $key, $value);
         }
     }
