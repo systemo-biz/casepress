@@ -1285,7 +1285,7 @@ class CP_Render_Fields {
         ?>
             <div class="cp_field">
                 <p>
-                    <label for="cp_case_members_input" id="cp_case_members_label class="cp_label"">Участники</label>
+                    <label for="cp_case_members_input" id="cp_case_members_label" class="cp_label">Участники</label>
 					<span id="cp_case_members_view" class="cp_forms" <?php  if (is_admin()) echo 'style="display: none"' ?>>
 						<?php // echo $out; ?>
 					</span>
