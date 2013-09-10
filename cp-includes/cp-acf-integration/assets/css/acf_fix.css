@@ -2,12 +2,11 @@
 .radio input[type="radio"], .checkbox input[type="checkbox"]
 {
 float: none;
-margin-left: 0;
+margin-left: 0!important;
 }
 
 ul.radio_list.horizontal li {
 float: none;
-
 }
 
 .label, .badge {
@@ -17,14 +16,13 @@ text-transform:capitalize!important;
 
 ul.acf-radio-list {
 	padding: 0!important;
-	margin: 0 0 9px 25px!important;
 	overflow: visible!important;
 	list-style: none;
 }
 
 ul.checkbox_list {
 	margin: 0 0 9px 25px!important;
-	list-style: none;*/
+	list-style: none;
 }
 
 .widefat {
