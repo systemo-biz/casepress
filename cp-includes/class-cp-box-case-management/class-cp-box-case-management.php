@@ -448,11 +448,16 @@ class CP_Case_Management {
                 if (date('H:i:s', $timestamp) == "00:00:00") $timestamp = $timestamp + 86399;
                 $value = date('Y-m-d H:i:s', $timestamp);
     			update_post_meta( $post_id, $key, $value);
-            }
+            } else {
+				delete_post_meta( $post_id, $key );
+			}
             
             $date_deadline = get_post_meta($post_id, $key, true);
             $date_deadline = strtotime($date_deadline);
-            $date_deadline = date('d.m.Y', $timestamp);
+			if ($timestamp > 0) {
+				$date_deadline = date('d.m.Y', $date_deadline);}
+			else {
+				$date_deadline = '';}
             echo $date_deadline;
             exit;
         }
