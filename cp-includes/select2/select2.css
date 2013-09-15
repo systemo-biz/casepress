@@ -564,7 +564,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-search-choice-close {
-    display: block;
+    display: block !important;
     width: 12px;
     height: 13px;
     position: absolute;
