@@ -42,7 +42,7 @@ function model_process() {
 		'capability_type'     => 'page',
 	);
 	register_post_type( 'process', $args );
-
+    register_taxonomy_for_object_type( 'results', 'process' );
 }
 
 // Hook into the 'init' action
