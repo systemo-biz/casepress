@@ -1,24 +1,24 @@
 <?php
 /**
- * Plugin Update Checker Library 1.2
+ * Plugin Update Checker Library 1.3.1
  * http://w-shadow.com/
  * 
- * Copyright 2012 Janis Elsts
+ * Copyright 2013 Janis Elsts
  * Licensed under the GNU GPL license.
  * http://www.gnu.org/licenses/gpl.html
  */
 
-if ( !class_exists('PluginUpdateChecker') ):
-	
+if ( !class_exists('PluginUpdateChecker_1_3_1') ):
+
 /**
  * A custom plugin update checker. 
  * 
  * @author Janis Elsts
- * @copyright 2012
- * @version 1.2
+ * @copyright 2013
+ * @version 1.3.1
  * @access public
  */
-class PluginUpdateChecker {
+class PluginUpdateChecker_1_3_1 {
 	public $metadataUrl = ''; //The URL of the plugin's metadata file.
 	public $pluginFile = '';  //Plugin filename relative to the plugins directory.
 	public $slug = '';        //Plugin slug.
@@ -77,16 +77,29 @@ class PluginUpdateChecker {
 
 		add_filter('plugin_row_meta', array($this, 'addCheckForUpdatesLink'), 10, 4);
 		add_action('admin_init', array($this, 'handleManualCheck'));
-		add_action('admin_notices', array($this, 'displayManualCheckResult'));
+		add_action('all_admin_notices', array($this, 'displayManualCheckResult'));
 		
 		//Set up the periodic update checks
 		$this->cronHook = 'check_plugin_updates-' . $this->slug;
 		if ( $this->checkPeriod > 0 ){
 			
-			//Trigger the check via Cron
-			add_filter('cron_schedules', array($this, '_addCustomSchedule'));
-			if ( !wp_next_scheduled($this->cronHook) && !defined('WP_INSTALLING') ) {
+			//Trigger the check via Cron.
+			//Try to use one of the default schedules if possible as it's less likely to conflict
+			//with other plugins and their custom schedules.
+			$defaultSchedules = array(
+				1  => 'hourly',
+				12 => 'twicedaily',
+				24 => 'daily',
+			);
+			if ( array_key_exists($this->checkPeriod, $defaultSchedules) ) {
+				$scheduleName = $defaultSchedules[$this->checkPeriod];
+			} else {
+				//Use a custom cron schedule.
 				$scheduleName = 'every' . $this->checkPeriod . 'hours';
+				add_filter('cron_schedules', array($this, '_addCustomSchedule'));
+			}
+
+			if ( !wp_next_scheduled($this->cronHook) && !defined('WP_INSTALLING') ) {
 				wp_schedule_event(time(), $scheduleName, $this->cronHook);
 			}
 			add_action($this->cronHook, array($this, 'checkForUpdates'));
@@ -96,13 +109,20 @@ class PluginUpdateChecker {
 			//In case Cron is disabled or unreliable, we also manually trigger 
 			//the periodic checks while the user is browsing the Dashboard. 
 			add_action( 'admin_init', array($this, 'maybeCheckForUpdates') );
+
+			//Like WordPress itself, we check more often on certain pages.
+			add_action( 'load-update-core.php', array($this, 'maybeCheckForUpdates') );
 			
 		} else {
 			//Periodic checks are disabled.
 			wp_clear_scheduled_hook($this->cronHook);
 		}
 
-		add_action('plugins_loaded', array($this, 'initDebugBarPanel'));
+		if ( did_action('plugins_loaded') ) {
+			$this->initDebugBarPanel();
+		} else {
+			add_action('plugins_loaded', array($this, 'initDebugBarPanel'));
+		}
 	}
 	
 	/**
@@ -118,7 +138,7 @@ class PluginUpdateChecker {
 				'interval' => $this->checkPeriod * 3600, 
 				'display' => sprintf('Every %d hours', $this->checkPeriod),
 			);
-		}		
+		}
 		return $schedules;
 	}
 
@@ -177,7 +197,7 @@ class PluginUpdateChecker {
 		//Try to parse the response
 		$pluginInfo = null;
 		if ( !is_wp_error($result) && isset($result['response']['code']) && ($result['response']['code'] == 200) && !empty($result['body']) ){
-			$pluginInfo = PluginInfo::fromJson($result['body'], $this->debugMode);
+			$pluginInfo = PluginInfo_1_3::fromJson($result['body'], $this->debugMode);
 		} else if ( $this->debugMode ) {
 			$message = sprintf("The URL %s does not point to a valid plugin metadata file. ", $url);
 			if ( is_wp_error($result) ) {
@@ -193,12 +213,12 @@ class PluginUpdateChecker {
 		$pluginInfo = apply_filters('puc_request_info_result-'.$this->slug, $pluginInfo, $result);
 		return $pluginInfo;
 	}
-	
+
 	/**
 	 * Retrieve the latest update (if any) from the configured API endpoint.
-	 * 
+	 *
 	 * @uses PluginUpdateChecker::requestInfo()
-	 * 
+	 *
 	 * @return PluginUpdate An instance of PluginUpdate, or NULL when no updates are available.
 	 */
 	public function requestUpdate(){
@@ -208,7 +228,7 @@ class PluginUpdateChecker {
 		if ( $pluginInfo == null ){
 			return null;
 		}
-		return PluginUpdate::fromPluginInfo($pluginInfo);
+		return PluginUpdate_1_3::fromPluginInfo($pluginInfo);
 	}
 	
 	/**
@@ -237,11 +257,11 @@ class PluginUpdateChecker {
 			return null;
 		}
 	}
-	
+
 	/**
-	 * Check for plugin updates. 
+	 * Check for plugin updates.
 	 * The results are stored in the DB option specified in $optionName.
-	 * 
+	 *
 	 * @return PluginUpdate|null
 	 */
 	public function checkForUpdates(){
@@ -276,7 +296,8 @@ class PluginUpdateChecker {
 	}
 	
 	/**
-	 * Check for updates only if the configured check interval has already elapsed.
+	 * Check for updates if the configured check interval has already elapsed.
+	 * Will use a shorter check interval on certain admin pages like "Dashboard -> Updates".
 	 * 
 	 * @return void
 	 */
@@ -285,12 +306,19 @@ class PluginUpdateChecker {
 			return;
 		}
 		$state = $this->getUpdateState();
-		
+
+		//Check more often when the user visits Dashboard -> Updates.
+		if ( current_filter() == 'load-update-core.php' ) {
+			$timeout = 60;
+		} else {
+			$timeout = $this->checkPeriod * 3600;
+		}
+
 		$shouldCheck =
 			empty($state) ||
-			!isset($state->lastCheck) || 
-			( (time() - $state->lastCheck) >= $this->checkPeriod*3600 );
-		
+			!isset($state->lastCheck) ||
+			( (time() - $state->lastCheck) >= $timeout );
+
 		if ( $shouldCheck ){
 			$this->checkForUpdates();
 		}
@@ -302,9 +330,13 @@ class PluginUpdateChecker {
 	 * @return StdClass|null
 	 */
 	public function getUpdateState() {
-		$state = get_site_option($this->optionName);
-		if ( !empty($state) && isset($state->update) && !($state->update instanceof PluginUpdate) ){
-			$state->update = PluginUpdate::fromObject($state->update);
+		$state = get_site_option($this->optionName, null);
+		if ( empty($state) || !is_object($state)) {
+			$state = null;
+		}
+
+		if ( !empty($state) && isset($state->update) && is_object($state->update) ){
+			$state->update = PluginUpdate_1_3::fromObject($state->update);
 		}
 		return $state;
 	}
@@ -317,7 +349,7 @@ class PluginUpdateChecker {
 	 * @return void
 	 */
 	private function setUpdateState($state) {
-		if ( isset($state->update) && ($state->update instanceof PluginUpdate) ) {
+		if ( isset($state->update) && is_object($state->update) && method_exists($state->update, 'toStdClass') ) {
 			$update = $state->update; /** @var PluginUpdate $update */
 			$state->update = $update->toStdClass();
 		}
@@ -372,8 +404,12 @@ class PluginUpdateChecker {
 		if ( !empty($update) ) {
 			//Let plugins filter the update info before it's passed on to WordPress.
 			$update = apply_filters('puc_pre_inject_update-' . $this->slug, $update);
+			if ( !is_object($updates) ) {
+				$updates = new StdClass();
+				$updates->response = array();
+			}
 			$updates->response[$this->pluginFile] = $update->toWpFormat();
-		} else {
+		} else if ( isset($updates, $updates->response) ) {
 			unset($updates->response[$this->pluginFile]);
 		}
 
@@ -416,16 +452,23 @@ class PluginUpdateChecker {
 	 * @param array $pluginMeta Array of meta links.
 	 * @param string $pluginFile
 	 * @param array|null $pluginData Currently ignored.
-	 * @param string|null $status Currently ignored/
+	 * @param string|null $status Currently ignored.
 	 * @return array
 	 */
 	public function addCheckForUpdatesLink($pluginMeta, $pluginFile, $pluginData = null, $status = null) {
 		if ( $pluginFile == $this->pluginFile && current_user_can('update_plugins') ) {
-			$linkText = apply_filters('puc_manual_check_link-' . $this->slug, 'Check for updates');
 			$linkUrl = wp_nonce_url(
-				add_query_arg('puc_check_for_updates', $this->slug, admin_url('plugins.php')),
+				add_query_arg(
+					array(
+						'puc_check_for_updates' => 1,
+						'puc_slug' => $this->slug,
+					),
+					is_network_admin() ? network_admin_url('plugins.php') : admin_url('plugins.php')
+				),
 				'puc_check_for_updates'
 			);
+
+			$linkText = apply_filters('puc_manual_check_link-' . $this->slug, 'Check for updates');
 			if ( !empty($linkText) ) {
 				$pluginMeta[] = sprintf('<a href="%s">%s</a>', esc_attr($linkUrl), $linkText);
 			}
@@ -441,15 +484,21 @@ class PluginUpdateChecker {
 	 */
 	public function handleManualCheck() {
 		$shouldCheck =
-			   isset($_GET['puc_check_for_updates'])
-			&& $_GET['puc_check_for_updates'] == $this->slug
+			   isset($_GET['puc_check_for_updates'], $_GET['puc_slug'])
+			&& $_GET['puc_slug'] == $this->slug
 			&& current_user_can('update_plugins')
 			&& check_admin_referer('puc_check_for_updates');
 
 		if ( $shouldCheck ) {
 			$update = $this->checkForUpdates();
 			$status = ($update === null) ? 'no_update' : 'update_available';
-			wp_redirect(add_query_arg('puc_update_check_result', $status, admin_url('plugins.php')));
+			wp_redirect(add_query_arg(
+					array(
+					     'puc_update_check_result' => $status,
+					     'puc_slug' => $this->slug,
+					),
+					is_network_admin() ? network_admin_url('plugins.php') : admin_url('plugins.php')
+			));
 		}
 	}
 
@@ -460,7 +509,7 @@ class PluginUpdateChecker {
 	 * You can change the result message by using the "puc_manual_check_message-$slug" filter.
 	 */
 	public function displayManualCheckResult() {
-		if ( isset($_GET['puc_update_check_result']) ) {
+		if ( isset($_GET['puc_update_check_result'], $_GET['puc_slug']) && ($_GET['puc_slug'] == $this->slug) ) {
 			$status = strval($_GET['puc_update_check_result']);
 			if ( $status == 'no_update' ) {
 				$message = 'This plugin is up to date.';
@@ -552,20 +601,20 @@ class PluginUpdateChecker {
 		}
 	}
 }
-	
+
 endif;
 
-if ( !class_exists('PluginInfo') ):
+if ( !class_exists('PluginInfo_1_3') ):
 
 /**
  * A container class for holding and transforming various plugin metadata.
  * 
  * @author Janis Elsts
  * @copyright 2012
- * @version 1.0
+ * @version 1.3
  * @access public
  */
-class PluginInfo {
+class PluginInfo_1_3 {
 	//Most fields map directly to the contents of the plugin's info.json file.
 	//See the relevant docs for a description of their meaning.  
 	public $name;
@@ -622,7 +671,7 @@ class PluginInfo {
 			return null;
 		}
 		
-		$info = new PluginInfo();
+		$info = new self();
 		foreach(get_object_vars($apiResponse) as $key => $value){
 			$info->$key = $value;
 		}
@@ -675,7 +724,7 @@ class PluginInfo {
 	
 endif;
 
-if ( !class_exists('PluginUpdate') ):
+if ( !class_exists('PluginUpdate_1_3') ):
 
 /**
  * A simple container class for holding information about an available update.
@@ -685,7 +734,7 @@ if ( !class_exists('PluginUpdate') ):
  * @version 1.2
  * @access public
  */
-class PluginUpdate {
+class PluginUpdate_1_3 {
 	public $id = 0;
 	public $slug;
 	public $version;
@@ -705,9 +754,9 @@ class PluginUpdate {
 		//Since update-related information is simply a subset of the full plugin info,
 		//we can parse the update JSON as if it was a plugin info string, then copy over
 		//the parts that we care about.
-		$pluginInfo = PluginInfo::fromJson($json, $triggerErrors);
+		$pluginInfo = PluginInfo_1_3::fromJson($json, $triggerErrors);
 		if ( $pluginInfo != null ) {
-			return PluginUpdate::fromPluginInfo($pluginInfo);
+			return self::fromPluginInfo($pluginInfo);
 		} else {
 			return null;
 		}
@@ -732,7 +781,7 @@ class PluginUpdate {
 	 * @return PluginUpdate The new copy.
 	 */
 	public static function fromObject($object) {
-		$update = new PluginUpdate();
+		$update = new self();
 		foreach(self::$fields as $field){
 			$update->$field = $object->$field;
 		}
@@ -778,3 +827,112 @@ class PluginUpdate {
 }
 	
 endif;
+
+if ( !class_exists('PucFactory') ):
+
+/**
+ * A factory that builds instances of other classes from this library.
+ *
+ * When multiple versions of the same class have been loaded (e.g. PluginUpdateChecker 1.2
+ * and 1.3), this factory will always use the latest available version. Register class
+ * versions by calling {@link PucFactory::addVersion()}.
+ *
+ * At the moment it can only build instances of the PluginUpdateChecker class. Other classes
+ * are intended mainly for internal use and refer directly to specific implementations. If you
+ * want to instantiate one of them anyway, you can use {@link PucFactory::getLatestClassVersion()}
+ * to get the class name and then create it with <code>new $class(...)</code>.
+ */
+class PucFactory {
+	protected static $classVersions = array();
+	protected static $sorted = false;
+
+	/**
+	 * Create a new instance of PluginUpdateChecker.
+	 *
+	 * @see PluginUpdateChecker::__construct()
+	 *
+	 * @param $metadataUrl
+	 * @param $pluginFile
+	 * @param string $slug
+	 * @param int $checkPeriod
+	 * @param string $optionName
+	 * @return PluginUpdateChecker
+	 */
+	public static function buildUpdateChecker($metadataUrl, $pluginFile, $slug = '', $checkPeriod = 12, $optionName = '') {
+		$class = self::getLatestClassVersion('PluginUpdateChecker');
+		return new $class($metadataUrl, $pluginFile, $slug, $checkPeriod, $optionName);
+	}
+
+	/**
+	 * Get the specific class name for the latest available version of a class.
+	 *
+	 * @param string $class
+	 * @return string|null
+	 */
+	public static function getLatestClassVersion($class) {
+		if ( !self::$sorted ) {
+			self::sortVersions();
+		}
+
+		if ( isset(self::$classVersions[$class]) ) {
+			return reset(self::$classVersions[$class]);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Sort available class versions in descending order (i.e. newest first).
+	 */
+	protected static function sortVersions() {
+		foreach ( self::$classVersions as $class => $versions ) {
+			uksort($versions, array(__CLASS__, 'compareVersions'));
+			self::$classVersions[$class] = $versions;
+		}
+		self::$sorted = true;
+	}
+
+	protected static function compareVersions($a, $b) {
+		return -version_compare($a, $b);
+	}
+
+	/**
+	 * Register a version of a class.
+	 *
+	 * @access private This method is only for internal use by the library.
+	 *
+	 * @param string $generalClass Class name without version numbers, e.g. 'PluginUpdateChecker'.
+	 * @param string $versionedClass Actual class name, e.g. 'PluginUpdateChecker_1_2'.
+	 * @param string $version Version number, e.g. '1.2'.
+	 */
+	public static function addVersion($generalClass, $versionedClass, $version) {
+		if ( !isset(self::$classVersions[$generalClass]) ) {
+			self::$classVersions[$generalClass] = array();
+		}
+		self::$classVersions[$generalClass][$version] = $versionedClass;
+		self::$sorted = false;
+	}
+}
+
+endif;
+
+//Register classes defined in this file with the factory.
+PucFactory::addVersion('PluginUpdateChecker', 'PluginUpdateChecker_1_3_1', '1.3.1');
+PucFactory::addVersion('PluginUpdate', 'PluginUpdate_1_3', '1.3');
+PucFactory::addVersion('PluginInfo', 'PluginInfo_1_3', '1.3');
+
+/**
+ * Create non-versioned variants of the update checker classes. This allows for backwards
+ * compatibility with versions that did not use a factory, and it simplifies doc-comments.
+ */
+if ( !class_exists('PluginUpdateChecker') ) {
+	class PluginUpdateChecker extends PluginUpdateChecker_1_3_1 { }
+}
+
+if ( !class_exists('PluginUpdate') ) {
+	class PluginUpdate extends PluginUpdate_1_3 {}
+}
+
+if ( !class_exists('PluginInfo') ) {
+	class PluginInfo extends PluginInfo_1_3 {}
+}
