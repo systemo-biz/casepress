@@ -27,6 +27,7 @@ function gf_register_cases_posttype() {
 
   //add custom-fields, if it is enable
   if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
+  if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="excerpt";
       
   $args = array(
     'labels' => $labels,
