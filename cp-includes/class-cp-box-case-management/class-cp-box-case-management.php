@@ -455,7 +455,7 @@ class CP_Case_Management {
             $date_deadline = get_post_meta($post_id, $key, true);
             $date_deadline = strtotime($date_deadline);
 			if ($timestamp > 0) {
-				$date_deadline = date('d.m.Y', $date_deadline);}
+				$date_deadline = date('d.m.Y H:i', $date_deadline);}
 			else {
 				$date_deadline = '';}
             echo $date_deadline;
@@ -1564,8 +1564,8 @@ class CP_Render_Fields {
         $value = "";
         $date_deadline = "";
         if ($timestamp > 0) {
-            $value = date('Y-m-d', $timestamp);
-            $date_deadline = date('d.m.Y', $timestamp);
+            $value = date('Y-m-d\TH:i', $timestamp);
+            $date_deadline = date('d.m.Y H:i', $timestamp);
         }
         
 
@@ -1575,7 +1575,7 @@ class CP_Render_Fields {
                 <span id="cp_field_date_deadline_view" class="cp_forms"><?php echo $date_deadline?></span>
                 <div id="cp_field_date_deadline_edit" style="display: none">
                     <div id="cp_field_date_deadline_edit_input">
-                        <input type="date" id="cp_field_date_deadline_input" name="cp_date_deadline" class="cp_full_width cp_input_datepicker" value="<?php echo $value?>"/>
+                        <input type="datetime-local" id="cp_field_date_deadline_input" name="cp_date_deadline" class="cp_full_width cp_input_datepicker" value="<?php echo $value?>"/>
                     </div>  
                     <p>
                         <a href="#ok" id="cp_action_save_deadline" class="button">OK</a>
