@@ -22,7 +22,7 @@ function register_results_tax() {
 		'singular_label' 	=> 'Результат',
 		'public' 			=> false,
 		'show_ui' 			=> true,
-		'hierarchical' 		=> false,
+		'hierarchical' 		=> true,
 		'show_tagcloud' 	=> true,
 		'show_in_nav_menus' => true,
 		'rewrite' 			=> array('slug' => 'results', 'with_front' => false ),
