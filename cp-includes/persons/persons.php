@@ -16,6 +16,7 @@ class PersonPage {
 			// Define params
 			$params = array(
 				'fields' => 'ID:link, post_title:link, prioritet, client:serialize_org, post_date, functions:tax',
+				'titles' => 'post_title: Заголовок, prioritet: Приоритет, client: Клиент, post_date: Дата публикации, functions: Функции',
 				'tax' => 'results',
 				'meta' => $_POST['meta']
                 
@@ -48,8 +49,8 @@ class PersonPage {
 
     function load_ss() {
         global $post;
-        if (!(is_singular('persons'))) return;
         
+        if (!(is_singular('persons'))) return;
         wp_register_style( 'person-page-frontend', plugins_url( 'assets/css/frontend.css',__FILE__ ), false, "1", 'all' );
         wp_register_script( 'person-page-frontend', plugins_url( 'assets/js/frontend.js' ,__FILE__), array( 'jquery' ), '1', false );
 
