@@ -15,7 +15,7 @@ class PersonPage {
 		if ( ( isset( $_POST['meta'] ) && $_POST['meta'] ) && ( isset( $_POST['tax'] ) && $_POST['tax'] ) ) {
 			// Define params
 			$params = array(
-				'fields' => 'ID:link, post_title:link, prioritet, client:serialize_org, post_date, functions:tax',
+				'fields' => 'ID:link, post_title:link, prioritet, client, post_date, functions:tax',
 				'titles' => 'post_title: Заголовок, prioritet: Приоритет, client: Клиент, post_date: Дата публикации, functions: Функции',
 				'tax' => 'results',
 				'meta' => $_POST['meta']
