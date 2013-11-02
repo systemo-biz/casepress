@@ -21,6 +21,9 @@ class cp_notification_for_basic_comments {
         //add plan function
         add_action('cp_email_notification', array($this, 'email_notifications_for_users'));
         
+        add_action('cp_activate', array($this, 'activate'));
+		
+        add_action('cp_deactivate', array($this, 'deactivate'));
 
     }
     
@@ -97,7 +100,6 @@ class cp_notification_for_basic_comments {
     
 
     function send_email($user_id, $comment) {
-        //error_log('user2: '.$user_id);
         
         $user = get_userdata($user_id);
         $post = get_post($comment->comment_post_ID);
@@ -138,13 +140,11 @@ $args = array(
     $comments = get_comments($args);
     echo '<table class="table"><tr><th class="noty_th">Событие:</th><th>Содержание:</th><th>Дата:</th></tr>';
     
-    //if (($atts['id'] != 0) && ($atts['id'] != false)) $user_id = $atts['id'];
-    //$results = $wpdb->get_results("SELECT * FROM `".$this->deliver_table."` WHERE `user_id` = ".$user_id." ORDER BY `deliver_id` DESC");
     if ($comments){
         foreach ($comments as $comment){                
             echo "<tr>";
             //$event = $wpdb->get_results("SELECT * FROM `" . $this->events_table . "` WHERE `event_id` = ".$result->event_id);
-            echo "<td class='noty_td'>Комментарий</td>";                
+            echo "<td class='noty_td'><a href='".get_permalink($comment->comment_post_ID)."'>#".$comment->comment_post_ID.": ".get_the_title($comment->comment_post_ID)."</a></td>";                
             echo "<td class='noty_td'>".$comment->comment_content."</td>";
             echo "<td class='noty_td'>".$comment->comment_date."</td>";
             echo "<tr/>";
@@ -154,31 +154,3 @@ $args = array(
 }
 
 add_shortcode('notifies', 'list_notifies');
-
-
-//add 15 sec interval for wp cron
-add_filter( 'cron_schedules', 'cron_add_15sec'); 
-
-if ( is_admin() ) {
-    register_activation_hook(__FILE__, 'activate' );
-    register_deactivation_hook(__FILE__, 'deactivate' );
-}
-
-    
-/*Activation and deactivation plugin*/
-function deactivate(){
-    wp_clear_scheduled_hook('cp_email_notification');
-}
-
-function activate(){
-    wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
-}
-
-function cron_add_15sec(){
-    // Adds once weekly to the existing schedules.  
-    $schedules['seconds15'] = array(  
-        'interval' => 15,  
-        'display' => __( 'Once in 15 sec' )
-    );  
-    return $schedules;
-}

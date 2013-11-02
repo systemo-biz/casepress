@@ -6,7 +6,7 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: b20131001-01
+  Version: b20131001-02
 */
 
 //include_once 'cp-includes/restrict-access.php';
@@ -52,4 +52,38 @@ $ExampleUpdateChecker = new PluginUpdateChecker(
 	__FILE__
 );
 
-?>
+
+if ( is_admin() ) {
+    register_activation_hook(__FILE__, 'activate' );
+    register_deactivation_hook(__FILE__, 'deactivate' );
+}
+
+
+    
+/*Activation and deactivation plugin*/
+function deactivate(){
+    wp_clear_scheduled_hook('cp_email_notification');
+}
+
+function activate(){
+    wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
+}
+
+
+//add 15 sec interval for wp cron
+add_filter( 'cron_schedules', 'cron_add_15sec'); 
+
+if ( is_admin() ) {
+    register_activation_hook(__FILE__, 'activate' );
+    register_deactivation_hook(__FILE__, 'deactivate' );
+}
+
+
+function cron_add_15sec(){
+
+    $schedules['seconds15'] = array(  
+        'interval' => 15,  
+        'display' => __( 'Once in 15 sec' )
+    );  
+    return $schedules;
+}
