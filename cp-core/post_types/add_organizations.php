@@ -48,26 +48,4 @@ function register_organizations_posttype() {
 	 );
 	register_post_type('organizations',$args);
 }
-
-/*
-add_action('init', 'organizations_rewrite');
-function organizations_rewrite() {
-	global $wp_rewrite;
-	$wp_rewrite->add_rewrite_tag('%organizations_id%', '([^/]+)', 'post_type=organizations&p=');
-	$wp_rewrite->add_permastruct('organizations', '/organizations/%organizations_id%', false);
-	$wp_rewrite->flush_rules();
-}
-
-add_filter('post_type_link', 'organizations_permalink', 1, 3);
-function organizations_permalink($post_link, $leavename, $sample) {
-	global $wp_rewrite;
-	$post = &get_post($id);
-	if (is_wp_error($post)) return $post;
-	$newlink = $wp_rewrite->get_extra_permastruct('organizations');
-	$newlink = str_replace('%organizations_id%', $post->ID, $newlink);
-	$newlink = home_url(user_trailingslashit($newlink));
-	if(get_post_type() == 'organizations'){return $newlink;} else {return $post_link;}
-}
-*/
-
 ?>

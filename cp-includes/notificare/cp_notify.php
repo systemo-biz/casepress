@@ -34,10 +34,10 @@ class cp_notification_for_basic_comments {
         
         //get post ID and $post
         $post_id = $comment->comment_post_ID;
-        $post = get_post( $post_id );
+        $r = get_post( $post_id );
         
         //it is cases?
-        if ( $post->post_type != 'cases') return;
+        if ( $r->post_type != 'cases') return;
         
         //add tag for plan email
         add_comment_meta($comment_id, 'email_notify', 0);
@@ -102,12 +102,12 @@ class cp_notification_for_basic_comments {
     function send_email($user_id, $comment) {
         
         $user = get_userdata($user_id);
-        $post = get_post($comment->comment_post_ID);
+        $r = get_post($comment->comment_post_ID);
         
         $author = get_userdata( $comment->user_id);
         
         $msg = array();
-        $msg['subject'] = $post->post_title.' ['.$post->ID.']';
+        $msg['subject'] = $r->post_title.' ['.$r->ID.']';
         $msg['text'] = '<p>Пользователь <a href="' .$author->user_url. '">'.$author->display_name.'</a> добавил(а) комментарий:</p><hr>';
         $msg['text'] .= '<div>'.$comment->comment_content.'</div>';
         $msg['text'] .= '<hr>';

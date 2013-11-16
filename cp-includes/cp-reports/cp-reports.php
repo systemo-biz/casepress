@@ -99,8 +99,8 @@ function save_report ( $post_id ) {
     
     
 	// теперь также проверим тип записи	
-	$post = get_post($post_id);
-	if ($post->post_type == 'report') { // укажите собственный
+	$r = get_post($post_id);
+	if ($r->post_type == 'report') { // укажите собственный
         
    		remove_action('save_post', 'save_report');
 		// update the post, which calls save_post again

@@ -72,10 +72,10 @@ function remove_cases_metabox() {
 
 add_filter('post_type_link', 'gf_fix_permalink', 1, 2);
 function gf_fix_permalink( $post_link, $id = 0 ) {
-  $post = get_post($id);
-  if(is_wp_error($post) || $post->post_type != 'cases') return $post_link;
-  empty($post->slug) and $post->slug = sanitize_title_with_dashes($post->post_title);
-  return home_url(user_trailingslashit("cases/$post->ID"));
+  $r = get_post($id);
+  if(is_wp_error($r) || $r->post_type != 'cases') return $post_link;
+  empty($r->slug) and $r->slug = sanitize_title_with_dashes($r->post_title);
+  return home_url(user_trailingslashit("cases/$r->ID"));
 } 
 
 function gf_cases_flush_rules(){

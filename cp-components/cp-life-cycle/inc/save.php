@@ -7,9 +7,9 @@
 	 */
 	function lfc_save_meta( $post_id ) {
 		// Prepare data
-		$post = get_post( $post_id );
+		$r = get_post( $post_id );
 		// Check post type
-		if ( $post->post_type !== 'life_cycle' )
+		if ( $r->post_type !== 'life_cycle' )
 			return $post_id;
 		delete_post_meta($post_id, 'cp_posts_life_cycle_case_category');
 		// Save fields for functions
