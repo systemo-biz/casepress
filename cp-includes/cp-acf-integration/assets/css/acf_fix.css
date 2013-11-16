@@ -5,6 +5,10 @@ float: none;
 margin-left: 0!important;
 }
 
+form.acf-form .label {
+text-transform: none;
+}
+
 ul.radio_list.horizontal li {
 float: none;
 }
