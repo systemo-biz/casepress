@@ -21,12 +21,12 @@ function register_objects_posttype() {
 	$supports = array(
 		'title',
 		'editor',
-//		'author',
-//		'thumbnail',
+		'author',
+		'thumbnail',
 //		'excerpt',
 //		'custom-fields',
 		'comments',
-//		'revisions',
+		'revisions',
 //		'post-formats',
 		'page-attributes'
 	);

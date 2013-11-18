@@ -1653,11 +1653,14 @@ class CP_Automaton_Case {
     }
     
     function auto_del_date_end($object_id, $tt_id) {
-	
-		$post_id = $object_id;
-		$key = 'cp_date_end';
 		
-        delete_post_meta($post_id, $key);
+        //get list terms from tax 'results' and find term deleted by taxonomy id
+        
+        $terms = get_terms('results', 'hide_empty=0');
+        foreach ($terms as $term){
+			if ($term->term_taxonomy_id == $tt_id[0]) delete_post_meta($object_id, 'cp_date_end');
+		}
+        
 	}
 }
 
