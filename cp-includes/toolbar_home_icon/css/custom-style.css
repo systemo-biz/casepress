@@ -1,0 +1,12 @@
+#wp-admin-bar-wp-logo>.ab-item>.ab-icon{
+background-image: url(../img/home_basic_blue.png) !important;
+background-position: 0 0px !important;
+background-size:20px 20px;
+}
+#wpadminbar .ab-top-menu >#wp-admin-bar-wp-logo.menupop.hover > .ab-item {
+    background: linear-gradient(to top, rgb(58, 58, 58), rgb(34, 34, 34)) repeat scroll 0 0 rgb(34, 34, 34)!important;
+    color: rgb(250, 250, 250)!important;
+}
+#wpadminbar li#wp-admin-bar-wp-logo.hover > .ab-sub-wrapper {
+    display: none;
+}

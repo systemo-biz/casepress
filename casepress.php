@@ -29,6 +29,7 @@ include_once 'cp-includes/acl_settings.php';
 include_once 'cp-includes/search-in-id/search-in-id.php';
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/cp_notify.php';
+include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
