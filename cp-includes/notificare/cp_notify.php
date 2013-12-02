@@ -21,9 +21,9 @@ class cp_notification_for_basic_comments {
         //add plan function
         add_action('cp_email_notification', array($this, 'email_notifications_for_users'));
         
-        add_action('cp_activate', array($this, 'activate'));
+        //add_action('cp_activate', array($this, 'activate'));
 		
-        add_action('cp_deactivate', array($this, 'deactivate'));
+        //add_action('cp_deactivate', array($this, 'deactivate'));
 
     }
     
@@ -45,23 +45,31 @@ class cp_notification_for_basic_comments {
         //get members for cases
         $members = get_post_meta( $post_id, 'members-cp-posts-sql');
 
-        $message = $post_id . '<пост, участник: ' . print_r($members, true);
-        
-        error_log($message);
+        //$message = $post_id . '<пост, участник: ' . print_r($members, true);
+        //error_log($message);
         
         //add user id to list for notification
         foreach ( $members as $member ) {
-            $user = get_user_by_person( $member);
-            if (get_current_user_id() == $user) continue;
-            if ($user > 0) {
-                add_comment_meta( $comment_id, 'notify_user', $user);
+            $id_usr = get_user_by_person( $member);
+
+			//Если участник текущий пользователь, то не нужно добавлять в список уведомлений
+            if (get_current_user_id() == $id_usr) continue;
+
+			//Если участник забанен, то не нужно добавлять в список уведомлений
+			$userdata = new WP_User( $id_usr );
+			$user_role = array_shift($userdata->roles);
+			if ($user_role == 'banned') continue;
+			
+			//Если у участника есть пользователь
+            if ($id_usr > 0) {
+                add_comment_meta( $comment_id, 'notify_user', $id_usr);
                 //error_log('comment: '. $comment_id . ', val: ' . $user);
             }
         }
     }
     
     function email_notifications_for_users() {
-        //error_log('Запланированный хук');
+        error_log('********************** Запланированный хук ***************************');
         $comments = get_comments( array(
                                 'status' => 'approve', 
                                 'meta_key'=>'email_notify',
@@ -72,22 +80,22 @@ class cp_notification_for_basic_comments {
             $comment_id = $comment->comment_ID;
             $users = get_comment_meta( $comment_id, 'notify_user');
             $users_notified = get_comment_meta( $comment_id, 'notified_user' );
-            foreach ($users as $user_id) {
-                //error_log('user: '.$user_id);
+            foreach ($users as $nuser_id) {
+                error_log('user: '.$nuser_id);
                 //error_log('users note: '.print_r($users_notified, true));
                 //тут не плохо было бы проверить отправлено данному пользователю уже уведомление или нет
-                if(in_array($user_id, $users_notified)) continue;
+                if(in_array($nuser_id, $users_notified)) continue;
                 
                 //если автор комментария ест в участниках, то ему уведомление на почту не отправлять, но отмечать как уведомленный
-                if($comment->user_id == $user_id){
-                    add_comment_meta( $comment_id, 'notified_user', $user_id);
+                if($comment->user_id == $nuser_id){
+                    add_comment_meta( $comment_id, 'notified_user', $nuser_id);
                     continue;
                 }
                 
                 //тут функция отправки, которая возвращает результат отправки
-                if ($this->send_email($user_id, $comment)){
+                if ($this->send_email($nuser_id, $comment)){
                     // если все хорошо то записываем пользователя в список отправленных уведомлений 
-                    add_comment_meta( $comment_id, 'notified_user', $user_id);
+                    add_comment_meta( $comment_id, 'notified_user', $nuser_id);
                 }
                 
             }
@@ -99,29 +107,30 @@ class cp_notification_for_basic_comments {
     }
     
 
-    function send_email($user_id, $comment) {
+    function send_email($nuser_id, $comment) {
         
-        $user = get_userdata($user_id);
+        $nuser = get_userdata($nuser_id);
         $r = get_post($comment->comment_post_ID);
         
-        $author = get_userdata( $comment->user_id);
+        $cauthor = get_userdata( $comment->user_id);
         
+		//error_log("comment->user_id = " . print_r($comment->user_id, true) . ", а автор: " . print_r($cauthor, true));
+		
         $msg = array();
         $msg['subject'] = $r->post_title.' ['.$r->ID.']';
-        $msg['text'] = '<p>Пользователь <a href="' .$author->user_url. '">'.$author->display_name.'</a> добавил(а) комментарий:</p><hr>';
+        $msg['text'] = '<p>Пользователь <a href="' .$cauthor->user_url. '">'.$cauthor->display_name.'</a> добавил(а) комментарий:</p><hr>';
         $msg['text'] .= '<div>'.$comment->comment_content.'</div>';
         $msg['text'] .= '<hr>';
         $msg['text'] .= '<a href="'.get_permalink($comment->comment_post_ID).'#comment-'.$comment->comment_ID.'">Перейти</a> | ';
         $msg['text'] .= '<a href="'.get_permalink($comment->comment_post_ID).'#respond">Ответить</a>';
         
-        
-        
-        //
-        //$subject = apply_filters('cp_notice_chg_subject', $subject, $comment);
+		//Фильтр сообщения
         $msg = apply_filters('cp_notice_chg_message', $msg, $comment);
         
         add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-        return wp_mail($user->user_email, $msg['subject'], $msg['text']);
+		$send = wp_mail($nuser->user_email, $msg['subject'], $msg['text']);
+        error_log("Отправлено: " . print_r($nuser->user_email, true));
+		return $send;
     }
 
     
@@ -143,7 +152,6 @@ $args = array(
     if ($comments){
         foreach ($comments as $comment){                
             echo "<tr>";
-            //$event = $wpdb->get_results("SELECT * FROM `" . $this->events_table . "` WHERE `event_id` = ".$result->event_id);
             echo "<td class='noty_td'><a href='".get_permalink($comment->comment_post_ID)."'>#".$comment->comment_post_ID.": ".get_the_title($comment->comment_post_ID)."</a></td>";                
             echo "<td class='noty_td'>".$comment->comment_content."</td>";
             echo "<td class='noty_td'>".$comment->comment_date."</td>";

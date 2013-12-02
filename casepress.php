@@ -9,7 +9,6 @@
   Version: b20131018-01
 */
 
-//include_once 'cp-includes/restrict-access.php';
 include_once 'cp-includes/load.php';
 include_once 'cp-core/core-includes.php';
 include_once 'cp-core/sidebars.php';
@@ -30,6 +29,7 @@ include_once 'cp-includes/search-in-id/search-in-id.php';
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/cp_notify.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
+include_once 'cp-includes/NeedAuthentication/need-auth-int-casepress.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
@@ -58,8 +58,6 @@ if ( is_admin() ) {
     register_activation_hook(__FILE__, 'activate' );
     register_deactivation_hook(__FILE__, 'deactivate' );
 }
-
-
     
 /*Activation and deactivation plugin*/
 function deactivate(){
@@ -70,17 +68,10 @@ function activate(){
     wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
 }
 
-
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 
 
-if ( is_admin() ) {
-    register_activation_hook(__FILE__, 'activate' );
-    register_deactivation_hook(__FILE__, 'deactivate' );
-}
-
-
-function cron_add_15sec(){
+function cron_add_15sec($schedules){
 
     $schedules['seconds15'] = array(  
         'interval' => 15,  
