@@ -6,11 +6,12 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: b20131203-01
+  Version: b20131215-01
 */
 
 include_once 'cp-includes/load.php';
 include_once 'cp-core/core-includes.php';
+include_once 'cp-includes/load.php';
 include_once 'cp-core/sidebars.php';
 include_once 'cp-components/components-includes.php';
 include_once 'cp-templates/template-include.php';
@@ -30,6 +31,7 @@ include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/cp_notify.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/NeedAuthentication/need-auth-int-casepress.php';
+include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
@@ -53,20 +55,6 @@ $ExampleUpdateChecker = new PluginUpdateChecker(
 	__FILE__
 );
 
-
-if ( is_admin() ) {
-    register_activation_hook(__FILE__, 'activate' );
-    register_deactivation_hook(__FILE__, 'deactivate' );
-}
-    
-/*Activation and deactivation plugin*/
-function deactivate(){
-    wp_clear_scheduled_hook('cp_email_notification');
-}
-
-function activate(){
-    wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
-}
 
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 

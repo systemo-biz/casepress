@@ -15,15 +15,18 @@ License: MIT
 class cp_notification_for_basic_comments {
 
     function __construct() {
+        
+        add_shortcode('notifies', array($this, 'list_notifies'));
+        
         //add users to list for notifi
         add_action( 'wp_insert_comment', array($this, 'add_users_list_to_comment_for_notice'), 110, 2);
         
         //add plan function
         add_action('cp_email_notification', array($this, 'email_notifications_for_users'));
         
-        //add_action('cp_activate', array($this, 'activate'));
+        add_action('cp_activate', array($this, 'activate'));
 		
-        //add_action('cp_deactivate', array($this, 'deactivate'));
+        add_action('cp_deactivate', array($this, 'deactivate'));
 
     }
     
@@ -133,13 +136,6 @@ class cp_notification_for_basic_comments {
 		return $send;
     }
 
-    
-
-}
-
-$cp_notification = new cp_notification_for_basic_comments();
-
-
 function list_notifies($atts){
 $user_id = get_current_user_id();
 $args = array(  
@@ -161,4 +157,13 @@ $args = array(
     echo "</table>";
 }
 
-add_shortcode('notifies', 'list_notifies');
+function activate(){
+   wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
+}
+/*Activation and deactivation plugin*/
+function deactivate(){
+    wp_clear_scheduled_hook('cp_email_notification');
+}
+}
+
+$GLOBAL['cp_notification'] = new cp_notification_for_basic_comments();
