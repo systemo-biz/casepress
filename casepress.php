@@ -6,8 +6,21 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: b20131216-01
+  Version: b20131216-02
 */
+
+
+register_activation_hook( __FILE__, 'cp_activation' );
+function cp_activation() {
+	do_action( 'cp_activate' );
+	flush_rewrite_rules(false);
+}
+
+register_deactivation_hook( __FILE__, 'cp_deactivation' );
+function cp_deactivation() {
+	do_action( 'cp_deactivate' );
+	flush_rewrite_rules(false);
+}
 
 include_once 'cp-includes/load.php';
 include_once 'cp-core/core-includes.php';
@@ -32,18 +45,9 @@ include_once 'cp-includes/notificare/cp_notify.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
+include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 
-register_activation_hook( __FILE__, 'cp_activation' );
-function cp_activation() {
-	do_action( 'cp_activate' );
-	flush_rewrite_rules(false);
-}
 
-register_deactivation_hook( __FILE__, 'cp_deactivation' );
-function cp_deactivation() {
-	do_action( 'cp_deactivate' );
-	flush_rewrite_rules(false);
-}
 
 
 /*
@@ -61,7 +65,7 @@ add_filter( 'cron_schedules', 'cron_add_15sec');
 
 function cron_add_15sec($schedules){
 
-    $schedules['seconds15'] = array(  
+    $schedules['15sec'] = array(  
         'interval' => 15,  
         'display' => __( 'Once in 15 sec' )
     );  

@@ -21,7 +21,7 @@ function add_banned_role() {
 	);
 }
 
-register_activation_hook( __FILE__, 'add_banned_role' );
+add_action( 'cp_activate', 'add_banned_role' );
 
 function cps_ban_authenticate_user($user){
 
@@ -37,7 +37,7 @@ function cps_ban_authenticate_user($user){
 	return $user;
 }
 add_filter( 'wp_authenticate_user', 'cps_ban_authenticate_user', 1 );
-function cps_ban_get_blogs_of_user( $blogs ){
+function cps_ban_get_blogs_of_user( $blogs, $user_id, $all ){
 	//global $current_user;
 	$cu_blogs = get_all_sites_of_cu(get_current_user_id());
 	//print_r($blogs);

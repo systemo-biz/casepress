@@ -26,12 +26,16 @@ return $msg;}
 // добавляем запланированный хук  
 add_action('cp_activate', 'add_action_for_event_deadline');  
 function add_action_for_event_deadline() {  
-    if ( !wp_next_scheduled( 'hourly_event_deadline' ) ) {  
-        wp_schedule_event( time(), 'hourly', 'hourly_event_deadline');  
-    }  
-}  
+	wp_schedule_event( time(), 'hourly', 'cp_deadline_control'); 
+}
+
+add_action('cp_deactivate', 'del_action_for_event_deadline');  
+function del_action_for_event_deadline() {  
+ wp_clear_scheduled_hook('cp_deadline_control');	
+}
+
 // добавляем функцию к указанному хуку  
-add_action('hourly_event_deadline', 'DeadLineComment');
+add_action('cp_deadline_control', 'DeadLineComment');
 
 function DeadLineComment() { 
   // параметры выборки

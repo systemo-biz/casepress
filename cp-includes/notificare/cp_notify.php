@@ -72,7 +72,7 @@ class cp_notification_for_basic_comments {
     }
     
     function email_notifications_for_users() {
-        error_log('********************** Запланированный хук ***************************');
+        //error_log('********************** Запланированный хук ***************************');
         $comments = get_comments( array(
                                 'status' => 'approve', 
                                 'meta_key'=>'email_notify',
@@ -84,7 +84,7 @@ class cp_notification_for_basic_comments {
             $users = get_comment_meta( $comment_id, 'notify_user');
             $users_notified = get_comment_meta( $comment_id, 'notified_user' );
             foreach ($users as $nuser_id) {
-                error_log('user: '.$nuser_id);
+                //error_log('user: '.$nuser_id);
                 //error_log('users note: '.print_r($users_notified, true));
                 //тут не плохо было бы проверить отправлено данному пользователю уже уведомление или нет
                 if(in_array($nuser_id, $users_notified)) continue;
@@ -132,7 +132,7 @@ class cp_notification_for_basic_comments {
         
         add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
 		$send = wp_mail($nuser->user_email, $msg['subject'], $msg['text']);
-        error_log("Отправлено: " . print_r($nuser->user_email, true));
+        //error_log("Отправлено: " . print_r($nuser->user_email, true));
 		return $send;
     }
 
@@ -158,7 +158,7 @@ $args = array(
 }
 
 function activate(){
-   wp_schedule_event( time(), 'seconds15', 'cp_email_notification'); 
+   wp_schedule_event( time(), '15sec', 'cp_email_notification'); 
 }
 /*Activation and deactivation plugin*/
 function deactivate(){
@@ -166,4 +166,4 @@ function deactivate(){
 }
 }
 
-$GLOBAL['cp_notification'] = new cp_notification_for_basic_comments();
+$GLOBALS['cp_notification'] = new cp_notification_for_basic_comments();

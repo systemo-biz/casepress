@@ -257,5 +257,6 @@ function pre_dump($param) {
  */
 function rp_is_home()
 {
-	return get_home_url() === rtrim( 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], '/' );
+    if(isset($_SERVER['HTTP_HOST']))
+        return get_home_url() === rtrim( 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], '/' );
 }
