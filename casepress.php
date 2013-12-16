@@ -30,7 +30,7 @@ include_once 'cp-includes/search-in-id/search-in-id.php';
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/cp_notify.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
-include_once 'cp-includes/NeedAuthentication/need-auth-int-casepress.php';
+include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
