@@ -6,7 +6,7 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   Author URI: http://casepress.org
-  Version: b20131216-02
+  Version: b20131217-01
 */
 
 
@@ -22,9 +22,18 @@ function cp_deactivation() {
 	flush_rewrite_rules(false);
 }
 
-include_once 'cp-includes/load.php';
-include_once 'cp-core/core-includes.php';
-include_once 'cp-includes/load.php';
+/*
+Add function for chek update from GitHub
+*/
+require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
+$ExampleUpdateChecker = new PluginUpdateChecker(
+	'https://raw.github.com/casepress-studio/casepress/master/info.json',
+	__FILE__
+);
+
+require_once 'cp-includes/load.php';
+require_once 'cp-core/core-includes.php';
+require_once 'cp-includes/load.php';
 include_once 'cp-core/sidebars.php';
 include_once 'cp-components/components-includes.php';
 include_once 'cp-templates/template-include.php';
@@ -46,18 +55,6 @@ include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
-
-
-
-
-/*
-Add function for chek update from GitHub
-*/
-require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
-$ExampleUpdateChecker = new PluginUpdateChecker(
-	'https://raw.github.com/casepress-studio/casepress/master/info.json',
-	__FILE__
-);
 
 
 //add 15 sec interval for wp cron

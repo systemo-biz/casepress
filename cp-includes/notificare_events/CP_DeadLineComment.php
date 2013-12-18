@@ -39,6 +39,7 @@ add_action('cp_deadline_control', 'DeadLineComment');
 
 function DeadLineComment() { 
   // параметры выборки
+  error_log("Запуск проверки срока");
   $today = current_time('mysql',0);
   $args = array(
 	'post_type' => 'cases',
