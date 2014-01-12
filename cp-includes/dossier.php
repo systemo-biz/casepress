@@ -3,8 +3,9 @@
 add_action( 'cp_entry_sections', 'cases_display_childs', 60 );
 
 function cases_display_childs() {
-
-		if ( is_single() && get_post_type() == 'cases' ) {
+        global $post;
+        $children = get_children('post_type=cases&post_status=publish&post_parent='.$post->ID);
+		if ( is_single() && get_post_type() == 'cases' && ! empty($children)) {
 			if ( function_exists( 'datatable_generator' ) ) {
 			
 				//$cp_components_url = plugin_dir_url(__FILE__);
@@ -15,7 +16,7 @@ function cases_display_childs() {
 				wp_enqueue_script('datatable.init', plugin_dir_url(__FILE__).'../cp-components/cp-datatable/assets/init.js', array('datatable'));
 				wp_enqueue_style('datatable', plugin_dir_url(__FILE__).'../cp-components/cp-datatable/assets/theme.css');
 		
-				global $post;
+
 
 				?>
 				<section class="cases-box-dossier">

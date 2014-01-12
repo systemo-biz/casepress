@@ -3,8 +3,9 @@
 
 
 function datatable_generator($params, $sql=null){
+		wp_register_script('datatable', plugin_dir_url(__FILE__).'assets/dt.js', array('jquery'), '1.9');
 
-	wp_enqueue_script('datatable', plugin_dir_url(__FILE__).'assets/dt.js', array('jquery'));
+	wp_enqueue_script('datatable');
 		// wp_enqueue_script('datatable.cf', plugin_dir_url(__FILE__).'assets/dt.columnFilter.js', array('datatable'));
 		wp_enqueue_script('datatable.tt', plugin_dir_url(__FILE__).'assets/dt.tableTools.js', array('datatable'));
 		wp_enqueue_script('datatable.rg', plugin_dir_url(__FILE__).'assets/dt.rowGrouping.js', array('datatable'));
