@@ -48,7 +48,7 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
-include_once 'cp-includes/search-in-id/search-in-id.php';
+include_once 'cp-includes/search-ext/search-ext.php';
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/cp_notify.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';

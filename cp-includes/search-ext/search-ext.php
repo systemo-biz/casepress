@@ -18,7 +18,7 @@ function __search_by_title_only( $search, &$wp_query )
     $searchand = '';
     foreach ( (array) $q['search_terms'] as $term ) {
         $term = esc_sql( like_escape( $term ) );
-        $search .= "{$searchand}(($wpdb->posts.post_title LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.post_content LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.ID = '{$term}'))";
+        $search .= "{$searchand}(($wpdb->posts.post_title LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.post_content LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.post_excerpt LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.ID = '{$term}'))";
         $searchand = ' AND ';
     }
     if ( ! empty( $search ) ) {

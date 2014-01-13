@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
         "sLast":"Последняя"
       }
     },
-    "sDom": '<"H"RTfr>t<"F"lip>',
+    "sDom": '<"H"RTfr><lip>t',
     "oTableTools":{"sSwfPath": '<?php echo plugin_dir_url(__FILE__)?>assets/export.swf'},
     "aaSorting":[
       <?php $i=0; foreach($fields as $k=>$d){
