@@ -1,19 +1,9 @@
 <?php get_header(); ?>
 
 <?php do_action('cp_content_before'); ?>
-<div id="content" class="clearfix row-fluid">
-	<?php do_action('cp_sidebar_before'); ?>
-	<aside id="sidebar" class="fluid-sidebar sidebar span3" role="complementary">
-		<?php do_action('cp_sidebar_inside_before'); ?>
-		<div class="well">
-			<?php dynamic_sidebar( 'persons' ); ?>
-		</div>
-		<?php do_action('cp_sidebar_inside_after'); ?>
-	</aside><!-- /#sidebar -->
-	<?php do_action('cp_sidebar_after'); ?>
-
+<div id="content" class="clearfix row">
 	<?php do_action('cp_main_before'); ?>	
-	<div id="main" class="span9 clearfix" role="main">
+	<div id="main" class="col-md-9 clearfix" role="main">
 		<?php do_action('cp_loop_before'); ?>
         <?php while ( have_posts() ) : the_post(); ?>
 
@@ -58,6 +48,18 @@
 
 	</div><!-- /#main -->
 	<?php do_action('cp_main_after'); ?>
+
+	<?php do_action('cp_sidebar_before'); ?>
+	<aside id="sidebar" class="fluid-sidebar sidebar col-md-3" role="complementary">
+		<?php do_action('cp_sidebar_inside_before'); ?>
+		<div class="well">
+			<?php dynamic_sidebar( 'persons' ); ?>
+		</div>
+		<?php do_action('cp_sidebar_inside_after'); ?>
+	</aside><!-- /#sidebar -->
+	<?php do_action('cp_sidebar_after'); ?>
+
+
 </div><!-- /#content -->
 <?php do_action('cp_content_after'); ?>
 

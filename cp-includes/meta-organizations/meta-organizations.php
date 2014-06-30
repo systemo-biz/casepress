@@ -9,9 +9,9 @@ Description: Description business processes and org unit
 function model_process() {
 
 	$labels = array(
-		'name'                => _x( 'Processes', 'Post Type General Name', 'casepress' ),
-		'singular_name'       => _x( 'Process', 'Post Type Singular Name', 'casepress' ),
-		'menu_name'           => __( 'Processes', 'casepress' ),
+		'name'                => _x( 'Процессы', 'Post Type General Name', 'casepress' ),
+		'singular_name'       => _x( 'Процесс', 'Post Type Singular Name', 'casepress' ),
+		'menu_name'           => __( 'Процессы', 'casepress' ),
 		'parent_item_colon'   => __( 'Parent', 'casepress' ),
 		'all_items'           => __( 'All', 'casepress' ),
 		'view_item'           => __( 'View', 'casepress' ),
@@ -24,8 +24,8 @@ function model_process() {
 		'not_found_in_trash'  => __( 'Not found in Trash', 'casepress' ),
 	);
 	$args = array(
-		'label'               => __( 'Processes', 'casepress' ),
-		'description'         => __( 'Desciption processes', 'casepress' ),
+		'label'               => __( 'Процессы', 'casepress' ),
+		'description'         => __( 'Описание процессов', 'casepress' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'comments', 'page-attributes', ),
 		'hierarchical'        => true,
@@ -128,4 +128,19 @@ function model_process_category()  {
 // Hook into the 'init' action
 add_action( 'init', 'model_process_category', 0 );
 
-?>
+/*
+Регистрируем сайдбар общий
+*/
+
+function register_sidebar_meta_general_cp(){
+	register_sidebar( array(
+		'name' => "Основная панель",
+		'id' => 'general-cp',
+		'description' => 'Виджеты этой панели показываются на основных страницах описания',
+		'before_widget' => '<aside class="widget">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h2>',
+		'after_title' => '</h2>'
+	) );
+}
+add_action( 'widgets_init', 'register_sidebar_meta_general_cp' );
