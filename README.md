@@ -19,10 +19,20 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 1. Переименовать org_item в div
 2. slug сделать structure
 
+
+## Уведомления
+1. Отладить уведомление о закрытии
+2. Добавить уведомление об открытии дела на участников
+3. Добавить уведомление о нарушении срока
+
+
 ## ACL
 1. Интегрировать ACL
 
 ## Тема
 1. Перетащить систему на Alienship
 2. Перетащить все секции на хук the_content
+
  
+## Календарь
+Интегрироваться с https://github.com/casepress-studio/calendar-wordpress-cp
