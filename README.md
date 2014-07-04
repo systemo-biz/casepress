@@ -20,6 +20,10 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 2. slug сделать structure
 
 
+## ACF
+1. Стилизовать ACF под alienship. Наработки можно взять от у https://github.com/fotonstep
+2. Перетащить все секции на хук the_content
+
 ## Уведомления
 1. Отладить уведомление о закрытии
 2. Добавить уведомление об открытии дела на участников
@@ -29,9 +33,9 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 ## ACL
 1. Интегрировать ACL
 
+
 ## Тема
 1. Перетащить систему на Alienship
-2. Перетащить все секции на хук the_content
 
  
 ## Календарь
