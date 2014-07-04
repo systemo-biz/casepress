@@ -11,3 +11,18 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 
 
 Лицензия [MIT](http://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
+
+
+# Todo
+
+## Орг.структура
+1. Переименовать org_item в div
+2. slug сделать structure
+
+## ACL
+1. Интегрировать ACL
+
+## Тема
+1. Перетащить систему на Alienship
+2. Перетащить все секции на хук the_content
+ 
