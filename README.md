@@ -36,6 +36,8 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 
 ## Тема
 1. Перетащить систему на Alienship
+2. Изменить вывод постов на блог. С возможностью через хук добавлять различные поля в вывод.
+3. Миниатюру сделать float:right
 
  
 ## Календарь
