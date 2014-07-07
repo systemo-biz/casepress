@@ -38,7 +38,7 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 1. Перетащить систему на Alienship
 2. Изменить вывод постов на блог. С возможностью через хук добавлять различные поля в вывод.
 3. Миниатюру сделать float:right
-
+4. Отличать новые дела, от не новых. Через мету "list_readers" куда записывать ID пользователей, которые уже читали дело.
  
 ## Календарь
 Интегрироваться с https://github.com/casepress-studio/calendar-wordpress-cp
