@@ -15,6 +15,11 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 
 # Todo
 
+## Р0. Прочее
+1. Добавить хук замены заголовков поста в форме редактирования
+2. Поменять URL перезаписи http://casepress.org/kb/web/kak-pomenyat-format-url-dlya-cpt-wordpress/
+
+
 ## Р1. Орг.структура
 1. Переименовать org_item в div
 2. slug сделать structure
