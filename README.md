@@ -18,6 +18,7 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 ## Р0. Прочее
 1. Добавить хук замены заголовков поста в форме редактирования
 2. Поменять URL перезаписи http://casepress.org/kb/web/kak-pomenyat-format-url-dlya-cpt-wordpress/
+3. Вырезать DataTable и убрать шаблоны из плагина. Чтобы применялись типовые шаблоны темы Alienship
 
 
 ## Р1. Орг.структура
