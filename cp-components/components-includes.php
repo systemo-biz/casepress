@@ -14,4 +14,5 @@ include_once 'cp-shortcodes/cp-shortcodes.php';
 include_once 'cp-life-cycle/cp-life-cycle.php';
 include_once 'cp-settings/commone_settings_page.php';
 include_once 'cp-settings/setting_page_security.php';
+include_once 'projects_and_requests.php';
 ?>

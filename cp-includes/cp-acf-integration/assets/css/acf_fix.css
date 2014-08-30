@@ -13,7 +13,7 @@ ul.radio_list.horizontal li {
 float: none;
 }
 
-.label, .badge {
+.acf-form .label, .acf-form .badge {
 background: none!important;
 }
 

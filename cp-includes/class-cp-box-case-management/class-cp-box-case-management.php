@@ -15,7 +15,7 @@ class CP_Case_Management {
         add_action( 'edit_form_after_title', array($this, 'form_case_members_render') );
         add_action( 'post_submitbox_misc_actions', array($this, 'form_case_parameters_render') );
         add_action( 'post_submitbox_start', array($this, 'form_actions_case_parameters_render') );
-        add_action( 'cp_entry_content_before', array($this, 'form_case_members_render_to_site'));
+        add_action( 'the_content', array($this, 'form_case_members_render_to_site'));
         add_action( 'case-sidebar', array($this, 'form_case_parameters_render_to_site'));
 
         //load and save data
@@ -77,10 +77,15 @@ class CP_Case_Management {
 	
 
     function form_case_members_render_to_site() {
-        global $post;
-        if (!($post->post_type == 'cases')) return;
+      global $post;
+      $content = $post->post_content;
+      if($post->post_type=='cases'){
+        ob_start();
         $this->form_case_members_render();
-
+        $content .= ob_get_contents();
+        ob_end_clean();
+      }
+      return $content;
     }
 	
 
@@ -698,9 +703,9 @@ class CP_Case_Management {
         wp_enqueue_style( 'select2' );
         wp_enqueue_script( 'jquery-masonry' );
         //admin_enqueue_scripts ('jquery-masonry');
-        wp_enqueue_style(
-            'cp-box-case-management',
-            trailingslashit( plugin_dir_url(__FILE__) ) .'cp-box-case-management.css');
+        //wp_enqueue_style(
+          //  'cp-box-case-management',
+            //trailingslashit( plugin_dir_url(__FILE__) ) .'cp-box-case-management.css');
 
         wp_enqueue_script(
             'cp-box-case-management',

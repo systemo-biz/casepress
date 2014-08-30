@@ -53,13 +53,13 @@ add_action( 'init', 'model_process', 0 );
 function model_orgunits() {
 
 	$labels = array(
-		'name'                => _x( 'Org Items', 'Post Type General Name', 'casepress' ),
-		'singular_name'       => _x( 'Org Item', 'Post Type Singular Name', 'casepress' ),
-		'menu_name'           => __( 'Org Items', 'casepress' ),
+		'name'                => 'Оргструктура',
+		'singular_name'       => "Единица структуры",
+		'menu_name'           => "Оргструктура",
 		'parent_item_colon'   => __( 'Parent', 'casepress' ),
 		'all_items'           => __( 'All', 'casepress' ),
 		'view_item'           => __( 'View', 'casepress' ),
-		'add_new_item'        => __( 'Add New', 'casepress' ),
+		'add_new_item'        => "Добавить",
 		'add_new'             => __( 'New', 'casepress' ),
 		'edit_item'           => __( 'Edit', 'casepress' ),
 		'update_item'         => __( 'Update', 'casepress' ),
@@ -85,7 +85,7 @@ function model_orgunits() {
 		'publicly_queryable'  => true,
 		'capability_type'     => 'page',
 	);
-	register_post_type( 'org_unit', $args );
+	register_post_type( 'unit', $args );
 
 }
 
@@ -127,20 +127,3 @@ function model_process_category()  {
 
 // Hook into the 'init' action
 add_action( 'init', 'model_process_category', 0 );
-
-/*
-Регистрируем сайдбар общий
-*/
-
-function register_sidebar_meta_general_cp(){
-	register_sidebar( array(
-		'name' => "Основная панель",
-		'id' => 'general-cp',
-		'description' => 'Виджеты этой панели показываются на основных страницах описания',
-		'before_widget' => '<aside class="widget">',
-		'after_widget' => '</aside>',
-		'before_title' => '<h2>',
-		'after_title' => '</h2>'
-	) );
-}
-add_action( 'widgets_init', 'register_sidebar_meta_general_cp' );

@@ -48,4 +48,22 @@ function register_organizations_posttype() {
 	 );
 	register_post_type('organizations',$args);
 }
-?>
+
+
+
+add_filter('post_type_link', 'org_post_type_link', 9, 3);
+function org_post_type_link( $link, $post = 0 ){
+    if ( $post->post_type == 'organizations' ){
+        return home_url( 'organizations/' . $post->ID );
+    } else {
+        return $link;
+    }
+}
+ 
+add_action( 'init', 'org_rewrites_init' );
+function org_rewrites_init(){
+    add_rewrite_rule(
+        'organizations/([0-9]+)?$',
+        'index.php?post_type=organizations&p=$matches[1]',
+        'top' );
+}

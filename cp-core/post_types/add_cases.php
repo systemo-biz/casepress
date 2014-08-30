@@ -70,6 +70,27 @@ function remove_cases_metabox() {
   remove_meta_box('commentsdiv', 'cases', 'side');  
 }
 
+add_filter('post_type_link', 'cases_post_type_link', 9, 3);
+ 
+function cases_post_type_link( $link, $post = 0 ){
+    if ( $post->post_type == 'cases' ){
+        return home_url( 'cases/' . $post->ID );
+    } else {
+        return $link;
+    }
+}
+ 
+add_action( 'init', 'cases_rewrites_init' );
+ 
+function cases_rewrites_init(){
+    add_rewrite_rule(
+        'cases/([0-9]+)?$',
+        'index.php?post_type=cases&p=$matches[1]',
+        'top' );
+}
+
+
+/*
 add_filter('post_type_link', 'gf_fix_permalink', 1, 2);
 function gf_fix_permalink( $post_link, $id = 0 ) {
   $r = get_post($id);
@@ -82,3 +103,4 @@ function gf_cases_flush_rules(){
   global $wp_rewrite;
   $wp_rewrite->flush_rules();
 } add_action('init', 'gf_cases_flush_rules', 100);
+*/

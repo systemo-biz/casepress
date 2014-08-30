@@ -36,7 +36,6 @@ require_once 'cp-core/core-includes.php';
 require_once 'cp-includes/load.php';
 include_once 'cp-core/sidebars.php';
 include_once 'cp-components/components-includes.php';
-include_once 'cp-templates/template-include.php';
 include_once 'cp-includes/class-cp-box-case-management/class-cp-box-case-management.php';
 include_once 'cp-includes/function-redirect-onsave.php';
 include_once 'cp-includes/dossier.php';
@@ -55,7 +54,8 @@ include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
-
+include_once 'cp-includes/add_hooks_for_sections.php';
+include_once 'cp-includes/view_sidebars.php';
 
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 
