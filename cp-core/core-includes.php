@@ -27,9 +27,8 @@ include_once 'taxs/tax_notify_template_action.php';
 /*
 * load basic scripts and styles for CasePress
 */
-add_action( 'wp_enqueue_scripts', 'cp_load_core_ss' );
-function cp_load_core_ss(){
+function cp_load_core_js(){
 	wp_enqueue_script( 'jquery' ); 
 	wp_localize_script( 'jquery', 'cp_core', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );  
-}
+} add_action( 'wp_enqueue_scripts', 'cp_load_core_js' );
 ?>

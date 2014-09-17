@@ -1,4 +1,25 @@
 <?php
+// case result right in title
+function cp_case_title_result($title, $id){
+  if((!function_exists('get_current_screen') || get_current_screen()->base!='edit') and get_post_type($id)=='cases'){
+    $results = wp_get_post_terms($id, 'results');
+    if(count($results)>0){
+      $result = $results[0]->name;
+      $label = $results[0]->slug=='success' ? 'label-success' : 'label-default';
+    }else{
+      $result = '- без статуса -';
+      $label = 'label-warning';
+    }
+    $title .= " <small><span class='label $label'>$result</span></small>";
+  }
+  return $title;
+} add_filter('the_title', 'cp_case_title_result', 1, 2);
+// excerpt is only for search
+function cp_do_not_show_excerpt($excerpt){
+  return '';
+} add_filter('the_excerpt', 'cp_do_not_show_excerpt', 1, 1);
+
+
 // projects
 function cp_update_projects_meta($post_id, $meta_key, $meta_value){
   if($meta_key=='responsible-cp-posts-sql'){
@@ -7,7 +28,7 @@ function cp_update_projects_meta($post_id, $meta_key, $meta_value){
       $comment_id = wp_insert_comment(array(
         'comment_post_ID' => $post_id,
         'comment_author' => 'sysinfo',
-        'comment_content' => "Назначен новый руководитель проекта: <a href='".get_permalink($person->ID)."'>#$person->ID, $person->post_title</a>",
+        'comment_content' => "Назначен новый ответственный: <a href='".get_permalink($person->ID)."'>#$person->ID, $person->post_title</a>",
         'comment_approved' => 1,
       ));
       add_comment_meta($comment_id, 'new_pm_cp', 'new_pm_cp', true);
@@ -15,13 +36,10 @@ function cp_update_projects_meta($post_id, $meta_key, $meta_value){
   }
 } add_action('add_post_meta', 'cp_update_projects_meta', 10, 3);
 
-
 function cp_project_comment_text($text){
-  if(get_comment_meta(get_comment_ID(), 'new_pm_cp', true)=='new_pm_cp') $text = "<span class='label label-success'>Назначение РП</span>$text";
+  if(get_comment_meta(get_comment_ID(), 'new_pm_cp', true)=='new_pm_cp') $text = "<span class='label label-success'>Назначение РП</span> $text";
   return $text;
 } add_filter('comment_text', 'cp_project_comment_text');
-
-
 
 function cp_project_calc_reserved_vacancy_positions($project_id){
   global $wpdb;
@@ -38,25 +56,18 @@ function cp_project_calc_reserved_vacancy_positions($project_id){
 
 
 
-# requests
-// function cp_requests_the_content($content){
-//   global $post;
-//   if($post->post_type!='cases') return $content;
-//   return $post->post_excerpt.$content;
-// } add_filter('the_content', 'cp_requests_the_content');
-
-
+// requests
 function cp_acf_update_value_request_project($value, $post_id, $field){
   $old_value = get_field($field['name'], $post_id)[0];
   if($value[0]==$old_value->ID) return $value;
 
   $project = get_post($value[0]);
-  $excerpt = "<h4>В закрепленном проекте требуются вакансии:</h4><table><tr><th>Название вакансии</th><th>Количество позиций</th></tr>";
+  $html = "<h4>В закрепленном проекте требуются вакансии:</h4><table><tr><th>Название вакансии</th><th>Количество позиций</th></tr>";
   while(have_rows('project_staff', $project->ID)): the_row();
-    $excerpt .= "<tr><td>".get_sub_field('vacancy_title')."</td><td>".get_sub_field('vacancy_positions')."</td></tr>";
+    $html .= "<tr><td>".get_sub_field('vacancy_title')."</td><td>".get_sub_field('vacancy_positions')."</td></tr>";
   endwhile;
-  $excerpt .= "</table>";
-  wp_update_post(array('ID'=>$post_id, 'post_excerpt'=>$excerpt));
+  $html .= "</table>";
+  update_post_meta($post_id, 'request_project_excerpt', $html);
   return $value;
 } add_filter('acf/update_value/name=request_project', 'cp_acf_update_value_request_project', 10, 3);
 
@@ -95,8 +106,8 @@ function cp_acf_update_value_request_security_check($value, $post_id, $field){
 
 
 function cp_request_comment_text($text){
-  if(get_comment_meta(get_comment_ID(), 'pm_chk_cp', true)=='pm_chk_cp') $text = "<span class='label label-info'>Утверждена</span>$text";
-  if(get_comment_meta(get_comment_ID(), 'seq_chk_cp', true)=='seq_chk_cp') $text = "<span class='label label-danger'>Проверка СБ</span>$text";
+  if(get_comment_meta(get_comment_ID(), 'pm_chk_cp', true)=='pm_chk_cp') $text = "<span class='label label-info'>Утверждена</span> $text";
+  if(get_comment_meta(get_comment_ID(), 'seq_chk_cp', true)=='seq_chk_cp') $text = "<span class='label label-danger'>Проверка СБ</span> $text";
   return $text;
 } add_filter('comment_text', 'cp_request_comment_text');
 
@@ -173,16 +184,37 @@ function cp_content_filter_add_request_meta($excerpt){
   $project = get_field('request_project')[0];
   if(!isset($project)) return $excerpt;
 
+  global $post;
   $owner = get_post(get_field('responsible-cp-posts-sql', $project->ID));
   $html = '';
   $html .= "<p>Проект: <a href='".get_the_permalink($project->ID)."'>$project->post_title</a></p>";
   $html .= "<p>Ответственный: <a href='".get_the_permalink($owner->ID)."'>$owner->post_title</a></p>";
-  $html .= "<p>Плановая дата завершения: ".DateTime::createFromFormat('Ymd', get_field('plan_date_end', $project->ID))->format('d.m.Y')."</p>";
-  return $html.$excerpt;
-} add_filter('the_excerpt', 'cp_content_filter_add_request_meta');
+  $html .= "<p>Плановая дата завершения: ".date('d.m.Y', strtotime(get_post_meta($project->ID, 'cp_date_deadline', true)))."</p>";
+  return $html.get_post_meta($post->ID, 'request_project_excerpt', true);
+} add_filter('the_excerpt', 'cp_content_filter_add_request_meta', 1, 10);
 
 
-# agreements
+
+
+// tech supervision
+function cp_content_filter_tech_supervision_excerpt($excerpt){
+  $object = get_field('tech_supervision_object')[0];
+  if(!isset($object)) return $excerpt;
+
+  global $post;
+  $html = '';
+  $html .= "<p>Объект: <a href='".get_the_permalink($object->ID)."'>$object->post_title</a></p>";
+  $html .= "<p>Дата регистрации: ".get_the_date()."</p>";
+  $results = wp_get_post_terms($post->ID, 'results');
+  if(count($results)>0) $html .= "<p>Статус: ".$results[0]->name."</p>";
+  return $html;
+} add_filter('the_excerpt', 'cp_content_filter_tech_supervision_excerpt', 1, 10);
+
+
+
+
+
+// agreements
 function cp_setup_cron_schedule(){
   if(!wp_next_scheduled('cp_hourly_event')) wp_schedule_event(time(), 'hourly', 'cp_hourly_event');
 } add_action('wp', 'cp_setup_cron_schedule');
@@ -218,7 +250,7 @@ function cp_show_cases_agreements_required($query){
 
 
 
-# search
+// search - cyrillic url hack
 function cp_change_search_url_rewrite(){
   if(is_search() && !empty($_GET['s'])){
     $_GET['s'] = '';

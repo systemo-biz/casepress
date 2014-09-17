@@ -27,18 +27,23 @@ ul.checkbox_list {
 	margin: 0 0 9px 25px!important;
 	list-style: none;
 }
+.acf-radio-list li, .acf-checkbox-list li {
+	list-style: none !important;
+}
+.acf-checkbox-list li .checkbox {
+  margin-top: 5px;
+}
 
 .widefat {
-	display:table-cell!important;
-	width:400px;!important;
-	background-color:#f1f1f1!important;
-	padding:7px 7px 8px 7px!important;
-	border:1px solid #DFDFDF!important;
-	border-top-left-radius:3px!important;
-	border-top-right-radius:3px!important;
-	}
-	
-
+  background-color:#f1f1f1!important;
+  border:1px solid #DFDFDF!important;
+  border-top-left-radius:3px!important;
+  border-top-right-radius:3px!important;
+}
+.acf_relationship .widefat {margin-bottom: 0;}
+tr.row:before, tr.row:after {display: none !important;}
+td.remove .acf-button-add {margin-top: -18px !important;}
+td.remove .acf-button-remove {margin-bottom: -18px !important;}
 	
 .relationship_search {
 	height:26px!important;
@@ -54,3 +59,7 @@ ul.checkbox_list {
 	padding:5px 0 5px 0!important;
 	border:1px solid #dfdfdf!important;
 	}
+
+.acf_postbox .field input[type="text"], .acf_postbox .field input[type="number"], .acf_postbox .field input[type="password"], .acf_postbox .field input[type="email"], .acf_postbox .field textarea {
+  padding: 0 5px !important;
+}
