@@ -4,12 +4,15 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Aucun r&eacute;sultat trouv&eacute;"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Merci de saisir " + n + " caract&egrave;re" + (n == 1? "" : "s") + " de plus"; },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Merci de saisir " + n + " caract&egrave;re" + (n == 1? "" : "s") + " de moins"; },
-        formatSelectionTooBig: function (limit) { return "Vous pouvez seulement s&eacute;lectionner " + limit + " &eacute;l&eacute;ment" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Chargement de r&eacute;sultats suppl&eacute;mentaires..."; },
-        formatSearching: function () { return "Recherche en cours..."; }
-    });
+    $.fn.select2.locales['fr'] = {
+        formatMatches: function (matches) { return matches + " résultats sont disponibles, utilisez les flèches haut et bas pour naviguer."; },
+        formatNoMatches: function () { return "Aucun résultat trouvé"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Saisissez " + n + " caractère" + (n == 1? "" : "s") + " supplémentaire" + (n == 1? "" : "s") ; },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "Supprimez " + n + " caractère" + (n == 1? "" : "s"); },
+        formatSelectionTooBig: function (limit) { return "Vous pouvez seulement sélectionner " + limit + " élément" + (limit == 1 ? "" : "s"); },
+        formatLoadMore: function (pageNumber) { return "Chargement de résultats supplémentaires…"; },
+        formatSearching: function () { return "Recherche en cours…"; }
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['fr']);
 })(jQuery);

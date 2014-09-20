@@ -1,11 +1,40 @@
 <?php
 
-add_action('wp_ajax_get_person_cp', 'get_person_cp');
+
+
+
+/*
+Механизм сохранения данных контроля кейсов
+*/
+function save_case_data_control() {
+	if(! isset($_REQUEST['update_case_control'])) return; 
+
+	global $post;
+
+	if(isset($_REQUEST['case_category'])) {
+		$case_category = $_REQUEST['case_category'];
+		error_log('$case_category = ' . $case_category);
+	}
+
+}
+add_action('init', 'save_case_data_control');
+
+
+
+
+
+
+/*
+Механизм получения данных о персонах для поля ответственного в виджете контроля кейсов
+*/
 
 function get_person_cp(){
 
+	if(isset($_REQUEST['s'])) $s = $_REQUEST['s'];
+
+
 	$data = get_posts(array(
-	    //'s' => $_REQUEST['q'],
+	    's' => $s,
 	    //'paged' => $_REQUEST['page'],
 	    //'posts_per_page' => $_REQUEST['page_limit'],
 	    'post_type' => 'persons'
@@ -16,26 +45,23 @@ function get_person_cp(){
 
 	foreach ($data as $item) :
 
-		$organization = '';
-
-		$elements[] = array(
+		$element = array(
 	        'id' => $item->ID,
-	        'title' => $item->post_title,
-	        'organization' => $organization
-	        );
+	        'name' => $item->post_title,
+        );
+
+		$elements[] = $element;
 	endforeach;
 
 	
 
 	$data_echo = array(
-	    "total" => 1,//(int)$query->found_posts, 
-	    'items' => $elements);
-	//$data[] = $query;
-	
+	    'items' => $elements
+	    );
 
-	//$data_echo = array()$data;
-	echo json_encode($data_echo);
-	//var_dump($elements);
-	//echo "string";
-	exit;
-}
+	wp_send_json($data_echo);
+} 
+
+add_action('wp_ajax_get_person_cp', 'get_person_cp');
+
+
