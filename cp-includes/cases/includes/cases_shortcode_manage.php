@@ -46,7 +46,7 @@ function shortcode_meta(){
 
     global $post;
 
-    $responsible_id = get_post_meta( $post->ID, 'cp_responsible', true );
+    $responsible_id = get_post_meta( $post->ID, 'responsible-cp-posts-sql', true );
     $terms = wp_get_post_terms($post->ID, 'functions', array("fields" => "ids"));
     $selected = empty($terms) ? 0 : $terms[0];
 
@@ -257,16 +257,13 @@ function save_case_data_control() {
      */
 
     $meta = array(
-        'deadline_cp',
-        'cp_responsible'
+        'deadline_cp' => isset($_REQUEST['deadline_cp']) ? $_REQUEST['deadline_cp'] : '',
+        'responsible-cp-posts-sql' => isset($_REQUEST['cp_responsible']) ? $_REQUEST['cp_responsible'] : ''
     );
 
-    foreach($meta as $meta_name){
-        if(isset($_REQUEST[$meta_name])){
+    foreach($meta as $meta_name => $meta_value){
 
-            update_post_meta( $post->ID, $meta_name, $_REQUEST[$meta_name] );
-            //print_r(array($post->ID, $meta_name, $_REQUEST[$meta_name]));
-        }
+        update_post_meta( $post->ID, $meta_name, $meta_value );
     }
 
     //print_r($_REQUEST);
