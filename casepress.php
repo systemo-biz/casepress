@@ -37,7 +37,7 @@ require_once 'cp-includes/load.php';
 include_once 'cp-core/sidebars.php';
 include_once 'cp-includes/cases/cases.php';
 include_once 'cp-components/components-includes.php';
-include_once 'cp-includes/class-cp-box-case-management/class-cp-box-case-management.php';
+include_once 'cp-includes/cases/class-cp-box-case-management/class-cp-box-case-management.php';
 include_once 'cp-includes/function-redirect-onsave.php';
 include_once 'cp-includes/dossier.php';
 include_once 'cp-includes/persons/persons.php';	

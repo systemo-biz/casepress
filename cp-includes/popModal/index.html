@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>popModal</title>
+<style>
+* {margin:0;font-family:sans-serif;outline:0}
+body {background:#fafafa}
+#page {background:#fff;border:1px solid #ccc;box-shadow:0 0 0 3px #eee;margin:40px auto;width:40%;min-width:800px;min-height:500px;border-radius:3px;padding:0 0 30px;position:relative}
+#page h2 {margin:20px;color:#444;margin-top:120px}
+#page #copyrightBlock + h2 {margin-top:20px}
+#copyrightBlock {position:absolute;top:10px;right:10px}
+#version, #gitHubLink {color:#fff;background:#4081BE;display:inline-block;padding:0 6px;border-radius:3px;text-decoration:none;font-size:12px;line-height:20px;margin-left:1px}
+#gitHubLink:hover {background:#3772A8}
+#version {background:#777}
+#version span {margin-left:10px;color:#ccc}
+
+.exampleContainer {border:1px solid #ddd;border-left:0;border-right:0}
+.exampleContainer .exampleLive {padding:20px;background:#fafafa}
+.exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;padding-bottom:10px;margin-right:10%}
+.exampleContainer .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:bold;font-size:13px}
+.exampleContainer .exampleLive > button:hover {background:#3772A8}
+.exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
+.exampleContainer .exampleCode code {white-space:pre-line}
+.exampleContainer .exampleCode code * {font-family:consolas;font-size:13px}
+.exampleContainer .exampleCode code > p {line-height:20px;color:#7993ad;display:inline-block}
+.exampleContainer .exampleCode code .tab {padding-left:15px}
+.exampleContainer .exampleCode code .tab2 {padding-left:30px}
+.exampleContainer .exampleCode code .tab3 {padding-left:45px}
+.exampleContainer .exampleCode code .tag {color:#97e0e9}
+.exampleContainer .exampleCode code .text {color:#fff}
+.exampleContainer .exampleCode code .key {color:#bf5c5b}
+.exampleContainer .exampleCode code .val {color:#fadf8c}
+.exampleContainer .exampleCode code .var {color:#aae997}
+.exampleContainer .exampleCode code .var2 {color:#b297e9}
+</style>
+<link type="text/css" rel="stylesheet" href="popModal.css">
+</head>
+<body>
+
+<div id="page">
+
+	<div id="copyrightBlock">
+		<div id="version" title="Current version/date">1.07<span>[10.09.14]</span></div>
+		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
+	</div>
+
+	<h2>popModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="popModal_ex1">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p><span class="text">$('</span><span class="tag">#elem</span><span class="text">').popModal(</span>{</p>
+			<p class="tab"><span class="key">html</span> : <span class="val">$('#content').html()</span>,</p>
+			<p class="tab"><span class="key">placement</span> : <span class="val">'bottomLeft'</span>,</p>
+			<p class="tab"><span class="key">showCloseBut</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">onDocumentClickClose</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">onDocumentClickClosePrevent</span> : <span class="val">''</span>,</p>
+			<p class="tab"><span class="key">inline</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">overflowContent</span> : <span class="val">false</span>,</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span></p>
+			<p>}<span class="text">)</span>;</p>
+		</code></pre></div>
+	</div>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">loading ajax</div>
+			<button id="popModal_ex2">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p><span class="text">$('</span><span class="tag">#elem</span><span class="text">').popModal(</span>{</p>
+			<p class="tab"><span class="key">html</span> : <span class="val">function</span><span class="text">(</span><span class="var2">callback</span><span class="text">)</span>{</p>
+			<p class="tab2"><span class="text">$.ajax(</span>{<span class="key">url</span> : <span class="val">'ajax.html'</span>}<span class="text">).done(</span><span class="val">function</span><span class="text">(</span><span class="var">content</span><span class="text">)</span>{</p>
+			<p class="tab3"><span class="var2">callback</span><span class="text">(</span><span class="var">content</span><span class="text">)</span>;</p>
+			<p class="tab2">}<span class="text">)</span>;</p>
+			<p class="tab">}</p>
+			<p>}<span class="text">)</span>;</p>
+		</code></pre></div>
+	</div>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">inline bind</div>
+			<button id="popModal_ex3" data-popModalBind="#content">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span> <span class="key">data-popModalBind</span>=<span class="val">"#content"</span> <span class="key">data-placement</span>=<span class="val">"bottomLeft"</span> <span class="key">data-showCloseBut</span>=<span class="val">"true"</span> <span class="key">data-overflowContent</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClose</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClosePrevent</span>=<span class="val">""</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+
+
+	<h2>notifyModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="notifyModal_ex1">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').notifyModal(</span>{</p>
+			<p class="tab"><span class="key">duration</span> : <span class="val">2500</span>,</p>
+			<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
+			<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span></p>
+			<p>}<span class="text">)</span>;</p>
+		</code></pre></div>
+	</div>
+	
+
+	<h2>hintModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button class="hintModal">Example
+				<div class="hintModal_container">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+				</div>
+			</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">span</span> <span class="key">class</span>=<span class="val">"hintModal"</span>&gt;<span class="text">example</span></p>
+			<p class="tab">&lt;<span class="tag">div</span> <span class="key">class</span>=<span class="val">"hintModal_container"</span>&gt;</p>
+			<p class="tab2"><span class="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry...</span></p>
+			<p class="tab">&lt;/<span class="tag">div</span>&gt;</p>
+			<p>&lt;/<span class="tag">span</span>&gt;</p>
+		</code></pre></div>
+	</div>
+	
+
+	<h2>dialogModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="dialogModal_ex1">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').dialogModal(</span>{</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span>,</p>
+			<p>}<span class="text">)</span>;</p>
+		</code></pre></div>
+	</div>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">inline bind</div>
+			<button id="dialogModal_ex2" data-dialogModalBind=".dialog_content">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">button</span> <span class="key">data-dialogModalBind</span>=<span class="val">"#content"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+
+
+	<h2>titleModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="titleModal_ex1" title="Title" data-titleModal="init">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">button</span> <span class="key">title</span>=<span class="val">"Title"</span> <span class="key">data-titleModal</span>=<span class="val">"init"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+
+</div>
+	
+<div style="display:none">
+<div id="content">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	<div class="popModal_footer">
+		<button type="button" data-popModalBut="ok">ok</button>
+		<button type="button" data-popModalBut="cancel">cancel</button>
+	</div>
+</div>
+</div>
+
+<div id="content2" style="display:none">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</div>
+
+<div id="dialog_content" class="dialog_content" style="display:none">
+	<div class="dialogModal_header">Dialog header 1</div>
+	<div class="dialogModal_content">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	</div>
+	<div class="dialogModal_footer">
+		<button type="button" data-dialogModalBut="ok">ok</button>
+		<button type="button" data-dialogModalBut="cancel">cancel</button>
+	</div>
+</div>
+
+<div id="dialog_content2" class="dialog_content" style="display:none">
+	<div class="dialogModal_header">Dialog header 2</div>
+	<div class="dialogModal_content">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	</div>
+	<div class="dialogModal_footer">
+		<button type="button" data-dialogModalBut="ok">ok</button>
+		<button type="button" data-dialogModalBut="cancel">cancel</button>
+	</div>
+</div>
+
+<script src="http://cdn.jsdelivr.net/jquery/1.11.1/jquery.min.js"></script>
+<script src="popModal.js"></script>
+<script>
+$(function(){
+	$('#popModal_ex1').click(function(){
+		$('#popModal_ex1').popModal({
+			html : $('#content'),
+			placement : 'bottomLeft',
+			showCloseBut : true,
+			onDocumentClickClose : true,
+			onDocumentClickClosePrevent : '',
+			inline : true,
+			overflowContent : false,
+			onOkBut : function(){},
+			onCancelBut : function(){},
+			onLoad : function(){},
+			onClose : function(){}
+		});
+	});
+	
+	$('#popModal_ex2').click(function(){
+		$('#popModal_ex2').popModal({
+			html : function(callback) {
+				$.ajax({url:'ajax.html'}).done(function(content){
+					callback(content);
+				});
+			}
+		});
+	});
+	
+	$('#notifyModal_ex1').click(function(){
+		$('#content2').notifyModal({
+			duration : 2500,
+			placement : 'center',
+			overlay : true,
+			type : 'notify'
+		});
+	});
+	
+	$('#dialogModal_ex1').click(function(){
+		$('.dialog_content').dialogModal({
+			onOkBut: function() {},
+			onCancelBut: function() {},
+			onLoad: function() {},
+			onClose: function() {},
+		});
+	});
+	
+});
+</script>
+</body>
+</html>

@@ -26,13 +26,20 @@ class ACL_Settings {
     }
     
     function ref_acl_callback() {
-        $ids = get_posts("fields=ids&post_type=cases&post_status=publish");
+        $ids = get_posts(array(
+            'numberposts'     => -1,
+            'fields'          => 'ids',
+            'post_type'       => 'cases',
+            'post_status'     => 'publish'
+        ));
+
+
             
         
         foreach ($ids as $post_id){
             $key = 'members-cp-posts-sql';
             $members = get_post_meta( $post_id, $key);
-            
+
             foreach ($members as $member) {
                 add_post_meta($post_id, 'acl_users_read', $member);
             }

@@ -58,7 +58,8 @@ function cp_project_calc_reserved_vacancy_positions($project_id){
 
 // requests
 function cp_acf_update_value_request_project($value, $post_id, $field){
-  $old_value = get_field($field['name'], $post_id)[0];
+  $old_value = get_field($field['name'], $post_id);
+  $old_value = $old_value[0];
   if($value[0]==$old_value->ID) return $value;
 
   $project = get_post($value[0]);
@@ -181,7 +182,8 @@ function cp_wp_ajax_request_project_changed(){
 } add_action('wp_ajax_request_project_changed', 'cp_wp_ajax_request_project_changed');
 
 function cp_content_filter_add_request_meta($excerpt){
-  $project = get_field('request_project')[0];
+  $project = get_field('request_project');
+  $project = $project[0];
   if(!isset($project)) return $excerpt;
 
   global $post;
@@ -198,7 +200,8 @@ function cp_content_filter_add_request_meta($excerpt){
 
 // tech supervision
 function cp_content_filter_tech_supervision_excerpt($excerpt){
-  $object = get_field('tech_supervision_object')[0];
+  $object = get_field('tech_supervision_object');
+  $object = $object[0];
   if(!isset($object)) return $excerpt;
 
   global $post;
