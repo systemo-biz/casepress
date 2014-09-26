@@ -79,7 +79,7 @@ function shortcode_meta(){
                 });
             </script>            
         </div>
-        <div id="deadline_cp_wrapper">
+        <div id="deadline_cp_wrapper" class="form-group">
             <label for="deadline_cp">Срок</label>
             <input id="deadline_cp" name="deadline_cp" class="form-control" value="<?php  echo get_post_meta( $post->ID, 'deadline_cp', true ); ?>">
             <script type="text/javascript">

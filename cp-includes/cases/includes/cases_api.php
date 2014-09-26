@@ -30,8 +30,11 @@ private function __construct() {
 	add_action( 'wp_ajax_get_post_parent', array($this, 'get_post_parent_callback') );
     add_action( 'wp_ajax_save_data_post', array($this, 'save_data_ajax') );
 
-	add_action( 'added_post_meta', array($this, 'add_member_from_after_add_post_meta'), 10, 4 );
-	add_action( 'deleted_post_meta', array($this, 'add_member_from_after_del_post_meta'), 10, 4);
+	//add_action( 'added_post_meta', array($this, 'add_member_from_after_adeadline_cp_wrapperdd_post_meta'), 10, 4 );
+	//add_action( 'deleted_post_meta', array($this, 'add_member_from_after_del_post_meta'), 10, 4);
+
+    add_action( 'added_post_meta', array($this, 'add_responsible_to_members'), 11, 4 );
+    add_action( 'updated_post_meta', array($this, 'add_responsible_to_members'), 11, 4 );
 
     add_action('wp', array($this, 'save_members'));
 }
@@ -58,22 +61,28 @@ private function __construct() {
         }
     }
 
-function persons_links_callback() {
-		$out = '';
-		if (isset($_REQUEST['data']) && is_array($_REQUEST['data'])) {
-			if(!empty($_REQUEST['data']) && !empty($_REQUEST['data'][0])){
-				$array = $_REQUEST['data'];
-				if (!isset($array[0]['id']) || $array[0]['id'] == '' || $array[0]['id'] == 0) exit;
-				foreach ($array as $subarray){
-					$out .= '<a href="'.get_permalink($subarray['id']).'">'.$subarray['title'].'</a>, ';
-				}
-			}
-		}
-		echo substr($out, 0, -2);
-		exit;
-	}
+    function persons_links_callback() {
+        $out = '';
+        if (isset($_REQUEST['data']) && is_array($_REQUEST['data'])) {
+            if(!empty($_REQUEST['data']) && !empty($_REQUEST['data'][0])){
+                $array = $_REQUEST['data'];
+                if (!isset($array[0]['id']) || $array[0]['id'] == '' || $array[0]['id'] == 0) exit;
+                foreach ($array as $subarray){
+                    $out .= '<a href="'.get_permalink($subarray['id']).'">'.$subarray['title'].'</a>, ';
+                }
+            }
+        }
+        echo substr($out, 0, -2);
+        exit;
+    }
+
+    function add_responsible_to_members($meta_id, $post_id, $meta_key, $meta_value){
+        if ($meta_key == 'responsible-cp-posts-sql' && !empty($meta_value)){
+            add_post_meta($post_id, 'members-cp-posts-sql', $meta_value);
+        }
+    }
 		
-	function add_member_from_after_add_post_meta($meta_id, $post_id, $meta_key, $meta_value) {
+	/*function add_member_from_after_add_post_meta($meta_id, $post_id, $meta_key, $meta_value) {
 		if ($meta_key == 'member_from-cp-posts-sql'){
 			$meta_member_from = get_post_meta($post_id, $meta_key, true);
 			$meta_members = get_post_meta($post_id, 'members-cp-posts-sql');
@@ -96,7 +105,7 @@ function persons_links_callback() {
 			$meta_members = get_post_meta($post_id, $meta_key);
 			if($meta_member_from != '' && $meta_member_from != 0 && !in_array($meta_member_from, $meta_members)) add_post_meta($post_id, $meta_key, $meta_member_from);
 		}
-	}
+	}*/
 	
 
     function form_case_members_render_to_site() {
