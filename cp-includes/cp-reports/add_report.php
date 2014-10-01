@@ -28,10 +28,16 @@ function register_cases_report_posttype(){
     'label'=>$labels['singular_name'],
     'labels'=>$labels,
     'public'=>true,
-    'hierarchical'=>true,
-	'rewrite' => array('slug' => 'reports', 'with_front' => false ),
+    //'hierarchical'=>true,
+	 'rewrite' => array(
+      'slug'                => 'reports',
+      'with_front'          => true,
+      'pages'               => true,
+      'feeds'               => false,
+    ),
     'supports'=> $supports,
     'taxonomies'=>array(),
+    'has_archive'         => true,
     'query_var'=>true,
     'menu_position'=>10,
   ));
