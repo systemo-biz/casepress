@@ -6,7 +6,6 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
-  GitHub Branch: master
   Author URI: http://casepress.org
   Version: 20141001-01
 */
@@ -23,16 +22,6 @@ function cp_deactivation() {
 	do_action( 'cp_deactivate' );
 	flush_rewrite_rules(false);
 }
-
-/*
-Add function for chek update from GitHub
-
-require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
-$ExampleUpdateChecker = new PluginUpdateChecker(
-	'https://raw.github.com/casepress-studio/casepress/master/info.json',
-	__FILE__
-);
-*/
 
 require_once 'cp-includes/load.php';
 require_once 'cp-core/core-includes.php';
