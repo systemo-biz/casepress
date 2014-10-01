@@ -17,8 +17,6 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 
 ## Р0. Прочее
 1. Добавить хук замены заголовков поста в форме редактирования
-2. Поменять URL перезаписи http://casepress.org/kb/web/kak-pomenyat-format-url-dlya-cpt-wordpress/
-3. Вырезать DataTable и убрать шаблоны из плагина. Чтобы применялись типовые шаблоны темы Alienship
 
 
 ## Р1. Орг.структура
@@ -26,8 +24,14 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 2. slug сделать structure
 
 
-## Р2. ACF
-- Стилизовать ACF под alienship. Наработки можно взять от у https://github.com/fotonstep
+## Р2. Метки CP
+- Суть мето в том, что они позволят классифицировать и отбирать сущности системы по нужной логике
+- Ключ cp_tag
+- Например при добавлении участников к делу, будут добавляться метки типа member-123 где 123 - это ИД персоны
+- Затем зная ИД персоны, мы сможем отобрать все дела, в которых он является участником
+- Аналогично если добавили ответственного, то добавляем метку responsible-123
+- Тем самым эмулируется некое подобие графовых БД
+- Такосномия должна быть не публичная. Ее нельзя менять руками. Но она должна участвовать в запросах.
 
 ## Р3. Уведомления
 - Отладить уведомление о закрытии
@@ -58,6 +62,12 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 5. Добавляем шорткод [agreement], который выводит ссылку "На согласование" дела на согласовании. Ссылку на Согласованные и ссылку на Отказанные. (все это через обычный запрос в УРЛ)
 
 # Changelog
+
+## 20141001
+- Стилизовать ACF под alienship. Наработки можно взять от у https://github.com/fotonstep
+- URL перезаписи http://casepress.org/kb/web/kak-pomenyat-format-url-dlya-cpt-wordpress/
+- Вырезан DataTable и убраны шаблоны из плагина. Чтобы применялись типовые шаблоны темы Alienship
+
 
 ## 20140830
 - Перетащить систему на Alienship
