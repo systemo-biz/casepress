@@ -26,12 +26,13 @@ function cp_deactivation() {
 
 /*
 Add function for chek update from GitHub
-*/
+
 require_once 'cp-includes/github-updater/plugin-updates/plugin-update-checker.php';
 $ExampleUpdateChecker = new PluginUpdateChecker(
 	'https://raw.github.com/casepress-studio/casepress/master/info.json',
 	__FILE__
 );
+*/
 
 require_once 'cp-includes/load.php';
 require_once 'cp-core/core-includes.php';
