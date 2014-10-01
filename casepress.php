@@ -7,7 +7,7 @@
   Author: CasePress
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   Author URI: http://casepress.org
-  Version: 20141001-01
+  Version: 20141001-02
 */
 
 
