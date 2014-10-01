@@ -6,8 +6,9 @@
   Description: Adaptive Case Managment System based on WordPress
   Author: CasePress
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
+  GitHub Branch: master
   Author URI: http://casepress.org
-  Version: b20131217-01
+  Version: 20131217-02
 */
 
 
