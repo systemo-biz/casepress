@@ -7,7 +7,7 @@
   Author: CasePress
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   Author URI: http://casepress.org
-  Version: 20141001-02
+  Version: 20141007
 */
 
 
@@ -50,6 +50,7 @@ include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_hooks_for_sections.php';
 include_once 'cp-includes/view_sidebars.php';
+include_once 'cp-includes/meta_public_var.php';
 
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 
