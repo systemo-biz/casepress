@@ -27,7 +27,7 @@ function add_dossier_to_person_page($content){
 
 		</div>
 		<footer>
-			<a href="<?php echo add_query_arg( array('post_type'=>'cases','meta_key'=>'members-cp-posts-sql','meta_value'=>$post->ID), get_site_url()); ?>" class='btn btn-info'>Все дела</a>
+			<a href="<?php echo add_query_arg( array('post_type'=>'cases','case_members'=>$post->ID), get_site_url()); ?>" class='btn btn-info'>Все дела</a>
 		</footer>
 	</section>
 	
