@@ -41,7 +41,7 @@ class CP_Add_ACF_Form_On_Pages {
 
 	function load_acf_components(){
 	    global $post;
-	    if(is_single() && in_array($post->post_type, array('organizations', 'objects', 'persons', 'cases'))){
+	    if(is_single() && in_array($post->post_type, array('organizations', 'objects', 'persons', 'cases', 'unit'))){
 	      acf_form_head();
 	      $path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
 	      wp_enqueue_style( 'acf_fix', $path_to_plugin.'assets/css/acf_fix.css', false, false, 'all' );
