@@ -203,13 +203,6 @@ function add_field_parent($post) {
             } elseif (isset($_REQUEST['case_parent_id']) && is_numeric($_REQUEST['case_parent_id'])) {
                $case_parent_id = $_REQUEST['case_parent_id'];
             } else $case_parent_id = '0';
-            
-            wp_update_post(
-                array(
-                    'ID' => $post->ID, 
-                    'post_parent' => $case_parent_id
-                )
-            );
         ?>
         <div>
             <label class="cp_label" id="cp_case_post_parent_input_label" for="cp_case_post_parent_input">Основание</label>
@@ -258,7 +251,7 @@ function add_field_parent($post) {
                 <?php if($post_parent_id != ''): ?>   
                     $("#case_post_parent_input").select2(
                         "data", 
-                        <?php echo json_encode(array('id' => $post_parent_id, 'title' => get_the_title($post_parent_id))); ?>
+                        <?php echo json_encode(array('id' => $case_parent_id, 'title' => get_the_title($post_parent_id))); ?>
                     ); 
                 <?php endif; ?>
 
