@@ -8,7 +8,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141019.2
+  Version: 20141022
 */
 
 
@@ -52,6 +52,8 @@ include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_hooks_for_sections.php';
 include_once 'cp-includes/view_sidebars.php';
 include_once 'cp-includes/meta_public_var.php';
+include_once 'cp-includes/search-context.php';
+
 
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 
