@@ -9,7 +9,7 @@ function view_sidebars_cp(){
 
 	if(is_post_type_archive('organizations') or is_singular('organizations')) {
 		dynamic_sidebar( 'organizations' );
-	} elseif (is_post_type_archive('cases') or is_singular('cases') or is_tax( 'functions' ) {
+	} elseif (is_post_type_archive('cases') or is_singular('cases') or is_tax( 'functions' )) {
 		dynamic_sidebar( 'cases' );
 	} elseif (is_post_type_archive('report') or is_singular('report') or is_tax( 'report_cat' )) {
 		dynamic_sidebar( 'report' );
