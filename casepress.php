@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: CasePress
   Plugin URI: http://casepress.org
@@ -8,7 +7,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141101.3
+  Version: 20141101.4
 */
 
 
@@ -27,7 +26,7 @@ function cp_deactivation() {
 include_once 'cp-includes/casepress_commone_functions.php';
 
 
-
+//ядро - надо будет постепенно перетащить в cp-includes по принципу ВИСИ
 include_once 'cp-core/post_types/add_cases.php';
 include_once 'cp-core/post_types/add_checklist.php';
 include_once 'cp-core/post_types/add_notify_templates.php';
@@ -43,16 +42,13 @@ include_once 'cp-core/taxs/tax_organizations_category.php';
 include_once 'cp-core/taxs/tax_subject_category.php';
 include_once 'cp-core/taxs/tax_organizations_structure.php';
 include_once 'cp-core/taxs/tax_persons_category.php';
-
 include_once 'cp-core/taxs/tax_labels.php';
-
 include_once 'cp-core/taxs/tax_notify_template_method.php';
 include_once 'cp-core/taxs/tax_notify_template_action.php';
-
 include_once 'cp-core/sidebars.php';
 
 
-
+//компоненты - надо будет постепенно перетащить в cp-includes по принципу ВИСИ
 include_once 'cp-components/casepress-component.class.php';
 include_once 'cp-components/cp-log_actions/cp-log_actions.php';
 //include_once 'cp-acl/acl.php';
@@ -69,6 +65,9 @@ include_once 'cp-components/cp-life-cycle/cp-life-cycle.php';
 include_once 'cp-components/cp-settings/commone_settings_page.php';
 include_once 'cp-components/cp-settings/setting_page_security.php';
 include_once 'cp-components/projects_and_requests.php';
+
+
+
 include_once 'cp-includes/cases/cases.php';
 include_once 'cp-includes/cases/class-cp-box-case-management/class-cp-box-case-management.php';
 include_once 'cp-includes/function-redirect-onsave.php';
@@ -84,10 +83,9 @@ include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
 include_once 'cp-includes/search-ext/search-ext.php';
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
-include_once 'cp-includes/notificare/cp_notify.php';
+include_once 'cp-includes/notificare/load.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
-include_once 'cp-includes/notificare_events/CP_DeadLineComment.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_hooks_for_sections.php';
 include_once 'cp-includes/view_sidebars.php';
