@@ -10,17 +10,12 @@ private function __construct() {
     add_action( 'added_post_meta', array($this, 'add_responsible_to_members'), 11, 4 );
     add_action( 'updated_post_meta', array($this, 'add_responsible_to_members'), 11, 4 );
 
-    add_filter('the_excerpt', array($this, 'cp_do_not_show_excerpt'), 1, 2);
 }
 
 
     
 
-// Вместо цитаты выводим краткое содержимое. Потому что цитата используется под кеш поиска данных.
-function cp_do_not_show_excerpt($excerpt, $post_id){
-    $data = get_post($post_id);
-  return strip_tags(substr($data->post_content,0,256));
-}
+
 
 
   
