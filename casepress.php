@@ -8,7 +8,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141101.1
+  Version: 20141101.2
 */
 
 
@@ -27,6 +27,7 @@ function cp_deactivation() {
 require_once 'cp-includes/load.php';
 require_once 'cp-core/core-includes.php';
 require_once 'cp-includes/load.php';
+include_once 'cp-includes/casepress_commone_functions.php';
 include_once 'cp-core/sidebars.php';
 include_once 'cp-includes/cases/cases.php';
 include_once 'cp-components/components-includes.php';
