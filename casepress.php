@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141101.4
+  Version: 20141101.5
 */
 
 
@@ -84,7 +84,9 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
-include_once 'cp-includes/search-ext/search-ext.php';
+
+include_once 'cp-includes/search-ext/_load.php';
+
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
 include_once 'cp-includes/notificare/load.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
@@ -93,7 +95,6 @@ include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_hooks_for_sections.php';
 include_once 'cp-includes/view_sidebars.php';
 include_once 'cp-includes/meta_public_var.php';
-include_once 'cp-includes/search-context.php';
 include_once 'cp-includes/lab_temp.php';
 //require_once 'cp-includes/load.php'; - удалить файл по возможнсти
 //include_once 'cp-core/core-functions.php'; -- удалить файл по возможности

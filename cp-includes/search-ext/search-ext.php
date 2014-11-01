@@ -3,9 +3,8 @@
 Plugin name: Add ID to search
 */
 
-add_filter( 'posts_search', '__search_by_title_only', 500, 2 );
 
-function __search_by_title_only( $search, &$wp_query )
+function search_by_title_content_excerpt_id( $search, &$wp_query )
 {
     global $wpdb;
     if ( empty( $search ) )
@@ -28,6 +27,4 @@ function __search_by_title_only( $search, &$wp_query )
     }
 
 	return $search;
-}
-
-?>
+} add_filter( 'posts_search', 'search_by_title_content_excerpt_id', 500, 2 );
