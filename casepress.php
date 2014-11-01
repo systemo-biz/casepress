@@ -70,12 +70,15 @@ include_once 'cp-components/projects_and_requests.php';
 
 include_once 'cp-includes/cases/cases.php';
 include_once 'cp-includes/cases/class-cp-box-case-management/class-cp-box-case-management.php';
+
 include_once 'cp-includes/function-redirect-onsave.php';
 include_once 'cp-includes/dossier.php';
+
 include_once 'cp-includes/persons/persons.php';	
 include_once 'cp-includes/persons/user_person_link.php';
 include_once 'cp-includes/persons/change_person_for_user.php';
 include_once 'cp-includes/persons/persons_init.php';
+
 include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect.php';
