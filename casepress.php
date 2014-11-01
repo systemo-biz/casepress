@@ -8,7 +8,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141101.1
+  Version: 20141022
 */
 
 
@@ -39,8 +39,7 @@ include_once 'cp-includes/persons/change_person_for_user.php';
 include_once 'cp-includes/persons/persons_init.php';
 include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
-//include_once 'cp-includes/redirect/redirect.php'; нужно будет удалить по возможности весь компонент и всю папку
-include_once 'cp-includes/redirect.php';
+include_once 'cp-includes/redirect/redirect.php';
 include_once 'cp-includes/data-registration.php';
 include_once 'cp-includes/acl_settings.php';
 include_once 'cp-includes/search-ext/search-ext.php';
@@ -54,7 +53,7 @@ include_once 'cp-includes/add_hooks_for_sections.php';
 include_once 'cp-includes/view_sidebars.php';
 include_once 'cp-includes/meta_public_var.php';
 include_once 'cp-includes/search-context.php';
-include_once 'cp-includes/lab_temp.php';
+
 
 //add 15 sec interval for wp cron
 add_filter( 'cron_schedules', 'cron_add_15sec'); 

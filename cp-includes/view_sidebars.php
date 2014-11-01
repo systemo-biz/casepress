@@ -9,11 +9,11 @@ function view_sidebars_cp(){
 
 	if(is_post_type_archive('organizations') or is_singular('organizations')) {
 		dynamic_sidebar( 'organizations' );
-	} elseif (is_post_type_archive('cases') or is_singular('cases') or is_tax( 'functions' )) {
+	} elseif (is_post_type_archive('cases') or is_singular('cases')) {
 		dynamic_sidebar( 'cases' );
-	} elseif (is_post_type_archive('report') or is_singular('report') or is_tax( 'report_cat' )) {
+	} elseif (is_post_type_archive('report') or is_singular('report')) {
 		dynamic_sidebar( 'report' );
-	} elseif (is_post_type_archive('objects') or is_singular('objects') or is_tax( 'objects_category' )) {
+	} elseif (is_post_type_archive('objects') or is_singular('objects')) {
 		dynamic_sidebar( 'objects' );
 	} elseif (is_post_type_archive('persons') or is_singular('persons')) {
 		dynamic_sidebar( 'persons' );

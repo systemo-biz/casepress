@@ -248,7 +248,7 @@ function add_field_parent($post) {
                 });
                 
                 //Если есть данные о значении, то делаем выбор
-                <?php if($case_parent_id != ''): ?>   
+                <?php if($post_parent_id != ''): ?>   
                     $("#case_post_parent_input").select2(
                         "data", 
                         <?php echo json_encode(array('id' => $case_parent_id, 'title' => get_the_title($post_parent_id))); ?>
@@ -556,3 +556,16 @@ static public function getInstance() {
 }
 
 } $CasesView = CaseViewsAdminSingltone::getInstance();
+
+
+
+
+
+
+
+
+
+
+
+
+

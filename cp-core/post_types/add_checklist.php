@@ -23,6 +23,6 @@ function create_events(){
 			)
 		);
 	}
-	//add_action( 'init', 'create_events' );
+	add_action( 'init', 'create_events' );
 
 ?>
