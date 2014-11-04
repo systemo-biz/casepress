@@ -7,6 +7,15 @@
 */
 
 
+//фильтруем комменты по типу
+function filter_comments_cp($arg) {
+
+$arg['type'] = 'comment';
+
+return $arg;
+
+} add_filter('wp_list_comments_args', 'filter_comments_cp');
+
 // Вместо цитаты выводим краткое содержимое. Потому что цитата используется под кеш поиска данных.
 function cp_do_not_show_excerpt($excerpt, $post_id){
 

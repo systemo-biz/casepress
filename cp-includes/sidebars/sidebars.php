@@ -33,4 +33,5 @@
 	}
 
 	add_action( 'widgets_init', 'cases_theme_register_sidebars' );
-?>
+
+include_once 'view_sidebars.php';

@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141101.5
+  Version: 20141104
 */
 
 
@@ -27,25 +27,23 @@ include_once 'cp-includes/casepress_commone_functions.php';
 
 
 //ядро - надо будет постепенно перетащить в cp-includes по принципу ВИСИ
-include_once 'cp-core/post_types/add_cases.php';
 include_once 'cp-core/post_types/add_checklist.php';
 include_once 'cp-core/post_types/add_notify_templates.php';
 include_once 'cp-core/post_types/add_objects.php';
 include_once 'cp-core/post_types/add_organizations.php';
 include_once 'cp-core/post_types/add_persons.php';
 include_once 'cp-core/post_types/add_life_cycle.php';
-include_once 'cp-core/taxs/tax_results.php';
-include_once 'cp-core/taxs/tax_functions.php';
+
+
 include_once 'cp-core/taxs/tax_navigation.php';
 include_once 'cp-core/taxs/tax_objects_category.php';
 include_once 'cp-core/taxs/tax_organizations_category.php';
 include_once 'cp-core/taxs/tax_subject_category.php';
 include_once 'cp-core/taxs/tax_organizations_structure.php';
 include_once 'cp-core/taxs/tax_persons_category.php';
-include_once 'cp-core/taxs/tax_labels.php';
-include_once 'cp-core/taxs/tax_notify_template_method.php';
-include_once 'cp-core/taxs/tax_notify_template_action.php';
-include_once 'cp-core/sidebars.php';
+//include_once 'cp-core/taxs/tax_labels.php';
+//include_once 'cp-core/taxs/tax_notify_template_method.php';
+//include_once 'cp-core/taxs/tax_notify_template_action.php';
 
 
 //компоненты - надо будет постепенно перетащить в cp-includes по принципу ВИСИ
@@ -93,7 +91,8 @@ include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_hooks_for_sections.php';
-include_once 'cp-includes/view_sidebars.php';
+include_once 'cp-includes/sidebars/sidebars.php';
+
 include_once 'cp-includes/meta_public_var.php';
 include_once 'cp-includes/lab_temp.php';
 //require_once 'cp-includes/load.php'; - удалить файл по возможнсти

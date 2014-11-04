@@ -251,7 +251,7 @@ function add_field_parent($post) {
                 <?php if($case_parent_id != ''): ?>   
                     $("#case_post_parent_input").select2(
                         "data", 
-                        <?php echo json_encode(array('id' => $case_parent_id, 'title' => get_the_title($post_parent_id))); ?>
+                        <?php echo json_encode(array('id' => $case_parent_id, 'title' => get_the_title($case_parent_id))); ?>
                     ); 
                 <?php endif; ?>
 
