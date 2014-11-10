@@ -17,7 +17,7 @@ return $arg;
 } add_filter('wp_list_comments_args', 'filter_comments_cp');
 
 // Вместо цитаты выводим краткое содержимое. Потому что цитата используется под кеш поиска данных.
-function cp_do_not_show_excerpt($excerpt, $post_id){
+function cp_do_not_show_excerpt($excerpt, $post_id = 0){
 
     $data = get_post($post_id);
   	return strip_tags(mb_substr($data->post_content, 0, 256, 'UTF-8'));

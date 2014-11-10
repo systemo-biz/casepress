@@ -277,7 +277,9 @@ function add_field_members_cp($content){
 
 
     //Доавляем секцию с мета данными
-    function add_meta_content_top($content, $post_id){
+    function add_meta_content_top($content, $post_id = 0){
+
+
         if (!(is_singular('cases') or (is_search() and get_post_type($post_id) == 'cases') or (get_post_type($post_id) == 'cases' and is_archive()))) return $content;
 
         global $post;

@@ -30,6 +30,7 @@ add_action( 'pre_get_posts', 'change_posts_per_page_cp' );
 
 
 //добавляе возможность отбора постов через параметр урл case_members, который может содержать ИД персоны
+// сейчас используется в досье Персноны, по возможности надо заменить на filter_posts_meta_cp (полный аналог, но более универсальный) и удалить всю данную функцию
 function filter_case_member_cp( $query ) {
 	
 	if(! $query->is_main_query() ) return;
