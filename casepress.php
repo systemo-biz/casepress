@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141104.2
+  Version: 20141105
 */
 
 
@@ -86,7 +86,7 @@ include_once 'cp-includes/acl_settings.php';
 include_once 'cp-includes/search-ext/_load.php';
 
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
-include_once 'cp-includes/notificare/load.php';
+include_once 'cp-includes/notificare/_load.php';
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';

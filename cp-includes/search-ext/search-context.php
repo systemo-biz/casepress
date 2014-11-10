@@ -10,6 +10,21 @@ Description: Добавляет виджет поиска, который зав
 function search_context_form($attr) {
 	global $wp;
 	ob_start();
+	?>
+	<?php
+
+	$user_id = get_current_user_id();
+	$person_id = get_person_by_user($user_id);
+
+	?>
+	<div id="navigation">
+		<ul>
+			<li>Мои дела (<a href="/cases?meta_responsible-cp-posts-sql=<?php echo $person_id; ?>">ответственный</a>, <a href="/cases?meta_members-cp-posts-sql=<?php echo $person_id; ?>">участник</a>)</li>
+		</ul>
+	</div>
+
+	<?php
+
 
 	//Если это одиночная запись, то поиск перейдет на главную страницу, иначе будет выполняться поиск в текущем списке
 	if(is_single()) {

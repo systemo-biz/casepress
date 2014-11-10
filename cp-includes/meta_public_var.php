@@ -62,27 +62,22 @@ add_action( 'pre_get_posts', 'filter_case_member_cp' );
 
 
 //универсальный фильтр по метаполям
+// Укахываем параметр meta_ и далее ключ. Если значения совпали, то произойдет отбор.
 function filter_posts_meta_cp($query) {
 
 	if(empty($_REQUEST)) return;
 
+	if(! $query->is_main_query()) return;
 
-	//Определяем все параметры, в которых есть префикс meta_
-	
-/*
-	$meta_keys = array();
-
-	foreach ( array_keys( $_REQUEST ) as $key ) {
-	    if ( 'meta_' == substr( $key, 0, 5 ) ) $meta_keys[] = $key;﻿
+	foreach ( array_keys($_REQUEST) as $key) {
+	    if ( 'meta_' == substr( $key, 0, 5 ) ) $meta_keys[] = $key;
 	}
-*/
-	//Если не нашлось параметров на meta_ то возвращаемся
-	//if(empty($meta_keys)) return;
 
-	//Получаем текущий запрос мет
-	//$meta_query = $query->get('meta_query');
 
-	//Добавляем в запрос фильтр по каждой мете
+	if(empty($meta_keys)) return;
+
+	$meta_query = $query->get('meta_query');
+
 	foreach ($meta_keys as $key_request) {
 		$meta_key = substr( $key_request, 5);
 
@@ -101,7 +96,7 @@ function filter_posts_meta_cp($query) {
 	return;	
 
 } 
-//add_action('pre_get_posts', 'filter_posts_meta_cp');
+add_action('pre_get_posts', 'filter_posts_meta_cp');
 
 
 
