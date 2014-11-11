@@ -7,9 +7,14 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141111.2
+  Version: 20141111.4
 */
 
+/*
+
+Все компоненты следует структурировать по методу ВИСИ http://casepress.org/mece/
+
+*/
 
 
 //Надо отказываться от DT и выпиливать его к чертям. 
