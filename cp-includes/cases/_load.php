@@ -11,3 +11,4 @@ include_once('includes/cases_shortcode_manage.php');
 include_once('includes/cases_view_admin.php');
 include_once 'includes/visits.php';
 include_once 'includes/filter_open_closed.php';
+include_once 'includes/add_nav_items.php';

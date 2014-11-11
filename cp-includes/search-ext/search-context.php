@@ -13,17 +13,8 @@ function search_context_form($attr) {
 	?>
 	<?php
 
-	$user_id = get_current_user_id();
-	$person_id = get_person_by_user($user_id);
+	do_action('add_navigation_item');
 
-	?>
-	<div id="navigation">
-		<ul>
-			<li>Мои дела (<a href="/cases?meta_responsible-cp-posts-sql=<?php echo $person_id; ?>">ответственный</a>, <a href="/cases?meta_members-cp-posts-sql=<?php echo $person_id; ?>">участник</a>)</li>
-		</ul>
-	</div>
-
-	<?php
 
 
 	//Если это одиночная запись, то поиск перейдет на главную страницу, иначе будет выполняться поиск в текущем списке
@@ -33,11 +24,13 @@ function search_context_form($attr) {
 		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
 	}
 
+	$s = esc_attr( get_search_query() );
+
 	?>
 	<form role="search" method="get" class="search-context-form" action="<?php echo esc_url( $current_url ); ?>">
 		<div class="form-group">
 			<label for="search-field-cp">Найти:</label>
-			<input id="search-field-cp" type="search" class="search-field-cp form-control" placeholder="Введите искомый текст" value="<?php echo esc_attr( get_search_query() ); ?>" name="s">
+			<input id="search-field-cp" type="search" class="search-field-cp form-control" placeholder="Введите искомый текст" value="<?php echo $s; ?>" name="s" />
 		</div>
 		<?php do_action('search_form_add_item'); ?>
 		<div>

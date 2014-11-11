@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/casepress-studio/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141110
+  Version: 20141111.2
 */
 
 
@@ -32,6 +32,9 @@ include_once 'cp-includes/persons/_load.php';
 //Организации
 include_once 'cp-includes/organizations/_load.php'; 
 
+//Объекты
+include_once 'cp-includes/objects/_load.php'; 
+
 //Прочее
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
 include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
@@ -52,6 +55,8 @@ include_once 'cp-includes/sidebars/sidebars.php';
 
 include_once 'cp-includes/meta_public_var.php';
 include_once 'cp-includes/lab_temp.php';
+
+include_once 'cp-includes/actions_box.php';
 
 //*********************************
 //Под вопросом на удаление

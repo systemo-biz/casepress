@@ -18,7 +18,7 @@ function add_open_field_to_context_search() {
 			<option <?php selected( $open, "", true ); ?> value="">Все дела</option>
 			<option <?php selected( $open, "yes", true ); ?> value="yes">Только открытые дела</option>
 			<option <?php selected( $open, "no", true ); ?> value="no">Только закрытые дела</option>
-		</seclet>
+		</select>
 	</div>
 
 <?php
