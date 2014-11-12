@@ -62,6 +62,7 @@ include_once 'cp-includes/meta_public_var.php';
 include_once 'cp-includes/lab_temp.php';
 
 include_once 'cp-includes/actions_box.php';
+include_once 'cp-includes/at_js_integrate/at_js_integrate.php';
 
 //*********************************
 //Под вопросом на удаление

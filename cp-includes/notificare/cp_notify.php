@@ -18,8 +18,6 @@ class cp_notification_for_basic_comments {
         
         add_shortcode('notifies', array($this, 'list_notifies'));
         
-        //add users to list for notifi
-        add_action( 'wp_insert_comment', array($this, 'add_users_list_to_comment_for_notice'), 110, 2);
         
         //add plan function
         add_action('cp_email_notification', array($this, 'email_notifications_for_users'));
@@ -31,45 +29,7 @@ class cp_notification_for_basic_comments {
     }
     
     
-    function add_users_list_to_comment_for_notice($comment_id, $comment){
-        
-        if ( $comment->comment_type == 'visited') return;
-        
-        //get post ID and $post
-        $post_id = $comment->comment_post_ID;
-        $r = get_post( $post_id );
-        
-        //it is cases?
-        if ( $r->post_type != 'cases') return;
-        
-        //add tag for plan email
-        add_comment_meta($comment_id, 'email_notify', 0);
-        
-        //get members for cases
-        $members = get_post_meta( $post_id, 'members-cp-posts-sql');
 
-        //$message = $post_id . '<пост, участник: ' . print_r($members, true);
-        //error_log($message);
-        
-        //add user id to list for notification
-        foreach ( $members as $member ) {
-            $id_usr = get_user_by_person( $member);
-
-			//Если участник текущий пользователь, то не нужно добавлять в список уведомлений
-            if (get_current_user_id() == $id_usr) continue;
-
-			//Если участник забанен, то не нужно добавлять в список уведомлений
-			$userdata = new WP_User( $id_usr );
-			$user_role = array_shift($userdata->roles);
-			if ($user_role == 'banned') continue;
-			
-			//Если у участника есть пользователь
-            if ($id_usr > 0) {
-                add_comment_meta( $comment_id, 'notify_user', $id_usr);
-                //error_log('comment: '. $comment_id . ', val: ' . $user);
-            }
-        }
-    }
     
     function email_notifications_for_users() {
         //error_log('********************** Запланированный хук ***************************');
@@ -84,8 +44,13 @@ class cp_notification_for_basic_comments {
             $users = get_comment_meta( $comment_id, 'notify_user');
             $users_notified = get_comment_meta( $comment_id, 'notified_user' );
             foreach ($users as $nuser_id) {
-                //error_log('user: '.$nuser_id);
-                //error_log('users note: '.print_r($users_notified, true));
+
+
+                //Если участник забанен, то не нужно добавлять в список уведомлений
+                $userdata = new WP_User( $nuser_id );
+                $user_role = array_shift($userdata->roles);
+                if ($user_role == 'banned') continue;
+
                 //тут не плохо было бы проверить отправлено данному пользователю уже уведомление или нет
                 if(in_array($nuser_id, $users_notified)) continue;
                 
