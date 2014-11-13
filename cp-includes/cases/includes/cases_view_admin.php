@@ -33,11 +33,45 @@ private function __construct() {
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_date_end'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_result'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_parent'));
+    add_action('add_field_for_case_aside_parameters', array($this, 'add_parser_result_function_cp'));
 
     add_action( 'save_post', array($this, 'save_data_post'));
 
 }
 
+//Функция для парсинга результатов AJAX запроса
+function add_parser_result_function_cp(){
+?>
+        <script type="text/javascript">
+
+
+            //format data from server and render list nodes for select2
+            function elementFormatResult(element) {
+                    //alert(element.title);
+                    var markup = "<div id=\"select-list\">";
+                    //if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
+                    //	markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
+                    //}
+                    markup += "<div class='node-title'>" + element.title + "</div>";
+                    if (element.email !== undefined) {
+                            markup += "<div class='node-email'>" + element.email + "</div>";
+                    }
+
+                    markup += "</div>";
+                    //alert(markup);
+                    return markup;
+            }
+
+            //get field for put to input 
+            function elementFormatSelection(element) {
+                    return element.title;
+            }
+    </script>
+
+<?php
+
+}
+    
 //Добавляем поле Участники под заголовок
 function form_case_members_render($post){
     
@@ -90,8 +124,8 @@ function form_case_members_render($post){
                         }
                     },
 
-                    formatResult: elementFormatResult, // omitted for brevity, see the source of this page
-                    formatSelection: elementFormatSelection, // omitted for brevity, see the source of this page
+                    formatResult: function(element){ return "<div>" + element.title + "</div>" }, // omitted for brevity, see the source of this page
+                    formatSelection: function(element){  return element.title; }, // omitted for brevity, see the source of this page
                     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                 });
@@ -101,7 +135,7 @@ function form_case_members_render($post){
                 if(! empty($members)):
                     $members_data = array();
                     foreach ($members as $member):
-                        $members_data[] = array('id' => $member, 'title' => get_the_title($member));
+                        if(!empty($member)) $members_data[] = array('id' => $member, 'title' => get_the_title($member));
                     endforeach;
                     ?>
                     $("#case_members").select2(
@@ -165,8 +199,8 @@ function add_field_responsible($post) {
                             }
                     },
                     
-                    formatResult: elementFormatResult, // omitted for brevity, see the source of this page
-                    formatSelection: elementFormatSelection, // omitted for brevity, see the source of this page
+                    formatResult: function(element){ return "<div>" + element.title + "</div>" }, // omitted for brevity, see the source of this page
+                    formatSelection: function(element){  return element.title; }, // omitted for brevity, see the source of this page
                     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                 });
@@ -241,14 +275,14 @@ function add_field_parent($post) {
                                 };
                         }
                     },
-                    formatResult: elementFormatResult, // omitted for brevity, see the source of this page
-                    formatSelection: elementFormatSelection, // omitted for brevity, see the source of this page
+                    formatResult: function(element){ return "<div>" + element.title + "</div>" }, // omitted for brevity, see the source of this page
+                    formatSelection: function(element){  return element.title; }, // omitted for brevity, see the source of this page
                     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
                     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                 });
                 
                 //Если есть данные о значении, то делаем выбор
-                <?php if($case_parent_id != ''): ?>   
+                <?php if(!empty($case_parent_id)): ?>   
                     $("#case_post_parent_input").select2(
                         "data", 
                         <?php echo json_encode(array('id' => $case_parent_id, 'title' => get_the_title($case_parent_id))); ?>

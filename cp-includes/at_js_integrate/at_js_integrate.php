@@ -1,5 +1,10 @@
 <?php
 
+/*
+
+Функции интеграции для плагина упоминаний через @ https://github.com/casepress-studio/at-js-4-wp-cp
+
+*/
 
 //Добавляем упомянутых в список уведомлений
 function add_mention_users_to_notify_list($meta_id, $object_id, $meta_key, $meta_value ) {
@@ -41,7 +46,11 @@ add_action('updated_comment_meta', 'add_mention_users_to_acl_mentions_list', 20,
 function add_user_to_acl_from_at_js_cp($meta_id, $object_id, $meta_key, $meta_value){
 	if($meta_key != 'acl_list_from_at_js') return;
 
-
+    $acl_users = get_post_meta($post_data->ID, 'acl_users');
+    
+    if(!in_array($meta_value, $acl_users)) add_post_meta($object_id, 'acl_users', $meta_value);
 
 	return;
 }
+add_action('added_post_meta', 'add_user_to_acl_from_at_js_cp', 20, 4);
+add_action('updated_post_meta', 'add_user_to_acl_from_at_js_cp', 20, 4);

@@ -10,7 +10,7 @@
   Version: 20141111.4
 */
 
-/*
+/* 
 
 Все компоненты следует структурировать по методу ВИСИ http://casepress.org/mece/
 
@@ -46,7 +46,7 @@ include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
 include_once 'cp-includes/redirect.php';
 include_once 'cp-includes/data-registration.php';
-include_once 'cp-includes/acl_settings.php';
+include_once 'cp-includes/acl_integrate/acl_int.php';
 
 include_once 'cp-includes/search-ext/_load.php';
 
@@ -63,6 +63,7 @@ include_once 'cp-includes/lab_temp.php';
 
 include_once 'cp-includes/actions_box.php';
 include_once 'cp-includes/at_js_integrate/at_js_integrate.php';
+include_once 'cp-includes/add_status_archive.php';
 
 //*********************************
 //Под вопросом на удаление
