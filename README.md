@@ -16,7 +16,7 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 # Установка
 
 1. Ставим тему https://github.com/casepress-studio/alienship-cp
-2. Ставим дочернюю тему https://github.com/casepress-studio/alienship-cp-child
+2. Создаем дочернюю тему - для упрощения настроек
 3. Выполняем инструкцию http://casepress.org/kb/shpargalka/
 
 
