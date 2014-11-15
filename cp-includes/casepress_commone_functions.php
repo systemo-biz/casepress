@@ -6,6 +6,9 @@
 
 */
 
+//Добавляем поддержку выполнения шорткодов в текстовом виджете
+// http://codex.wordpress.org/Function_Reference/do_shortcode#Examples
+add_filter('widget_text', 'do_shortcode'); 
 
 //фильтруем комменты по типу
 function filter_comments_cp($arg) {

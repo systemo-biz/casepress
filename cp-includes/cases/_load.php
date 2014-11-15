@@ -13,3 +13,4 @@ include_once 'includes/visits.php';
 include_once 'includes/filter_open_closed.php';
 include_once 'includes/add_nav_items.php';
 include_once 'includes/add_case_members_to_notify.php';
+include_once 'includes/add_panel_manage_case.php';
