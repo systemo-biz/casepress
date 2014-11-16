@@ -29,13 +29,16 @@ function add_panel_actions_cp(){
 
 
 //Добавляем хук в тему для вызова наших сайдбаров
-function add_text_to_commone_sidebar_cp($index){
+function add_text_to_commone_sidebar_cp($index){    
     
     //Если есть виджеты - возврат
     if(is_active_sidebar($index)) return;
     
     // Если текущий сайдбар не общий - возврат
     if($index != 'commone') return;
+    
+    //Если админка, то возврат
+    if(is_admin()) return;
     
     do_action('add_item_to_empty_sidebar_commone');
  
