@@ -41,12 +41,13 @@ include_once 'cp-includes/organizations/_load.php';
 include_once 'cp-includes/objects/_load.php'; 
 
 //Прочее
-include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
-include_once 'cp-includes/cp-acf-integration/cp-acf-integration.php';
+include_once 'cp-includes/acf_integrate/_load.php';
+include_once 'cp-includes/acl_integrate/acl_int.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
+
+include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
 include_once 'cp-includes/redirect.php';
 include_once 'cp-includes/data-registration.php';
-include_once 'cp-includes/acl_integrate/acl_int.php';
 
 include_once 'cp-includes/search-ext/_load.php';
 

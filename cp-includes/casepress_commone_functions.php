@@ -72,6 +72,10 @@ class CP_Include {
 		wp_enqueue_style('jquery');
 
 		wp_localize_script( 'jquery', 'cp_core', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );  
+    
+        //Load thickbox
+        wp_enqueue_script( 'thickbox' );
+ 
 
 		//select2 - register component files
 		wp_register_script( 'select2', plugins_url( '/select2/select2.js',__FILE__ ), array(), '3.4.0', 'all');

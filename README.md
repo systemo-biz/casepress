@@ -16,17 +16,12 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 # Установка
 
 1. Ставим тему https://github.com/casepress-studio/alienship-cp
-2. Создаем дочернюю тему - для упрощения настроек
+2. Ставим дочернюю тему https://github.com/casepress-studio/alienship-cp-child
 3. Выполняем инструкцию http://casepress.org/kb/shpargalka/
 
 
 
 # Todo
-
-## ближайшие
-- перекинуть вызовы сайдбаров на хук https://developer.wordpress.org/reference/hooks/dynamic_sidebar_after/
-- Интегрировать ACL
-
 
 ## Р0. Прочее
 1. Добавить хук замены заголовков поста в форме редактирования
@@ -52,6 +47,8 @@ EN: This is a deep alpha version and try to put it without understanding the alg
 - Добавить уведомление о нарушении срока
 
 
+## Р4. ACL
+- Интегрировать ACL
 
 
 ## Р5. Тема

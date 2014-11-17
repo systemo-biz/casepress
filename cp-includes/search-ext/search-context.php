@@ -54,26 +54,28 @@ function add_dropdown__post_type_to_context_search() {
 
 	if(! is_search()) return;
 
-		if(empty($_REQUEST['post_type'])) {
-			$post_type_ruquest ='';
-		} else {
-			$post_type_ruquest = $_REQUEST['post_type'];
-		}
+    if(empty($_REQUEST['post_type'])) {
+        $post_type_ruquest ='';
+    } else {
+        $post_type_ruquest = $_REQUEST['post_type'];
+    }
 
-		$post_types = get_post_types(array(
-			'public'   				=> true,
-			//'publicly_queryable'	=> true,
-			'has_archive'			=> true,
-			'exclude_from_search'	=> false,
-			), 'objects');
-	//var_dump($post_types);
-	?>
+    $post_types = get_post_types(array(
+        'public'   				=> true,
+        '_builtin'	=> false,
+        'has_archive'			=> true,
+        'exclude_from_search'	=> false,
+        ), 'objects');
+//var_dump($post_types);
+?>
 
 	<div id="post_type_field_wrapper_cp" class="form-group">
 		<label for="post_type_field_cp"><span>Тип</span></label>
 		<select id="post_type_field_cp" class="form-control" placeholder="Выберите тип" name="post_type">
 		<?php
 		echo '<option value="" ' . selected( $post_type_ruquest, '', false ) . '>Все типы</option>'; 
+		echo '<option value="post" ' . selected( $post_type_ruquest, 'post', false ) . '>Посты (Блог)</option>'; 
+		echo '<option value="page" ' . selected( $post_type_ruquest, 'page', false ) . '>Страницы</option>'; 
 		foreach($post_types as $post_type) {
 		    echo '<option value="' . $post_type->name . '"' . selected( $post_type_ruquest, $post_type->name, false ) . '>' . $post_type->labels->name . '</option>';
 		}

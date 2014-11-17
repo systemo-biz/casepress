@@ -40,10 +40,36 @@ ul.checkbox_list {
   border-top-left-radius:3px!important;
   border-top-right-radius:3px!important;
 }
-.acf_relationship .widefat {margin-bottom: 0;}
-tr.row:before, tr.row:after {display: none !important;}
-td.remove .acf-button-add {margin-top: -18px !important;}
-td.remove .acf-button-remove {margin-bottom: -18px !important;}
+
+
+/*
+ACF Relationship
+*/
+.acf_relationship {
+position: relative;
+overflow: hidden;
+}
+
+.acf_relationship .relationship_left {
+width: 50%;
+float: left;
+}
+
+.acf_relationship .widefat {
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+tr.row:before, tr.row:after {
+    display: none !important;
+}
+td.remove .acf-button-add {
+    margin-top: -18px !important;
+}
+td.remove .acf-button-remove {
+    margin-bottom: -18px !important;
+}
 	
 .relationship_search {
 	height:26px!important;
@@ -54,6 +80,35 @@ td.remove .acf-button-remove {margin-bottom: -18px !important;}
 .bl.relationship_list.ui-sortable {
 	border:1px solid #dfdfdf!important;
 	}
+
+/*
+Orhers
+*/
+
+.widefat {
+border-spacing: 0;
+width: 100%;
+clear: both;
+margin: 0;
+}
+
+.widefat th {
+text-align: left;
+line-height: 1.3em;
+font-size: 14px;
+}
+.widefat td, .widefat th {
+padding: 8px 10px;
+}
+
+
+.acf_relationship .relationship_list li a .acf-button-add, .acf_relationship .relationship_list li a .acf-button-remove {
+position: absolute;
+top: 5px;
+right: 5px;
+display: none;
+cursor: pointer;
+}
 
 .textarea, .password, .email, .number, .text {
 	padding:5px 0 5px 0!important;
