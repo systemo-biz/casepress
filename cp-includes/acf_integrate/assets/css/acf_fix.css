@@ -81,9 +81,6 @@ td.remove .acf-button-remove {
 	border:1px solid #dfdfdf!important;
 	}
 
-/*
-Orhers
-*/
 
 .widefat {
 border-spacing: 0;
@@ -101,6 +98,16 @@ font-size: 14px;
 padding: 8px 10px;
 }
 
+
+
+/*
+Orhers
+*/
+
+.acf-form .label {
+text-align: initial;
+    font-size: 15px;
+}
 
 .acf_relationship .relationship_list li a .acf-button-add, .acf_relationship .relationship_list li a .acf-button-remove {
 position: absolute;
