@@ -28,14 +28,7 @@ function cp_do_not_show_excerpt($excerpt, $post_id = 0){
 } add_filter('the_excerpt', 'cp_do_not_show_excerpt', 5, 2);
 
 
-//Добавляем секцию с мета данными для всех типов постов
-function add_top_section_metadata_to_post($content) {
 
-	$content =  '<div class="metadata_top_cp">' . do_action('add_metadata_to_post_cp') . '<div>' . $content;
-
-	return $content;
-
-}  add_filter('the_content', 'add_top_section_metadata_to_post');
 
 
 
