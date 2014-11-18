@@ -1,7 +1,5 @@
 <?php
 
-
-add_filter('the_content', 'add_hooks_for_postmeta_cp');
 function add_hooks_for_postmeta_cp($content){
 	ob_start();
     ?>
@@ -22,6 +20,9 @@ function add_hooks_for_postmeta_cp($content){
     
 	return $html;
 }
+add_filter('the_excerpt', 'add_hooks_for_postmeta_cp', 9, 2);
+add_filter('the_content', 'add_hooks_for_postmeta_cp', 9, 2);
+
 
 function add_hook_for_sections_cp(){
 	do_action('cp_entry_sections');
