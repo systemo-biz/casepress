@@ -66,6 +66,8 @@ include_once 'cp-includes/actions_box.php';
 include_once 'cp-includes/at_js_integrate/at_js_integrate.php';
 include_once 'cp-includes/add_status_archive.php';
 include_once 'cp-includes/print_cover/_load.php';
+include_once 'cp-includes/comments/_load.php';
+
 
 //*********************************
 //Под вопросом на удаление
