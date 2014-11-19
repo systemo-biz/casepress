@@ -6,6 +6,10 @@
 
 */
 
+//отключаем защиту от флуда
+remove_filter( 'comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
+ 
+
 //Добавляем поддержку выполнения шорткодов в текстовом виджете
 // http://codex.wordpress.org/Function_Reference/do_shortcode#Examples
 add_filter('widget_text', 'do_shortcode'); 

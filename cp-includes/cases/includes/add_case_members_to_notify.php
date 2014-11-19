@@ -36,6 +36,7 @@ function add_users_list_to_comment_for_notice($comment_id, $comment){
             //error_log('comment: '. $comment_id . ', val: ' . $user);
         }
     }
+    return;
 }
 //add users to list for notifi
 add_action( 'wp_insert_comment', 'add_users_list_to_comment_for_notice', 110, 2);

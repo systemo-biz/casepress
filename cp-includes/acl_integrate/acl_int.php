@@ -28,6 +28,8 @@ class ACL_Int {
         } else {
             if(in_array($user_id, $acl_users)) delete_post_meta($object_id, 'acl_users', $user_id); // если пользовател в списке, то удалить
         }
+        
+        return;
     }
     
     //при попытке обновить ACL берем список пользователей из списка участников (не все участники могут иметь пользователей)
