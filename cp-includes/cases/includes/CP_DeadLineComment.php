@@ -61,28 +61,8 @@ function DeadLineComment() {
 		  $post_date_end = get_post_meta($post_id,'cp_date_end', true);
 		  if ($post_date_end==''){
 		    $comment = array (
-              'author_email' => '',  
-              'ID' => '',  
-              'karma' => '',  
-              'number' => '',  
-              'offset' => '',  
-              'orderby' => '',  
-              'order' => 'DESC',  
-              'parent' => '',  
-              'post_id' => $post_id,  
-              'post_author' => '',  
-              'post_name' => '',  
-              'post_parent' => '',  
-              'post_status' => '',  
-              'post_type' => 'cases',  
-              'status' => '',  
+              'post_id' => $post_id,   
               'type' => 'deadline_fail',  
-              'user_id' => '',  
-              'search' => '',  
-              'count' => false,  
-              'meta_key' => '',  
-              'meta_value' => '',  
-              'meta_query' => '',
             );		  
 	        $comm = get_comments($comment);
 	        if ($comm) {return 0;}
