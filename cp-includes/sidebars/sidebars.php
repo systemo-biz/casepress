@@ -69,19 +69,33 @@ function view_sidebars_cp(){
     
     dynamic_sidebar('commone');
 	
-    if(is_post_type_archive('organizations') or is_singular('organizations')) {
-		dynamic_sidebar( 'organizations' );
+    if (is_home() or is_tag() or is_category()) {
+		$sidebar_id = 'blog';
 	} elseif (is_post_type_archive('cases') or is_singular('cases') or is_tax( 'functions' )) {
-		dynamic_sidebar( 'cases' );
-	} elseif (is_post_type_archive('report') or is_singular('report') or is_tax( 'report_cat' )) {
-		dynamic_sidebar( 'report' );
-	} elseif (is_post_type_archive('objects') or is_singular('objects') or is_tax( 'objects_category' )) {
-		dynamic_sidebar( 'objects' );
+		$sidebar_id = 'cases';
 	} elseif (is_post_type_archive('persons') or is_singular('persons')) {
-		dynamic_sidebar( 'persons' );
-	} elseif (is_home() or is_tag() or is_category()) {
-		dynamic_sidebar( 'blog' );        
+		$sidebar_id =  'persons';
+    } elseif (is_post_type_archive('organizations') or is_singular('organizations')) {
+		$sidebar_id = 'organizations';
+	} elseif (is_post_type_archive('report') or is_singular('report') or is_tax( 'report_cat' )) {
+		$sidebar_id = 'report' ;
 	} else {
-        dynamic_sidebar( 'other' );
+        $sidebar_id = 'other';
+        
     }
+    
+    $sidebar_id = apply_filters('change_sidebar_cp', $sidebar_id);
+    
+    dynamic_sidebar( $sidebar_id );
+    
 } add_action('sidebars_cp', 'view_sidebars_cp');
+
+//подменяем сайдбар для страниц объектов
+function change_sidebar_for_objects($sidebar_id){
+
+    if (is_post_type_archive('objects') or is_singular('objects') or is_tax( 'objects_category' )) 
+        $sidebar_id = 'objects';
+
+    return $sidebar_id;
+    
+} add_filter('change_sidebar_cp', 'change_sidebar_for_objects');

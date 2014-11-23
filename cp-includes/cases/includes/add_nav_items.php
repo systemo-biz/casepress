@@ -6,12 +6,8 @@ function add_case_items_navigation(){
 	$person_id = get_person_by_user($user_id);
 
 	?>
-	<div id="navigation">
-		<ul>
 			<li><a href="/cases?open=yes&meta_responsible-cp-posts-sql=<?php echo $person_id; ?>">Я ответственный (мои дела)</a></li>
 			<li><a href="/cases?open=yes&meta_members-cp-posts-sql=<?php echo $person_id; ?>">Я участник (мои дела)</a></li>
-		</ul>
-	</div>
 
 	<?php
 

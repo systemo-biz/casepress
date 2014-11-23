@@ -11,11 +11,13 @@ function search_context_form($attr) {
 	global $wp;
 	ob_start();
 	?>
-	<?php
+    <div id="navigation">
+		<ul>
+            <?php do_action('add_navigation_item'); ?>
+        </ul>
+	</div>
 
-	do_action('add_navigation_item');
-
-
+    <?php
 
 	//Если это одиночная запись, то поиск перейдет на главную страницу, иначе будет выполняться поиск в текущем списке
 	if(is_single()) {
