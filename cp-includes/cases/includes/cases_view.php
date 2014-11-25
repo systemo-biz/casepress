@@ -23,16 +23,18 @@ class CaseViewsSingltone {
 	private function __construct() {
 
 		add_filter('the_content', array($this, 'add_wrapper_content_case_cp'), 9, 2);
-        add_filter('the_content', array($this, 'add_field_members_cp'));
-        add_filter('the_content', array($this, 'add_meta_content_top'), 14, 2);
-        add_filter('the_excerpt', array($this, 'add_meta_content_top'), 14, 2);
+        add_action('content_before_wrapper_cp', array($this, 'add_meta_content_top'), 14, 2);
+        //add_filter('the_excerpt', array($this, 'add_meta_content_top'), 14, 2);
+        add_action('content_before_wrapper_cp', array($this, 'add_field_members_cp'), 22);
 
 	    add_action('wp_footer', array($this, 'add_js_functions'));
 
+        add_action('case_meta_top_add_li', array($this, 'add_id_and_category_to_case_meta'));
         add_action('case_meta_top_add_li', array($this, 'add_result_meta'));
         add_action('case_meta_top_add_li', array($this, 'add_deadline'));
         add_action('case_meta_top_add_li', array($this, 'add_responsible'));
         
+
         add_action('wp', array($this, 'save_members'));
         add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
 
@@ -146,7 +148,6 @@ function add_field_members_cp($content){
     
     global $post;
 
-    ob_start();
     ?>
 
     <div id="case_members_wrapper" class="panel panel-default">
@@ -268,57 +269,56 @@ function add_field_members_cp($content){
              
 
     <?php
-    $html = ob_get_contents();
-    ob_get_clean();
-    return $html . $content;
+
 }
 
 
 
 
     //Доавляем секцию с мета данными
-    function add_meta_content_top($content, $post_id = 0){
-
-
-        if (!(is_singular('cases') or (is_search() and get_post_type($post_id) == 'cases') or (get_post_type($post_id) == 'cases' and is_archive()))) return $content;
-
+    function add_meta_content_top(){
         global $post;
+        
+        if (!(is_singular('cases') or (is_search() and get_post_type($post->ID) == 'cases') or (get_post_type($post->ID) == 'cases' and is_archive()))) return;
 
-        ob_start();
+        
+
         ?>
         <section id='meta-case'>
             <ul class="list-inline">
-                 <li>
-                    <span>
-                        <span class="glyphicon glyphicon-link"></span>
-                        <span id="case_id"><a href="<?php the_permalink(); ?>">#<?php the_ID() ?></a></span>
-                    </span>
-                </li>
-                <li>
-                    <span id="case_category_meta_wrapper">
-                        <?php 
-                        $category_case = wp_get_post_terms($post->ID, 'functions'); 
-                        //var_dump($category_case);
-                        ?>
-                        <span class="glyphicon glyphicon-folder-open"></span>
-                        <?php if(empty($category_case)): ?>
-                            <span class="label label-success">Без категории</span>
-                        <?php else: ?>
-                            <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>"><?php echo $category_case[0]->name; ?></a>
-                        <?php endif; ?>
-                        
-                    </span>
-                </li>
                 <?php do_action('case_meta_top_add_li'); ?>
             </ul> 
         </section>
         <?php
-        $html = ob_get_contents();
-        ob_get_clean();
-        return $html . $content;
+
     }
 
-
+    function add_id_and_category_to_case_meta(){
+        global $post;
+        ?>
+        <li>
+            <span>
+                <span class="glyphicon glyphicon-link"></span><span id="case_id"><a href="<?php the_permalink(); ?>">#<?php the_ID() ?></a></span>
+            </span>
+        </li>
+        <li>
+            <span id="case_category_meta_wrapper">
+                <?php 
+                $category_case = wp_get_post_terms($post->ID, 'functions'); 
+                //var_dump($category_case);
+                ?>
+                <span class="glyphicon glyphicon-folder-open">
+                <?php if(empty($category_case)): ?>
+                    <span class="label label-success">Без категории</span>
+                <?php else: ?>
+                    <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>"><?php echo $category_case[0]->name; ?></a>
+                <?php endif; ?>
+                </span>
+            </span>
+        </li>
+        <?php
+    }
+    
    //Добавляем результат в мету кейса, если есть
     function add_result_meta(){
         global $post;
