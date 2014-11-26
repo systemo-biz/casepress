@@ -1,4 +1,4 @@
-CasePress - adaptive case managment system by WordPress
+CasePress - adaptive case managment system powered by WordPress
 =========
 
 [casepress.org](http://casepress.org/)
