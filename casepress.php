@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/sistemo/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141125
+  Version: 20141127
 */
 
 /* 
@@ -17,8 +17,6 @@
 */
 
 
-//Надо отказываться от DT и выпиливать его к чертям. 
-include_once 'cp-components/cp-datatable/dt.php';
 
 //Общие функции
 include_once 'cp-includes/casepress_commone_functions.php';
@@ -41,6 +39,7 @@ include_once 'cp-includes/objects/_load.php';
 
 //Прочее
 include_once 'cp-includes/notice-page/add_notification_list.php';
+include_once 'cp-includes/new-content-menu.php';
 
 include_once 'cp-includes/acf_integrate/_load.php';
 include_once 'cp-includes/acl_integrate/acl_int.php';
