@@ -9,11 +9,11 @@ function add_dossier_to_person_page(){
 	$query = new WP_Query('post_type=cases&meta_key=members-cp-posts-sql&meta_value='.$post->ID);
 	?>
 	<section id="person_dossier" class="cases-box">
-		<div class="cases-box-header">
+		<header class="cases-box-header">
 	    	<h1>Досье</h1>
 	    	<hr>
-		</div>
-		<div class="cases-box-content">
+		</header>
+		<article class="cases-box-content">
 			<?php 
             while ( $query->have_posts() ) : 
                 $query->the_post(); 
@@ -30,7 +30,7 @@ function add_dossier_to_person_page(){
 				wp_reset_postdata();
 			?>
 
-		</div>
+		</article>
 		<footer>
             <div class="btn-group" role="group" aria-label="...">
                 <a href="<?php echo add_query_arg( array('post_type'=>'cases','meta_members-cp-posts-sql'=>$post->ID), get_site_url()); ?>" class='btn btn-default'>Дела в которых участвует</a>

@@ -18,3 +18,4 @@ include_once 'includes/add_panel_manage_case.php';
 include_once 'includes/CP_DeadLineComment.php';
 include_once 'includes/cp-notice-comment.php';
 include_once 'includes/CP_NoticeComment.php';
+include_once 'includes/dossier.php';
