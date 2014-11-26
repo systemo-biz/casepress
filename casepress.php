@@ -7,7 +7,7 @@
   GitHub Plugin URI: https://github.com/sistemo/casepress/
   GitHub Branch: master
   Author URI: http://casepress.org
-  Version: 20141127
+  Version: 20141128
 */
 
 /* 
