@@ -20,11 +20,11 @@ CasePress - adaptive case managment system powered by WordPress
 
 Лицензия [MIT](http://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
 
-Это бета-версия. Все вопросы, предложения и идеи пишем тут https://github.com/sistemo/casepress/issues
+Это бета-версия. Все вопросы, предложения и идеи пишем тут https://github.com/systemo-biz/casepress/issues
 
 # Установка
 
-1. Ставим тему https://github.com/casepress-studio/alienship-cp
+1. Ставим тему https://github.com/systemo-biz/alienship-cp
 2. Лучше сразу создать дочернюю тему
 3. Выполняем инструкцию http://casepress.org/kb/shpargalka/
 
