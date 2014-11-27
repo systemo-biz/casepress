@@ -47,7 +47,6 @@ include_once 'cp-includes/cp-reports/cp-reports.php';
 
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
 include_once 'cp-includes/redirect.php';
-include_once 'cp-includes/data-registration.php';
 
 include_once 'cp-includes/search-ext/_load.php';
 
