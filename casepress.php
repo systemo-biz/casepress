@@ -7,7 +7,7 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20141128.7
+Version: 20141128.8
 */
 
 /*
@@ -22,7 +22,7 @@ include_once 'cp-includes/settings/_load.php';
 
 //Дела
 include_once 'cp-includes/cases/_load.php';
-include_once 'cp-includes/function-redirect-onsave.php';
+include_once 'cp-includes/redirect-onsave.php';
 
 //Персоны
 include_once 'cp-includes/persons/_load.php'; 

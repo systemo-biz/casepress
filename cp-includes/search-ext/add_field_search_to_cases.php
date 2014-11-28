@@ -4,9 +4,10 @@
 
 //Добавляем поиск по типу поста на страницы поиска
 
-function add_responsible_to_context_search() {
+function add_responsible_to_context_search($resp = '') {
 
 	if (!(is_post_type_archive('cases') or is_tax( 'functions' ))) return;
+    
 	if(isset($_REQUEST['meta_responsible-cp-posts-sql'])) $resp = $_REQUEST['meta_responsible-cp-posts-sql'];
 	?>
 	<div id="case_responsible_field_wrapper_cp" class="form-group">
