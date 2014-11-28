@@ -1,22 +1,18 @@
 <?php
 /*
-  Plugin Name: CasePress
-  Plugin URI: http://casepress.org
-  Description: Adaptive Case Managment System based on WordPress. Alpha version
-  Author: CasePress
-  GitHub Plugin URI: https://github.com/systemo-biz/casepress
-  GitHub Branch: master
-  Author URI: http://casepress.org
-  Version: 20141128.5
+Plugin Name: CasePress
+Plugin URI: http://casepress.org
+Description: Adaptive Case Managment System based on WordPress. Beta-version
+Author: CasePress
+Author URI: http://casepress.org
+GitHub Plugin URI: https://github.com/systemo-biz/casepress
+GitHub Branch: master
+Version: 20141128.5
 */
 
-/* 
-
+/*
 Все компоненты следует структурировать по методу ВИСИ http://casepress.org/mece/
-
 */
-
-
 
 //Общие функции
 include_once 'cp-includes/casepress_commone_functions.php';
