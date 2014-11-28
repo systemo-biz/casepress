@@ -38,7 +38,6 @@ include_once 'cp-includes/organizations/_load.php';
 include_once 'cp-includes/objects/_load.php'; 
 
 //Прочее
-include_once 'cp-includes/notice-page/add_notification_list.php';
 include_once 'cp-includes/new-content-menu.php';
 
 include_once 'cp-includes/acf_integrate/_load.php';
@@ -51,7 +50,9 @@ include_once 'cp-includes/redirect.php';
 include_once 'cp-includes/search-ext/_load.php';
 
 include_once 'cp-includes/meta-organizations/meta-organizations.php';
-include_once 'cp-includes/notificare/_load.php';
+include_once 'cp-includes/notice/_load.php';
+//include_once 'cp-includes/notice-page/add_notification_list.php';
+
 include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
