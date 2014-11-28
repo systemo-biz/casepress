@@ -1,6 +1,9 @@
 CasePress - adaptive case managment system powered by WordPress
 =========
 # Описание
+
+## Назначение
+
 Это платформа, на базе которой можно построить гибкую ERP/CRM систему. Концепция адаптивного кейс-менеджмента, заложенная в основу системы, позволяет гибко и быстро настраивать бизнес-процессы любой сложности.
 
 Система проверена в организациях от 10 до 2000 сотрудников.
@@ -15,12 +18,17 @@ CasePress - adaptive case managment system powered by WordPress
 
 Любые операционные системы от Windows XP и MacOS, до Linux и Android.
 
+## Технические особенности
+- OpenSource и без ограничений в распространении
+- Поддержка GitHub Updater https://github.com/afragen/github-updater/
+- Использует Bootstrap http://getbootstrap.com/css/
+- php/mysql - как базовый стек технологий
 
-[casepress.org](http://casepress.org/)
+## Ссылки
 
-Лицензия [MIT](http://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
-
-Это бета-версия. Все вопросы, предложения и идеи пишем тут https://github.com/systemo-biz/casepress/issues
+- Сайт: [casepress.org](http://casepress.org/)
+- Лицензия [MIT](http://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
+- Это бета-версия. Все вопросы, предложения и идеи пишем тут https://github.com/systemo-biz/casepress/issues
 
 # Установка
 
