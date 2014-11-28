@@ -36,7 +36,8 @@ class cp_notification_for_basic_comments {
         $comments = get_comments( array(
                                 'status' => 'approve', 
                                 'meta_key'=>'email_notify',
-                                'meta_value'=>'0'
+                                'meta_value'=>'0',
+                                'number' => 10,
                                 ));
         foreach($comments as $comment){
             //error_log($comment->comment_author . '<br />' . $comment->comment_content);
@@ -123,7 +124,7 @@ $args = array(
 }
 
 function activate(){
-   wp_schedule_event( time(), '15sec', 'cp_email_notification'); 
+   wp_schedule_event( time(), 'minutely', 'cp_email_notification'); 
 }
 /*Activation and deactivation plugin*/
 function deactivate(){

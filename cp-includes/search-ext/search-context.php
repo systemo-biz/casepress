@@ -87,3 +87,25 @@ function add_dropdown__post_type_to_context_search() {
 
 <?php
 } add_action('search_form_add_item', 'add_dropdown__post_type_to_context_search');
+
+
+
+
+
+
+//Добавляем метку типа поста на страницы поиска через хук the_content
+
+function add_post_type_label_to_search_page($excerpt) {
+
+	if(is_search()) {
+		global $post;
+
+		$post_type = get_post_type( $post );
+
+		$obj = get_post_type_object( $post_type );
+
+		echo  '<div><span class="label label-default">' . $obj->labels->singular_name . '</span><div>' . $excerpt;
+	}
+
+
+} add_action('add_metadata_to_post_cp', 'add_post_type_label_to_search_page');

@@ -19,7 +19,9 @@ function cases_display_childs_cp() {
 			<?php while ( $query->have_posts() ) : $query->the_post(); ?>
             <li role="article" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <header class="entry-header">
-                    <a href="<?php the_permalink(); ?>"><h2 class="entry-title">#<?php the_ID(); ?> <?php the_title(); ?></h2></a>
+                    <a href="<?php the_permalink(); ?>">
+                        <h2 class="entry-title"><?php the_title(); ?></h2>
+                    </a>
                 </header>
                 <section id='meta-case'>
                     <ul class="list-inline">

@@ -1,17 +1,29 @@
 <?php
-
 /*
-
 Функции общие для всей системы
-
 */
+
+
+
+
+
+//Добавляем ежеменутный интервал в расписание
+add_filter( 'cron_schedules', 'cron_add_minutely_cp'); 
+
+function cron_add_minutely_cp($schedules){
+
+    $schedules['minutely'] = array(  
+        'interval' => 60,  
+        'display' => __( 'Every minute', 'casepress' )
+    );  
+    return $schedules;
+}
+
 
 //отключаем защиту от флуда
 remove_filter( 'comment_flood_filter', 'wp_throttle_comment_flood', 10, 3);
- 
 
-//Добавляем поддержку выполнения шорткодов в текстовом виджете
-// http://codex.wordpress.org/Function_Reference/do_shortcode#Examples
+//Добавляем поддержку выполнения шорткодов в текстовом виджете http://codex.wordpress.org/Function_Reference/do_shortcode#Examples
 add_filter('widget_text', 'do_shortcode'); 
 
 //фильтруем комменты по типу
@@ -36,23 +48,6 @@ function cp_do_not_show_excerpt($excerpt, $post_id = 0){
 
 
 
-
-//Добавляем тип поста на страницы поиска через хук the_content
-
-function add_post_type_label_to_search_page($excerpt) {
-
-	if(is_search()) {
-		global $post;
-
-		$post_type = get_post_type( $post );
-
-		$obj = get_post_type_object( $post_type );
-
-		echo  '<div><span class="label label-default">' . $obj->labels->singular_name . '</span><div>' . $excerpt;
-	}
-
-
-} add_action('add_metadata_to_post_cp', 'add_post_type_label_to_search_page');
 
 
 
@@ -123,31 +118,6 @@ $The_CP_Include = new CP_Include();
 
 
 
-
-//получаем ИД персоны по почте
-function get_person_id_by_email($email=null){
-	if(!isset($email)) return 0;
-	global $wpdb;
-	$pid = $wpdb->get_var($wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'email' AND meta_value = %s", $email));
-	return (int)$pid;
-}
-
-//получаем ид юзера по ид персоны
-function get_user_by_person($person_id){
-	global $wpdb;
-	$user_id=$wpdb->get_var("SELECT user_id FROM $wpdb->usermeta where meta_key='id_person' and meta_value='".$person_id."'");
-	if (!isset($user_id)) $user_id=0;
-	return $user_id;
-}
-
-//получаем ид персоны по ид юзера
-function get_person_by_user($user_id){
-	global $wpdb;
-	$person_id=$wpdb->get_var("SELECT meta_value FROM $wpdb->usermeta where meta_key='id_person' and user_id='".$user_id."'");
-	if (!isset($person_id)) $person_id=0;
-	return $person_id;
-} 
-	
 //не понятно
 function get_object_taxs($object_id)
 {

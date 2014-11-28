@@ -41,7 +41,7 @@ include_once 'cp-includes/acl_integrate/acl_int.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
 
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
-include_once 'cp-includes/redirect.php';
+include_once 'cp-includes/redirect_from_main_page.php';
 
 include_once 'cp-includes/search-ext/_load.php';
 
@@ -74,16 +74,7 @@ include_once 'cp-includes/comments/_load.php';
 //include_once 'cp-includes/notify_old/add_notify_templates.php';
 //include_once 'cp-includes/tax_labels.php';
 //include_once 'cp-includes/tax_navigation.php';
-//include_once 'cp-components/cp-flexo/cp-flexo.php';
-//include_once 'cp-components/cp-drafts-shorcodes/drafts-shorcodes.php';
-//include_once 'cp-components/cp-new-content-menu/new-content-menu.php';
-//include_once 'cp-components/cp-overdue-sc/overdue-sc.php';
-//include_once 'cp-components/cp-shortcodes/cp-shortcodes.php';
-//include_once 'cp-components/cp-life-cycle/cp-life-cycle.php';
-//include_once 'cp-components/cp-members/members.php';
-//include_once 'cp-components/casepress-component.class.php';
-//include_once 'cp-components/cp-acl/acl.php';
-//include_once 'cp-components/cp-labels/labels.php';
+
 
 
 //*********************************
@@ -92,19 +83,6 @@ include_once 'cp-includes/comments/_load.php';
 //include_once 'cp-includes/redirect/redirect.php'; нужно будет удалить по возможности весь компонент и всю папку
 //require_once 'cp-core/core-includes.php'; - удалить файл по возможности
 //include_once 'cp-components/components-includes.php'; - удалить файл по возможности
-
-
-//add 15 sec interval for wp cron
-add_filter( 'cron_schedules', 'cron_add_15sec'); 
-
-function cron_add_15sec($schedules){
-
-    $schedules['15sec'] = array(  
-        'interval' => 15,  
-        'display' => __( 'Once in 15 sec' )
-    );  
-    return $schedules;
-}
 
 
 
