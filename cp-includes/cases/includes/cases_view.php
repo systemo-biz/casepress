@@ -41,26 +41,29 @@ class CaseViewsSingltone {
 	}
 
 //Добавляем Срок в поле под заголовок поста
-function add_deadline(){
-        global $post;
-        $data = get_post_meta($post->ID, 'deadline_cp', true);
-        if(empty($data)) return;
+function add_deadline($violation_of_date = false){
+    global $post;
+    $deadline_cp = get_post_meta($post->ID, 'deadline_cp', true);
 
-        if(((strtotime($data) - strtotime('now'))/86400)>0) {
-            ?>
-            <li>
-                <span class="label label-default"><span class="glyphicon glyphicon-calendar"></span> <?php echo $data ?></span>
-            </li>
-            <?php    
-        } else {
-            ?>
-            <li>
-                <span class="label label-danger"><span class="glyphicon glyphicon-calendar"></span> <?php echo $data ?></span>
-            </li>
-            <?php
-        }
-        
-        //endif;
+    //Если срока нет, то ничего не выводим
+    if(empty($deadline_cp)) return;
+
+
+    $cp_date_end = get_post_meta($post->ID, 'cp_date_end', true);
+    $now = date('Y-m-d H:i');
+
+    //Если срок больше даты завершения или текущего времени то отмечаем факт нарушения срока
+    if ( ($deadline_cp < $cp_date_end) || ($deadline_cp < $now) ) $violation_of_date = true;
+    ?>
+    <li>
+    <?php if($violation_of_date) : ?>
+        <span class="label label-danger">
+    <?php else: ?>
+        <span class="label label-default">
+    <?php endif; ?>
+        <span class="glyphicon glyphicon-calendar"></span> <?php echo $deadline_cp ?>
+    </li>
+    <?php
 }
 
 //Добавляем поле Ответственный под заголовок поста
@@ -307,13 +310,14 @@ function add_field_members_cp($content){
                 $category_case = wp_get_post_terms($post->ID, 'functions'); 
                 //var_dump($category_case);
                 ?>
-                <span class="glyphicon glyphicon-folder-open">
                 <?php if(empty($category_case)): ?>
-                    <span class="label label-success">Без категории</span>
+                    <span class="label label-default"><span class="glyphicon glyphicon-folder-open"></span> Без категории</span>
                 <?php else: ?>
-                    <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>"><?php echo $category_case[0]->name; ?></a>
+                    <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>">
+                        <span class="label label-default"><span class="glyphicon glyphicon-folder-open"></span> <?php echo $category_case[0]->name; ?></span>
+                    </a>
                 <?php endif; ?>
-                </span>
+
             </span>
         </li>
         <?php
