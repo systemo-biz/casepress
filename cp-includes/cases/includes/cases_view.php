@@ -53,7 +53,11 @@ function add_deadline($violation_of_date = false){
     $now = date('Y-m-d H:i');
 
     //Если срок больше даты завершения или текущего времени то отмечаем факт нарушения срока
-    if ( ($deadline_cp < $cp_date_end) || ($deadline_cp < $now) ) $violation_of_date = true;
+    if ( ($deadline_cp <= $cp_date_end) and $cp_date_end > 0) {
+         $violation_of_date = true;
+    } elseif(empty($cp_date_end) and $deadline_cp < $now) { 
+         $violation_of_date = true;
+    }
     ?>
     <li>
     <?php if($violation_of_date) : ?>
