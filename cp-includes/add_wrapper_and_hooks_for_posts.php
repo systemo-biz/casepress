@@ -5,10 +5,16 @@ function add_hooks_for_postmeta_cp($content){
     ?>
     <div class="entry_wrapper_cp">
         <div class="content_before_wrapper_cp">
-            <?php  do_action('content_before_wrapper_cp'); ?>
+            <?php  
+                remove_filter( 'the_content', 'wpautop' );
+                remove_filter( 'the_excerpt', 'wpautop' );
+                do_action('content_before_wrapper_cp'); 
+                //apply_filters( 'the_content', 'wpautop', $content );
+                //apply_filters( 'the_excerpt', 'wpautop', $content);            
+            ?>
         </div>
         <div class="content_wrapper_cp">
-            <?php echo $content; ?>
+            <?php echo wpautop($content); ?>
         </div>
         <div class="content_after_wrapper_cp">
             <?php  do_action('content_after_wrapper_cp'); ?>
@@ -23,8 +29,6 @@ function add_hooks_for_postmeta_cp($content){
 add_filter('the_excerpt', 'add_hooks_for_postmeta_cp', 9, 2);
 add_filter('the_content', 'add_hooks_for_postmeta_cp', 9, 2);
 
-remove_filter( 'the_content', 'wpautop' );
-remove_filter( 'the_excerpt', 'wpautop' );
 
 function add_hook_for_sections_cp(){
 	do_action('cp_entry_sections');

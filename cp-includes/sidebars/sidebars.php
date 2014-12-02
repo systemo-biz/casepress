@@ -68,8 +68,9 @@ function add_sidebar_hook_cp($index){
 function view_sidebars_cp(){
     
     dynamic_sidebar('commone');
+    
 	
-    if (is_home() or is_tag() or is_category()) {
+    if (is_home() or is_tag() or is_category() or is_singular('post')) {
 		$sidebar_id = 'blog';
 	} elseif (is_post_type_archive('cases') or is_singular('cases') or is_tax( 'functions' )) {
 		$sidebar_id = 'cases';
