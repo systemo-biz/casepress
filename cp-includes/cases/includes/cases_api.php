@@ -12,37 +12,12 @@ private function __construct() {
     add_action( 'added_post_meta', array($this, 'add_responsible_to_members'), 111, 4 );
     add_action( 'updated_post_meta', array($this, 'add_responsible_to_members'), 111, 4 );
     
-    //Включаем фильтр по нарушению срока
-    add_action('pre_get_posts', array($this, 'filter_cases_deadline'));
 
 }
 
 
 
 
-function filter_cases_deadline($query) {
-
-	if(empty($_REQUEST['deadline'])) return;
-
-	if(! $query->is_main_query()) return;
-
-    $meta_query = $query->get('meta_query');
-
-    $deadline = $_REQUEST['deadline'];    
-    if($deadline == 'yes') {
-		$meta_query[] = array(
-            'key'           =>'deadline_cp',
-            'value'        =>date('Ymd H:i'),
-            'compare'   =>  '>=',
-            'type' => 'DATETIME',
-        );
-	}
-
-	$query->set('meta_query',$meta_query);
-
-	return;
-
-} 
   
 
 //Добавляем ответственного в участники.

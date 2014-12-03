@@ -39,6 +39,9 @@ CasePress - adaptive case managment system powered by WordPress
 
 # Changelog
 
+## 20141201
+- Улучшена навигация по сроку, теперь можно смотреть нарушения сроков и срочные дела в порядке срочности
+
 ## 20141001
 - Стилизовать ACF под alienship. Наработки можно взять от у https://github.com/fotonstep
 - URL перезаписи http://casepress.org/kb/web/kak-pomenyat-format-url-dlya-cpt-wordpress/

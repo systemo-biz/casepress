@@ -26,8 +26,8 @@ function add_users_list_to_comment_for_notice($comment_id, $comment){
     foreach ( $members as $member ) {
         $id_usr = get_user_by_person( $member);
 
-		//Если участник текущий пользователь, то не нужно добавлять в список уведомлений
-        if (get_current_user_id() == $id_usr) continue;
+		//Если участник и автор комментария есть одно и то же, то не нужно добавлять в список уведомлений (зачем автору читать свой же коммент на почте?)
+        if ($comment->user_id == $id_usr) continue;
 
 		
 		//Если у участника есть пользователь
