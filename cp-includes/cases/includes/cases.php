@@ -10,13 +10,88 @@ private function __construct() {
 
     add_action('cp_activate', array($this, 'register_cases_post_type'));	
     add_action('init', array($this, 'register_cases_post_type'));
+
+    add_action('cp_activate', array($this, 'register_results_tax'));	
+    add_action('init', array($this, 'register_results_tax'));
     
-    add_action( 'admin_menu', array($this, 'remove_cases_metabox'));
-    add_action('wp', array('enable_comment_for_case_cp'));
+    add_action('cp_activate', array($this, 'register_functions_tax'));	
+    add_action('init', array($this, 'register_functions_tax'));
 
     add_filter('post_type_link', array($this, 'cases_post_type_link'), 10, 2);
+
+    add_action('wp', array($this, 'enable_comment_for_case_cp'));
+    add_action( 'admin_menu', array($this, 'remove_cases_metabox'));
+    add_action( 'admin_menu' , array($this, 'remove_result_mb_cases') );  
 }
 
+
+function register_functions_tax() {
+
+$n = array('Категория дел', 'Категории дел', 'Категорию дел');//in next versions this variable need move to options WP
+
+  $labels = array(
+    'name' => $n[1],
+    'singular_name' => $n[0],
+    'add_new' => 'Добавить',
+    'add_new_item' => 'Добавить '.$n[2],
+    'edit_item' => 'Редактировать '.$n[2],
+    'new_item' => 'Новая '.$n[0],
+    'view_item' => 'Просмотр '.$n[1],
+    'search_items' => 'Поиск '.$n[1],
+    'not_found' => $n[0].' не найдена',
+    'not_found_in_trash' => 'В Корзине '.$n[0].' не найдена',
+    );
+
+  $pages = array('cases', 'wiki');
+
+  $args = array(
+    'labels' => $labels,
+    'singular_label' => $n[0],
+    'public' => true,
+    'show_ui' => true,
+    'hierarchical' => true,
+    'show_tagcloud' => true,
+    'show_in_nav_menus' => true,
+    'rewrite' => array('slug' => 'functions', 'with_front' => false ),
+  );
+
+  register_taxonomy('functions', $pages, $args);
+} 
+    
+    
+function register_results_tax() {
+	$labels = array(
+		'name' 					=> 'Результаты',
+		'singular_name' 		=> 'Результат',
+		'add_new' 				=> 'Добавить',
+		'add_new_item' 			=> 'Добавить Результат',
+		'edit_item' 			=> 'Редактировать Результат',
+		'new_item' 				=> 'Новый Результат',
+		'view_item' 			=> 'Просмотр Результата',
+		'search_items' 			=> 'Поиск Результата',
+		'not_found' 			=> 'Результат не найден',
+		'not_found_in_trash' 	=> 'В Корзине Результат не найден',
+	);
+	
+	$post_types = array('cases', 'process');
+				
+	$args = array(
+		'labels' 			=> $labels,
+		'singular_label' 	=> 'Результат',
+		'public' 			=> false,
+		'show_ui' 			=> true,
+		'hierarchical' 		=> true,
+		'show_tagcloud' 	=> true,
+		'show_in_nav_menus' => true,
+		'rewrite' 			=> array('slug' => 'results', 'with_front' => false ),
+	 );
+	register_taxonomy('results', $post_types, $args);    
+}
+
+
+function remove_result_mb_cases() {  
+    remove_meta_box( 'resultsdiv' , 'cases' , 'side' );  
+}  
 
 
 function register_cases_post_type() {
@@ -94,7 +169,7 @@ function remove_cases_metabox() {
   remove_meta_box('tagsdiv-results', 'cases', 'side');
   remove_meta_box('tagsdiv-state', 'cases', 'side');  
   remove_meta_box('commentsdiv', 'cases', 'side');
-  //remove_meta_box('commentstatusdiv', 'cases', 'side');  
+  remove_meta_box('commentstatusdiv', 'cases', 'side');  
 }
     
 // Если есть шорткод, то включаем пагинацию комментов и выключаем комментарии у самой страницы
