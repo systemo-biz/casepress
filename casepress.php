@@ -7,12 +7,29 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20141201
+Version: 20141203
 */
 
 /*
 Все компоненты следует структурировать по методу ВИСИ http://casepress.org/mece/
 */
+
+
+register_activation_hook( __FILE__, 'cp_activation' );
+function cp_activation() {
+  
+  //хук для компонентов, которым нужна активация
+  do_action( 'cp_activate' );
+
+  //сброс правил перезаписи, чтобы ссылки открывались как следует
+  flush_rewrite_rules();
+}
+
+register_deactivation_hook( __FILE__, 'cp_deactivation' );
+function cp_deactivation() {
+  do_action( 'cp_deactivate' );
+  flush_rewrite_rules();
+}
 
 //Общие функции
 include_once 'cp-includes/casepress_commone_functions.php';
@@ -22,10 +39,9 @@ include_once 'cp-includes/settings/_load.php';
 
 //Дела
 include_once 'cp-includes/cases/_load.php';
-include_once 'cp-includes/redirect-onsave.php';
 
 //Персоны
-include_once 'cp-includes/persons/_load.php'; 
+require_once 'cp-includes/persons/_load.php'; 
 
 //Организации
 include_once 'cp-includes/organizations/_load.php'; 
@@ -34,8 +50,10 @@ include_once 'cp-includes/organizations/_load.php';
 include_once 'cp-includes/objects/_load.php'; 
 
 //Прочее
-include_once 'cp-includes/new-content-menu.php';
 
+include_once 'cp-includes/taxonomy_subject_category.php';
+include_once 'cp-includes/new-content-menu.php';
+include_once 'cp-includes/redirect-onsave.php';
 include_once 'cp-includes/acf_integrate/_load.php';
 include_once 'cp-includes/acl_integrate/acl_int.php';
 include_once 'cp-includes/cp-reports/cp-reports.php';
@@ -63,6 +81,7 @@ include_once 'cp-includes/at_js_integrate/at_js_integrate.php';
 include_once 'cp-includes/add_status_archive.php';
 include_once 'cp-includes/print_cover/_load.php';
 include_once 'cp-includes/comments/_load.php';
+include_once 'cp-includes/fullscreen/_load.php';
 
 
 //*********************************
@@ -85,19 +104,3 @@ include_once 'cp-includes/comments/_load.php';
 //include_once 'cp-components/components-includes.php'; - удалить файл по возможности
 
 
-
-register_activation_hook( __FILE__, 'cp_activation' );
-function cp_activation() {
-  
-  //хук для компонентов, которым нужна активация
-  do_action( 'cp_activate' );
-
-  //сброс правил перезаписи, чтобы ссылки открывались как следует
-  flush_rewrite_rules(false);
-}
-
-register_deactivation_hook( __FILE__, 'cp_deactivation' );
-function cp_deactivation() {
-  do_action( 'cp_deactivate' );
-  flush_rewrite_rules(false);
-}

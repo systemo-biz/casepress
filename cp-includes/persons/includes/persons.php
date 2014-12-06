@@ -1,6 +1,23 @@
 <?php
 
-add_action('init', 'register_persons_category_tax');
+
+class PersonsModelSingltone {
+private static $_instance = null;
+
+private function __construct() {
+
+    add_action('cp_activate', array($this, 'register_persons_post_type'));	
+    add_action('init', array($this, 'register_persons_post_type'));	
+
+    add_action('cp_activate', array($this, 'register_persons_post_tax'));	
+    add_action('init', array($this, 'register_persons_post_tax'));
+
+    add_action('cp_activate', array($this, 'register_persons_category_tax'));	
+    add_action('init', array($this, 'register_persons_category_tax'));
+
+}
+
+    
 function register_persons_category_tax() {
 	$labels = array(
 		'name' 					=> 'Категории персон',
@@ -30,7 +47,6 @@ function register_persons_category_tax() {
 	register_taxonomy('persons_category', $pages, $args);
 }
 
-add_action('init', 'register_persons_post_tax');
 function register_persons_post_tax() {
 	$labels = array(
 		'name' 					=> 'Должности',
@@ -62,5 +78,65 @@ function register_persons_post_tax() {
 		register_taxonomy('persons_post', $pages, $args);
 	//}
 }
+    
+    
+    
+    
+function register_persons_post_type() {
+	$labels = array(
+		'name' 				=> 'Персоны',
+		'singular_name'		=> 'Персона',
+		'add_new' 			=> 'Добавить',
+		'add_new_item' 		=> 'Добавить Персону',
+		'edit_item' 		=> 'Редактировать Персону',
+		'new_item' 			=> 'Новая Персона',
+		'view_item' 		=> 'Просмотр Персону',
+		'search_items' 		=> 'Поиск Персоны',
+		'not_found' 		=> 'Персона не найдена',
+		'not_found_in_trash'=> 'В Корзине Персона не найдена',
+		'parent_item_colon' => ''
+	);
+	
+	$taxonomies = array();
+	
+	$supports = array(
+		'editor',
+		'comments',
+		'thumbnail',
+		'title'
+		);
+	
+	if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
+			
+	$args = array(
+		'labels' 			=> $labels,
+		'singular_label' 	=> 'Персона',
+		'public' 			=> true,
+		'show_ui' 			=> true,
+		'publicly_queryable'=> true,
+		'query_var'			=> true,
+		'capability_type' 	=> 'post',	
+		'has_archive' 		=> true,
+		'hierarchical' 		=> true,
+		'rewrite' 			=> array('slug' => 'persons', 'with_front' => false ),
+		'supports' 			=> $supports,
+		'menu_position' 	=> 5,
+		'taxonomies'		=> $taxonomies
+	 );
+	register_post_type('persons',$args);
+}
+    
+protected function __clone() {
+	// ограничивает клонирование объекта
+}
 
-?>
+static public function getInstance() {
+	if(is_null(self::$_instance))
+	{
+	self::$_instance = new self();
+	}
+	return self::$_instance;
+}
+
+} $PersonsModel = PersonsModelSingltone::getInstance();
+

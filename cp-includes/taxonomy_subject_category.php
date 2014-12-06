@@ -5,6 +5,8 @@
  */
 
 add_action('init', 'register_subjects_category_tax');
+add_action('cp_activate', 'register_subjects_category_tax');
+
 function register_subjects_category_tax() {
 	$labels = array(
 		'name' 					=> 'Категории субъектов',

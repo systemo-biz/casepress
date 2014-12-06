@@ -56,7 +56,7 @@ $cases = get_posts(array(
         //Проверяем наличие комментария о нарушении срока
         $comment_check = get_comments(array (
             'post_id' => $post_id,   
-            'type' => 'event_case_deadline_fail',
+            'type' => 'e_cp_deadline_fail',
             'meta_key' => 'deadline_date',
             'meta_value' => $deadline_cp,
         ));
@@ -77,7 +77,7 @@ $cases = get_posts(array(
               'comment_author' => 'CasePress',
               'comment_author_email' => get_option('admin_email'),
               'comment_content' => "Нарушен срок: " . $deadline_cp . ". " . "Ответственный: " . $responsible_name,
-              'comment_type' => 'event_case_deadline_fail',
+              'comment_type' => 'e_cp_deadline_fail',
               'comment_parent' => 0,
               'user_ID' => '',
             ));
@@ -98,6 +98,7 @@ function add_action_for_event_deadline() {
 function del_action_for_event_deadline() {  
  wp_clear_scheduled_hook('cp_deadline_control');	
 }
+    
     
 
 // Функция меняет текст письма который уходит уведомлением о нарушении срока
