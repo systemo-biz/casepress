@@ -19,7 +19,7 @@ private function __construct() {
 
     add_filter('post_type_link', array($this, 'cases_post_type_link'), 10, 2);
 
-    add_action('wp', array($this, 'enable_comment_for_case_cp'));
+    add_filter( 'comments_open', array($this, 'enable_comment_for_case_cp'), 10, 2);
     add_action( 'admin_menu', array($this, 'remove_cases_metabox'));
     add_action( 'admin_menu' , array($this, 'remove_result_mb_cases') );  
 }
@@ -172,11 +172,11 @@ function remove_cases_metabox() {
   remove_meta_box('commentstatusdiv', 'cases', 'side');  
 }
     
-// Если есть шорткод, то включаем пагинацию комментов и выключаем комментарии у самой страницы
-function enable_comment_for_case_cp(){
-    global $post;
-    if('cases' == $post->post_type)
-        add_filter( 'comments_open', '__return_true' );
+// Включаем комменты для дел всегда
+function enable_comment_for_case_cp($open, $post_id){
+    if('cases' == get_post_type($post_id))
+        $open = __return_true();
+    return $open;
 }
 
     

@@ -62,7 +62,10 @@ $cases = get_posts(array(
         ));
         // Если комментарии с нарушением этого срока уже есть, то переходим к следующиему посту 
         if(! empty($comment_check)) continue;
-         
+        
+
+        
+        
         $responsible_id =get_post_meta($post_id,'responsible-cp-posts-sql',true);
 
         // Проверяем наличие ответственного, заполняем переменную имени ответственного
@@ -80,6 +83,7 @@ $cases = get_posts(array(
               'comment_type' => 'e_cp_deadline_fail',
               'comment_parent' => 0,
               'user_ID' => '',
+              'comment_approved' => true,
             ));
         
         update_comment_meta( $comment_id, 'deadline_date', $deadline_cp );
