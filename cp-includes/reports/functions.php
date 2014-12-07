@@ -1,10 +1,7 @@
 <?php
-include_once 'add_report.php';
-include_once 'tax_report_cat.php';
 
-function cases_report_rewrite_flush(){
-  flush_rewrite_rules();
-} add_action('cp-activate','cases_report_rewrite_flush');
+
+
 
 function add_cases_report_content($content){
   global $post;

@@ -7,7 +7,7 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20141204
+Version: 20141205
 */
 
 /*
@@ -15,21 +15,7 @@ Version: 20141204
 */
 
 
-register_activation_hook( __FILE__, 'cp_activation' );
-function cp_activation() {
-  
-  //хук для компонентов, которым нужна активация
-  do_action( 'cp_activate' );
 
-  //сброс правил перезаписи, чтобы ссылки открывались как следует
-  flush_rewrite_rules();
-}
-
-register_deactivation_hook( __FILE__, 'cp_deactivation' );
-function cp_deactivation() {
-  do_action( 'cp_deactivate' );
-  flush_rewrite_rules();
-}
 
 //Общие функции
 include_once 'cp-includes/casepress_commone_functions.php';
@@ -56,7 +42,7 @@ include_once 'cp-includes/new-content-menu.php';
 include_once 'cp-includes/redirect-onsave.php';
 include_once 'cp-includes/acf_integrate/_load.php';
 include_once 'cp-includes/acl_integrate/acl_int.php';
-include_once 'cp-includes/cp-reports/cp-reports.php';
+include_once 'cp-includes/reports/_load.php';
 
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
 include_once 'cp-includes/redirect_from_main_page.php';
@@ -104,3 +90,18 @@ include_once 'cp-includes/fullscreen/_load.php';
 //include_once 'cp-components/components-includes.php'; - удалить файл по возможности
 
 
+register_activation_hook( __FILE__, 'cp_activation' );
+function cp_activation() {
+  
+  //хук для компонентов, которым нужна активация
+  do_action( 'cp_activate' );
+
+  //сброс правил перезаписи, чтобы ссылки открывались как следует
+  flush_rewrite_rules();
+}
+
+register_deactivation_hook( __FILE__, 'cp_deactivation' );
+function cp_deactivation() {
+  do_action( 'cp_deactivate' );
+  flush_rewrite_rules();
+}

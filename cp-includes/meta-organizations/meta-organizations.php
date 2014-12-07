@@ -1,8 +1,25 @@
-<?php 
+<?php
+
+
+
 /*
-Plugin Name: Meta Organization
-Description: Description business processes and org unit
+Создаем организации и связанные таксономии
 */
+class MetaOrgModelSingltone {
+private static $_instance = null;
+
+private function __construct() {
+    
+    add_action('cp_activate', array($this, 'model_orgunits'));	
+    add_action('init', array($this, 'model_orgunits'));
+
+    add_action('cp_activate', array($this, 'model_process'));	
+    add_action('init', array($this, 'model_process'));    
+
+    add_action('cp_activate', array($this, 'model_process_category'));	
+    add_action('init', array($this, 'model_process_category'));  
+
+}
 
 
 // Register Custom Post Type
@@ -45,8 +62,6 @@ function model_process() {
     register_taxonomy_for_object_type( 'results', 'process' );
 }
 
-// Hook into the 'init' action
-add_action( 'init', 'model_process', 0 );
 
 
 
@@ -89,8 +104,6 @@ function model_orgunits() {
 
 }
 
-// Hook into the 'init' action
-add_action( 'init', 'model_orgunits', 0 );
 
 
 // Register Custom Taxonomy
@@ -125,5 +138,21 @@ function model_process_category()  {
 
 }
 
-// Hook into the 'init' action
-add_action( 'init', 'model_process_category', 0 );
+    
+    
+    
+    
+protected function __clone() {
+	// ограничивает клонирование объекта
+}
+
+static public function getInstance() {
+	if(is_null(self::$_instance))
+	{
+	self::$_instance = new self();
+	}
+	return self::$_instance;
+}
+
+} $MetaOrgModel = MetaOrgModelSingltone::getInstance();
+
