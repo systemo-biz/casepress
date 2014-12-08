@@ -19,12 +19,13 @@ function add_notice_for_added_members($meta_id, $object_id, $meta_key, $meta_val
         
     $user_ID = get_current_user_id();
 
-    $comment_id = wp_new_comment(array(
+    $comment_id = wp_insert_comment(array(
        'comment_post_ID' => $object_id,
        'comment_author' => 'CasePress',
        'comment_content' => 'Добавлен участник - ' . get_the_title($meta_value),
        'comment_type' => 'event_case_member_added',
-       'user_ID' => $user_ID
+       'user_ID' => $user_ID,
+        'comment_approved' => true,
 	   ));
         //exit(var_dump($comment_id));
 
@@ -73,7 +74,7 @@ function add_comment_new_case_cp($post_ID, $post) {
        'user_ID' => $user_ID
 	   );
        // добавляем данные в Базу Данных
-       wp_new_comment($commentdata);
+       wp_insert_comment($commentdata);
 	}
 
 } add_action('wp_insert_post','add_comment_new_case_cp', 100, 2);

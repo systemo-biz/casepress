@@ -25,11 +25,12 @@ private function __construct() {
 function DeadLineComment() { 
 // параметры выборки
 
-$today = current_time('mysql',0);
+$now = current_time('mysql',0);
 $results_array = get_terms('results', 'fields=ids');
 
 $cases = get_posts(array(
     'post_type' => 'cases',
+    'nopaging' => true,
     'tax_query' => array(
           array(
               'taxonomy' => 'results',
@@ -40,17 +41,23 @@ $cases = get_posts(array(
     'meta_query' => array(
         array(
             'key' => 'deadline_cp',
-            'value' => $today,
+            'value' => $now,
             'compare' => '<',
             'type' => 'DATETIME',
             ),
         )
     ));
 
-    //error_log(print_r($cases, true));
-    foreach($cases as $post){
-        setup_postdata($post);
-        $post_id = $post->ID;
+    //error_log("Комменты: " . print_r($cases, true));
+    /*
+    foreach($cases as $case){
+        error_log('Post ID - ' . print_r($case->ID, true));
+    }*/
+    
+    foreach($cases as $case){
+        //setup_postdata($post);
+        $post_id = $case->ID;
+        //error_log('Post ID - ' . print_r($post_id, true));
         $deadline_cp = get_post_meta($post_id,'deadline_cp',true);
 
         //Проверяем наличие комментария о нарушении срока
@@ -60,6 +67,10 @@ $cases = get_posts(array(
             'meta_key' => 'deadline_date',
             'meta_value' => $deadline_cp,
         ));
+        
+        //error_log('Коммент - ' . print_r($comment_check, true));
+        //error_log('Срок проверки - ' . print_r($deadline_cp, true));
+
         // Если комментарии с нарушением этого срока уже есть, то переходим к следующиему посту 
         if(! empty($comment_check)) continue;
         
@@ -75,7 +86,7 @@ $cases = get_posts(array(
             $responsible_name = get_the_title($responsible_id);
         }
         
-        $comment_id = wp_new_comment(array(
+        $comment_id = wp_insert_comment(array(
               'comment_post_ID' => $post_id,
               'comment_author' => 'CasePress',
               'comment_author_email' => get_option('admin_email'),
@@ -86,11 +97,12 @@ $cases = get_posts(array(
               'comment_approved' => true,
             ));
         
-        update_comment_meta( $comment_id, 'deadline_date', $deadline_cp );
-        if($responsible_id > 0) update_comment_meta( $comment_id, 'responsible_id', $responsible_id ); 
-        
+        if($comment_id) {
+            update_comment_meta( $comment_id, 'deadline_date', $deadline_cp );
+            if($responsible_id > 0) update_comment_meta( $comment_id, 'responsible_id', $responsible_id ); 
+        }
     }
-    wp_reset_postdata();
+    //wp_reset_postdata();
 
 }
 

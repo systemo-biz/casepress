@@ -418,9 +418,12 @@ function save_case_data_control() {
      */
 
     if(isset($_REQUEST['case_post_parent_cp'])) {
+        if(isset($_REQUEST['case_post_parent_cp'])) {
+            $post_parent = $_REQUEST['case_post_parent_cp'];
+        } 
+        if(is_numeric($post_parent)) $case_post_parent_cp = $post_parent;
+        if(empty($post_parent)) $case_post_parent_cp = '';
         
-        if(is_numeric($_REQUEST['case_post_parent_cp'])) $case_post_parent_cp = $_REQUEST['case_post_parent_cp'];
-
         wp_update_post(array(
             'ID' => $post->ID, 
             'post_parent' => $case_post_parent_cp
