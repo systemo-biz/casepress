@@ -7,7 +7,7 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20141207
+Version: 20141222
 */
 
 /*
@@ -43,6 +43,7 @@ include_once 'cp-includes/redirect-onsave.php';
 include_once 'cp-includes/acf_integrate/_load.php';
 include_once 'cp-includes/acl_integrate/acl_int.php';
 include_once 'cp-includes/reports/_load.php';
+include_once 'cp-includes/todo-comments/todo-comments-integrate-cp.php';
 
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
 include_once 'cp-includes/redirect_from_main_page.php';
