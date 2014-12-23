@@ -6,9 +6,14 @@ Plugin Name: Секция с комментариями на контроле
 
 function cases_display_todo_comments() {
     if(! is_singular('cases')) return;
-    
     if (! shortcode_exists( 'todo_comments' ) ) return;
-    
+	$args = array (
+		'post_id' => $post->ID,
+		'meta_key' => 'cp_control',
+		'meta_value' => 'yes',
+	);
+	$comment = get_comments( $args );
+	if (!isset ($comment)) return;
     ?>
 	<section id="case_todo_comments_wrapper" class="cases-box">
 		<header class="cases-box-header">
