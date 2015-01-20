@@ -54,7 +54,7 @@ function cps_ban_get_blogs_of_user( $blogs, $user_id, $all ){
 	//echo '</pre>';
 	return $return;
 }
-add_filter( 'get_blogs_of_user', 'cps_ban_get_blogs_of_user' );
+add_filter( 'get_blogs_of_user', 'cps_ban_get_blogs_of_user', 10, 3 );
 
 function cps_ban_check(){
 	if ( !is_user_logged_in() ) return;
