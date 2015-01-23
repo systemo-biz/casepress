@@ -110,21 +110,34 @@ function query_persons_callback(){
 
 //Сохраняем участников
 function save_members(){
+
+    //Если нет передачи параметра, то пропуск, иначе определяем переменную и записываем список участников
+    if(isset($_REQUEST['case_members'])) {
+        $case_members = $_REQUEST['case_members'];
+    } else {
+        return;
+    }
+
     global $post;
+    $post_id = $post->ID;
 
-    if(! isset($_REQUEST['save_case_members'])) return;
-
-    if(isset($_REQUEST['case_members'])) $case_members = $_REQUEST['case_members'];
+    //var_dump($post_id);
 
     $case_members = explode(',', $case_members);
 
     $current_members = get_post_meta($post->ID, 'members-cp-posts-sql');
 
+    //тут участники которых удалили из списка
     $members_remove = array_diff($current_members, $case_members);
+    
+    //участники которых нет в текущей записи, на добавление
     $members_add = array_diff($case_members, $current_members);
-
+    if(empty($members_add)) $members_add = $case_members;
+    
+    //получаем ИД ответственного
      $responsible_id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
 
+    //удаляем лишних учатсников
     foreach($members_remove as $member){
         
             //если участника на удаление есть в поле Ответственный, то пропускаем удаление
@@ -134,10 +147,13 @@ function save_members(){
             delete_post_meta($post->ID, 'members-cp-posts-sql', trim($member));
     }
 
-    //удаляем лишних учатсников
+    //var_dump($post_id);
+    //добавляем участников
     foreach($members_add as $member){
-        add_post_meta($post->ID, 'members-cp-posts-sql', trim($member));
+
+        $test = add_post_meta($post->ID, 'members-cp-posts-sql', $member);
     }   
+
 }
  
 /*
