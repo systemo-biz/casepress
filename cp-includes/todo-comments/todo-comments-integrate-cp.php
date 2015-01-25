@@ -4,7 +4,7 @@ Plugin Name: Секция с комментариями на контроле
 */
 function cases_display_todo_comments() {
 	if(! is_singular('cases')) return;
-	if (! shortcode_exists( 'todo_comments' ) ) return;
+	if (! shortcode_exists( 'cp_todo_comments' ) ) return;
 	global $post;
 	$args = array(
 		'post_id' => $post->ID,
@@ -28,7 +28,7 @@ function cases_display_todo_comments() {
 			<hr>
 		</header>
 		<article class="cases-box-content">
-			<?php echo do_shortcode('[todo_comments]'); ?>
+			<?php echo do_shortcode('[cp_todo_comments]'); ?>
 		</article>
 	</section>
 <?php
