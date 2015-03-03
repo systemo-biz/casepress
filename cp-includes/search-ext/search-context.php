@@ -57,7 +57,7 @@ function add_dropdown__post_type_to_context_search() {
 	if(! is_search()) return;
 
     if(empty($_REQUEST['post_type'])) {
-        $post_type_ruquest ='';
+        $post_type_ruquest = get_query_var( 'post_type' );
     } else {
         $post_type_ruquest = $_REQUEST['post_type'];
     }

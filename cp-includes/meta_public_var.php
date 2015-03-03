@@ -83,6 +83,9 @@ function filter_posts_meta_cp($query) {
 		$meta_key = substr( $key_request, 5);
 
 		$meta_value = $_REQUEST[$key_request];
+		if ( empty( $meta_value ) ) {
+			continue;
+		}
 		
 		$meta_query[] = array(
             'key' 		=>	$meta_key,
