@@ -122,9 +122,10 @@ function chg_mail($msg, $comment){
   $comment_type=$comment->comment_type;
   $comment_post_ID=$comment->comment_post_ID;
   $post_name=get_the_title($comment_post_ID);
+  $post_category=wp_get_post_terms($comment_post_ID, 'functions');
   if ($comment_type=='deadline_fail'){
   //$msg['subject'] = 'Нарушение срока по задаче - '.$post_name.' ['.$comment_post_ID.']';
-  $msg['subject'] = $post_name.' ['.$comment_post_ID.'] - нарушение срока по задаче';
+  $msg['subject'] = $post_name.' ['.$comment_post_ID.']'.$post_category[0]->name.'- нарушение срока по задаче';
   $msg['text'] = '<div>'.$comment->comment_content.'</div>';
   $msg['text'] .= '<hr>';
   $msg['text'] .= '<a href="'.get_permalink($comment->comment_post_ID).'">Перейти к задаче</a>';
