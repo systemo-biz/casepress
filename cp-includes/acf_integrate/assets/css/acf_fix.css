@@ -1,9 +1,6 @@
-/*-- ACF FIX --*/
-.radio input[type="radio"], .checkbox input[type="checkbox"]
-{
-float: none;
-margin-left: 0!important;
-}
+/*
+ACF CSS fix
+*/
 
 form.acf-form .label {
 text-transform: none;
