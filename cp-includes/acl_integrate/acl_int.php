@@ -4,8 +4,7 @@ class ACL_Int {
 
         function __construct() {
         add_action('added_post_meta', array($this, 'update_acl_if_updated_members'), 10, 4);
-        add_action('updated_postmeta', array($this, 'update_acl_if_updated_members'), 10, 4);
-        add_action( 'deleted_post_meta', array($this, 'update_acl_if_updated_members'), 10, 4 );
+        add_filter('posts_where', array($this, 'acl_filter_where'), 10, 1);
     }
 
     //если изменили список участников, то обновить ACL
@@ -28,13 +27,8 @@ class ACL_Int {
         
         return;
     }
-}
 
-$TheACL_Int = new ACL_Int;
-
-add_filter('posts_where', 'acl_filter_where', 10, 1);
-
-function acl_filter_where($where){
+    function acl_filter_where($where){
         
     global $wpdb;
         
@@ -57,3 +51,9 @@ function acl_filter_where($where){
 
         return $where;
 }
+}
+
+$TheACL_Int = new ACL_Int;
+
+
+
