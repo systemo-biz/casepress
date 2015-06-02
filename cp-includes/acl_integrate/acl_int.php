@@ -1,16 +1,13 @@
 <?php
 
-//Добавляем пользователей в список доступа, из списка участников
 class ACL_Int {
 
-    function __construct() {
+        function __construct() {
         add_action('added_post_meta', array($this, 'update_acl_if_updated_members'), 10, 4);
         add_action('updated_postmeta', array($this, 'update_acl_if_updated_members'), 10, 4);
         add_action( 'deleted_post_meta', array($this, 'update_acl_if_updated_members'), 10, 4 );
-        
-        add_filter( 'acl_users_list',  array($this, 'update_acl_if_update_members'), 10, 2 );
     }
-    
+
     //если изменили список участников, то обновить ACL
     function update_acl_if_updated_members($meta_ids, $object_id, $meta_key, $meta_value){
         
@@ -20,38 +17,43 @@ class ACL_Int {
         if(empty($user_id)) return; //Если нет пользователя, то возврат
         
         $members = get_post_meta($object_id, 'members-cp-posts-sql');
-        $acl_users = get_post_meta($object_id, 'acl_users');
+        $acl_users_s = get_post_meta($object_id, 'acl_users_s');
         
         //Если персона еще в участника, то добавить ACL, иначе - удалить
         if(in_array($meta_value, $members)) {
-            if(! in_array($user_id, $acl_users)) add_post_meta($object_id, 'acl_users', $user_id); // если пользователя нет в списке, то добавить
+            if(! in_array($user_id, $acl_users)) add_post_meta($object_id, 'acl_users_s', $user_id); // если пользователя нет в списке, то добавить
         } else {
-            if(in_array($user_id, $acl_users)) delete_post_meta($object_id, 'acl_users', $user_id); // если пользовател в списке, то удалить
+            if(in_array($user_id, $acl_users)) delete_post_meta($object_id, 'acl_users_s', $user_id); // если пользовател в списке, то удалить
         }
         
         return;
     }
-    
-    //при попытке обновить ACL берем список пользователей из списка участников (не все участники могут иметь пользователей)
-    function update_acl_if_update_members($users_ids, $post_id) {
-        
-        $users_ids_from_members = array();
-        
-        foreach ($members as $member){
-            $user_id = get_user_by_person($member);
-            
-            if(empty($user_id)) continue;
-            
-            $users_ids_from_members[] = $user_id;
-
-        }
-        
-        $users_ids = array_merge($users_ids, $users_ids_from_members); 
-        $users_ids =  array_unique($users_ids);
-
-               
-        return $users_ids;
-    }
 }
 
 $TheACL_Int = new ACL_Int;
+
+add_filter('posts_where', 'acl_filter_where', 10, 1);
+
+function acl_filter_where($where){
+        
+    global $wpdb;
+        
+    $current_user_id = get_current_user_id();
+    //Если это администратор, редактор или кто то с правом доступа, то отменяем контроль
+    if (user_can($current_user_id, 'full_access_to_posts') or user_can($current_user_id, 'editor') or user_can($current_user_id, 'administrator')) return $where;
+        
+    $where .= " AND 
+        if(" . $wpdb->posts . ".post_type = 'post', 
+            if(" . $wpdb->posts . ".ID IN (
+                    SELECT post_id 
+                    FROM " . $wpdb->postmeta ." 
+                    WHERE 
+                        " . $wpdb->postmeta .".meta_key = 'acl_users_s' 
+                        AND " . $wpdb->postmeta .".post_id = " . $wpdb->posts . ".ID
+                        AND " . $wpdb->postmeta .".meta_value = " . $current_user_id ."
+                )
+            ,1,0),
+        1)=1";
+
+        return $where;
+}
