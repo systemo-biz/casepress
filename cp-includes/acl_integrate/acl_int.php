@@ -43,7 +43,7 @@ function acl_filter_where($where){
     if (user_can($current_user_id, 'full_access_to_posts') or user_can($current_user_id, 'editor') or user_can($current_user_id, 'administrator')) return $where;
         
     $where .= " AND 
-        if(" . $wpdb->posts . ".post_type = 'post', 
+        if(" . $wpdb->posts . ".post_type = 'cases', 
             if(" . $wpdb->posts . ".ID IN (
                     SELECT post_id 
                     FROM " . $wpdb->postmeta ." 
