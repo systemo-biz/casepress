@@ -1,14 +1,12 @@
 <?php
 
-
-
-
 function add_cases_report_content($content){
-  global $post;
-  if($post->post_type != 'report') return $content;
-  ob_start();
-  eval($post->php_content);
-  $php_content = ob_get_contents();
+    global $post;
+    if(! is_singular( 'report' ) ) return $content;
+    
+    ob_start();
+    eval($post->php_content);
+    $php_content = ob_get_contents();
   ob_end_clean();
   return $content.$php_content;
 } add_filter('the_content', 'add_cases_report_content');
