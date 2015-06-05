@@ -43,10 +43,12 @@ function enable_comment_pagination_cp(){
     global $post;
     $page_notice_cp = esc_attr( get_option( 'page_notice_cp' ) );
     
+    if(isset($post)){
     if(has_shortcode($post->post_content, 'list_comments') or $page_notice_cp == $post->ID) {
         add_filter( 'pre_option_page_comments', '__return_true' );
         //add_filter( 'comments_open', '__return_false' );
     }
+}
     //exit(has_shortcode($post->post_content, 'list_comments'));
 }
 add_action('wp', 'enable_comment_pagination_cp');
