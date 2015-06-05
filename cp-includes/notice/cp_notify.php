@@ -80,13 +80,14 @@ class cp_notification_for_basic_comments {
         
         $nuser = get_userdata($nuser_id);
         $r = get_post($comment->comment_post_ID);
+        $post_category = wp_get_post_terms($r->ID, 'functions');
         
         $cauthor = get_userdata( $comment->user_id);
         
 		//error_log("comment->user_id = " . print_r($comment->user_id, true) . ", а автор: " . print_r($cauthor, true));
 		
         $msg = array();
-        $msg['subject'] = $r->post_title.' ['.$r->ID.']';
+        $msg['subject'] = $r->post_title.' ['.$r->ID.'] '.$post_category[0]->name;
         $msg['text'] = '<p>Пользователь <a href="' .$cauthor->user_url. '">'.$cauthor->display_name.'</a> добавил(а) комментарий:</p><hr>';
         $msg['text'] .= '<div>'.$comment->comment_content.'</div>';
         $msg['text'] .= '<hr>';
