@@ -87,8 +87,11 @@ class cp_notification_for_basic_comments {
 		//error_log("comment->user_id = " . print_r($comment->user_id, true) . ", а автор: " . print_r($cauthor, true));
 		
         $msg = array();
-        $msg['subject'] = $r->post_title.' ['.$r->ID.'] '.$post_category[0]->name;
-        $msg['text'] = '<p>Пользователь <a href="' .$cauthor->user_url. '">'.$cauthor->display_name.'</a> добавил(а) комментарий:</p><hr>';
+        $msg['subject'] = $r->post_title.' ['.$r->ID.']';
+        if(!empty($post_category)){
+            $msg['text'].='<p>Категория дела: <a href="'.get_term_link($post_category[0]->term_id, 'functions').'">'.$post_category[0]->name.'</a></p><hr>';
+        }
+        $msg['text'] .= '<p>Пользователь <a href="' .$cauthor->user_url. '">'.$cauthor->display_name.'</a> добавил(а) комментарий:</p><hr>';
         $msg['text'] .= '<div>'.$comment->comment_content.'</div>';
         $msg['text'] .= '<hr>';
         $msg['text'] .= '<a href="'.get_permalink($comment->comment_post_ID).'#comment-'.$comment->comment_ID.'">Перейти</a> | ';
