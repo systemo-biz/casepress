@@ -22,9 +22,9 @@ class ACL {
         
         //Если персона еще в участниках, то добавить ACL, иначе - удалить
         if(in_array($meta_value, $members)) {
-            if(! in_array($user_id, $acl_users)) add_post_meta($object_id, 'acl_users_s', $user_id); // если пользователя нет в списке, то добавить
+            if(! in_array($user_id, $acl_users_s)) add_post_meta($object_id, 'acl_users_s', $user_id); // если пользователя нет в списке, то добавить
         } else {
-            if(in_array($user_id, $acl_users)) delete_post_meta($object_id, 'acl_users_s', $user_id); // если пользовател в списке, то удалить
+            if(in_array($user_id, $acl_users_s)) delete_post_meta($object_id, 'acl_users_s', $user_id); // если пользовател в списке, то удалить
         }
         
         return;
