@@ -19,4 +19,6 @@ include_once 'includes/comments_and_notice/add_case_members_to_notify.php';
 include_once 'includes/comments_and_notice/CP_DeadLineComment.php';
 include_once 'includes/comments_and_notice/CP_NoticeComment.php';
 
+include_once 'includes/nav_field_case_category.php';
+
 include_once 'includes/visits/_load.php';
