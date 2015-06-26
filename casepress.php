@@ -70,6 +70,7 @@ include_once 'cp-includes/add_status_archive.php';
 include_once 'cp-includes/print_cover/_load.php';
 include_once 'cp-includes/comments/_load.php';
 include_once 'cp-includes/fullscreen/_load.php';
+include_once 'cp-includes/add_caps_for_contributors.php';
 
 
 //*********************************

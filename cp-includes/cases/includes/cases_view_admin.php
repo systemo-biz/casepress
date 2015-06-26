@@ -496,25 +496,6 @@ function save_data_post(){
                 
         update_post_meta( $post_id, $key, $timestamp);
     }
-    
-    /*
-     * Field "Post Parent"
-     */
-    // infinity loop  fixed
-    if (isset($_REQUEST['cp_case_post_parent'])) {
-
-        $post_parent = trim( $_REQUEST['cp_case_post_parent'] );
-        if ($post_parent > 0 && $post->post_parent != $post_parent){
-        //unhook
-            remove_action( 'save_post', array($this, 'save_data_post'));
-            wp_update_post(array(
-                'ID' => $post_id, 
-                'post_parent' => $post_parent
-            )); 
-        //rehook
-            add_action( 'save_post', array($this, 'save_data_post'));
-        }
-    } 
             
     /*
      * Field "Members"
@@ -568,6 +549,25 @@ function save_data_post(){
 
         update_post_meta($post_id, $key, $data);
     }
+
+    /*
+     * Field "Post Parent"
+     */
+    // infinity loop  fixed
+    if (isset($_REQUEST['cp_case_post_parent'])) {
+
+        $post_parent = trim( $_REQUEST['cp_case_post_parent'] );
+        if ($post_parent > 0 && $post->post_parent != $post_parent){
+        //unhook
+            remove_action( 'save_post', array($this, 'save_data_post'));
+            wp_update_post(array(
+                'ID' => $post_id, 
+                'post_parent' => $post_parent
+            )); 
+        //rehook
+            add_action( 'save_post', array($this, 'save_data_post'));
+        }
+    } 
 
 }   
 
