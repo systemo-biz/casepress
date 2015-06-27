@@ -68,7 +68,7 @@ function register_persons_post_tax() {
 		'singular_label' 	=> 'Должность',
 		'public' 			=> true,
 		'show_ui' 			=> true,
-		'hierarchical' 		=> true,
+		'hierarchical' 		=> false,
 		'show_tagcloud' 	=> true,
 		'show_in_nav_menus' => true,
 		'rewrite' 			=> array('slug' => 'persons_post', 'with_front' => false ),
