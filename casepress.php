@@ -7,7 +7,7 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20150626-6
+Version: 20150626-7
 */
 
 /*
@@ -31,9 +31,6 @@ require_once 'cp-includes/persons/_load.php';
 
 //Организации
 include_once 'cp-includes/organizations/_load.php'; 
-
-//Объекты
-include_once 'cp-includes/objects/_load.php'; 
 
 //Прочее
 include_once 'cp-includes/comments_action.php';
