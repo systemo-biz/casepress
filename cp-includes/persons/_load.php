@@ -5,3 +5,4 @@ include_once 'includes/change_person_for_user.php';
 include_once 'includes/dossier.php';
 include_once 'includes/view_persons.php';
 include_once 'includes/persons_functions.php';
+include_once 'includes/person_meta.php';

@@ -1,199 +1,12 @@
 <?php
 
-class Cases_Widget_User extends WP_Widget {
-
-    function Cases_Widget_User() {
-		$widget_ops = array(
-			'classname' => 'cases_widget_user',
-			'description' => 'Размещает информацию о текущем пользователе.'
-		);
-		$this->WP_Widget( 'cases_widget_user', 'Cases.Widget.User', $widget_ops);
-    }
-
-    function form($instance) {  
-    $title = esc_attr($instance['title']);
-		echo '
-		<p>
-			<label for="'.$this->get_field_id("title").'">'._e("Title:").'</label> 
-			<input 	class="widefat"
-					id="'.$this->get_field_id("title").'"
-					name="'.$this->get_field_name("title").'"
-					type="text" value="'.esc_attr($title).'"
-			/>
-		</p>';
-    }  
-    
-	/**
-	 * @see WP_Widget::update()
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 * @return array Updated safe values to be saved.
-	 */  
-    function update($new_instance, $old_instance) {  
-		$instance=$old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);  
-		return $instance;  
-    }  
-    
-	/**
-	 * @see WP_Widget::widget()
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */  
-    function widget($args, $instance) {
-		if (!is_singular('persons')) return ''; //if not person page - exit
-		
-		global $wpdb;
-		$wpdb->show_errors();			
-		global $post;
-
-		$to_get_user_args = array(
-			'meta_key' => 'id_person',
-			'meta_value' => $post->ID		
-		);		
-		$user_id = get_users($to_get_user_args);
-		
-		$person_data = get_post($post->ID);
-		
-		
-		$person_email = get_post_meta($post->ID,'email',true);
-		$person_name = $person_data->post_name;
-		$person_url = $person_data->guid;
-		$person_title_full = $person_data->post_title;
-		$person_title1 = strtok($person_title_full," ");
-		$person_title2 = strtok(" ");
-		$person_title3 = strtok(" ");
-		$person_title = $person_title_full;
-		
-		/*extract($args);
-		echo $before_widget; 
-		echo $before_title;
-		echo $instance['title'];
-		echo $after_title;*/
-		
-		if ($user_id){
-			//foreach ($user_id as $user_id[0]){
-			echo 'Логин: '.$user_id[0]->user_login.'<br>';
-			echo 'Ник: '.$user_id[0]->display_name.'<br>';
-			echo 'Почта: '.$user_id[0]->user_email.'<br>';
-			echo 'Дата регистрации: '.$user_id[0]->user_registered.'<br>';
-			echo '<a href="/wp-admin/user-edit.php?user_id='.$user_id[0]->ID.'">Редактировать профиль</a>';
-			//}		
-		}
-		else{			
-			echo "
-				<div id='create_user'>
-					<form  onsubmit='return false;' method='post'>
-						<div style='padding:0px 0px'>Введите логин:</div>
-						<div style='padding:5px 0px'><input type='text' name='name' id='name' value='".$person_name."'></div>				
-						<div style='padding:0px 0px'>Введите почту:</div>
-						<div style='padding:5px 0px'><input type='text' name='email' id='email' value='".$person_email."'></div>
-						<div style='padding:0px 0px;display: none;'>GUID:</div>
-						<div style='padding:5px 0px;display: none;'><input type='text' name='user_url' id='user_url' value='".$person_url."'></div>
-						<div style='padding:0px 0px;display: none;'>NAME:</div>
-						<div style='padding:5px 0px;display: none;'><input type='text' name='user_name' id='user_name' value='".$person_title."'></div>
-						<div style='padding:0px 0px;display: none;'>PID:</div>
-						<div style='padding:5px 0px;display: none;'><input type='text' name='p_post_id' id='p_post_id' value='".$post->ID."'></div>
-						<div style='padding:0px 0px'>Введите пароль:</div>
-						<div style='padding:5px 0px'><input type='password' name='password' id='password' value=''></div>
-						<div style='padding:5px 0px'><input type='submit' value='создать пользователя' onClick='saveform(this.form);return false;'></div>
-						
-					</form>
-				</div>
-				";
-				echo "
-					<script>
-						function myalert(){
-							alert('myalert');
-						}
-						function saveform(data){
-							jQuery('#create_user').html('');
-							var aj_name = data.name.value;
-							var aj_email = data.email.value;
-							var aj_password = data.password.value;
-							var aj_user_url = data.user_url.value;
-							var aj_user_name = data.user_name.value;
-							var aj_p_post_id = data.p_post_id.value;
-							jQuery.ajax({
-								type:'POST',
-								url: ajaxurl,			
-								data: 
-								{
-									action: 'cases_insert_user', 
-									name: aj_name,
-									email: aj_email,
-									password: aj_password,
-									user_url: aj_user_url,
-									user_name: aj_user_name,
-									p_post_id: aj_p_post_id
-								},
-								success: function(result) 
-								{						
-									jQuery('#create_user').html('<span>'+result+'</span>');
-								},
-								dataType: 'html'													
-							});				
-							
-						}
-					</script>
-				";
-		}	
-    }
-}
-
-function cases_insert_user(){
-	if (isset($_POST["email"])) { $new_user_mail = $_POST["email"]; } else { $new_user_mail = 'No mail';}
-	if (isset($_POST["password"])) { $new_user_pass = $_POST["password"]; } else { $new_user_pass = '123';}
-	if (isset($_POST["name"])) { $new_user_name = $_POST["name"]; } else { $new_user_name = "new user";}
-	if (isset($_POST["user_url"])) { $new_user_url = $_POST["user_url"]; } else { $new_user_url = "new url";}
-	if (isset($_POST["user_name"])) { $new_user_display_name = $_POST["user_name"];} 
-	
-	$user_data = array(		
-		'user_login' => $new_user_name,
-		'user_email' => $new_user_mail,
-		'user_pass' => $new_user_pass,
-		'user_url' => $new_user_url,
-		'display_name' => $new_user_display_name
-	);
-	if ( username_exists( $new_user_name ) ) { echo "Это имя пользователя уже используется!"; die();}
-	if ( $user = email_exists($new_user_mail) ) 
-	{
-		$exist_person_id = get_user_meta($user,'id_person',true);
-		$exist_person_guid = get_the_guid($exist_person_id);
-		$exist_person_name = get_the_title($exist_person_id);
-		echo "Пользователь с таким e-mail уже зарегистрирован: <a href='".$exist_person_guid."'>".$exist_person_name."</a>"; die(); 
-	
-	}
-	if (isset($_POST["p_post_id"])) 
-	{	
-		$linked_post_id = $_POST["p_post_id"];
-		$added_id = wp_insert_user($user_data);
-		if ($added_id == 1) {echo "Ошибка код - 1, свяжитесь с администратором!"; die();}
-		add_user_meta($added_id, 'id_person',$linked_post_id);
-		add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-		wp_new_user_notification($added_id, $user_data["user_pass"]);
-		echo "Пользователь успешно добавлен!";
-		die();
-	} 
-	else 
-	{  
-		echo "Ошибка код - 2, свяжитесь с администратором!";
-	} 
-}
-
-
-function cases_widget_user_load() {
-	register_widget('Cases_Widget_User');  
-}
-
+//Профиль пользователя. Выводим данные о связанной персоне
 function show_person_data($user) {
 	echo "<h3>Данные о связанной Персоне</h3>";
-	global $wpdb;
-	$wpdb->show_errors();			
-	global $post;
+	
 	$user_email = $user->data->user_email;
-	$current_user_id =  $user->data->ID;
-	$linked_post_id = get_user_meta($current_user_id,'id_person',true);	
+	$user_id =  $user->data->ID;
+	$linked_post_id = get_user_meta($user_id,'id_person',true);	
 	if ($linked_post_id)		
 		{
 			$linked_post = get_post($linked_post_id);
@@ -207,6 +20,110 @@ function show_person_data($user) {
 add_action( 'show_user_profile', 'show_person_data' );
 add_action( 'edit_user_profile', 'show_person_data' );
 
-add_action(	'wp_ajax_cases_insert_user', 'cases_insert_user');
-add_action( 'widgets_init', 'cases_widget_user_load' );
-?>
+
+//Персона. В режиме редактирования можем подключить в систему или связать с пользователем.
+class PersonRelationshipUser_CP_Singleton {
+
+private static $_instance = null;
+    
+private function __construct() {
+    add_action( 'add_meta_boxes', array( &$this, 'add' ) );
+    add_action( 'save_post', array( &$this, 'save' ), 1, 2 );
+}
+    
+//init metabox
+function add() {
+    add_meta_box('person_select_user', __('User', 'casepress'), array(&$this, 'person_select_user_callback'), 'persons', 'side');
+
+}
+
+    //print HTML add_contacts
+    function person_select_user_callback($post){
+        
+        $post = get_post();
+        
+        wp_nonce_field( basename( __FILE__ ), 'person_select_user-nonce' );
+        
+        $email = get_post_meta($post->ID, 'email',true);
+
+        // Get user for person
+		$user_id = get_user_by_person( $post->ID);
+        if($user_id) {
+            $profile_link = add_query_arg( 'user_id', $user_id, self_admin_url( 'user-edit.php'));
+            echo '<a href="' . $profile_link . '">Ссылка на профиль</a>';
+        } else {
+            ?>
+
+                <label for="user_email_for_added">Укажите адрес эл.почты для приглашения:</label><br/>
+                <input type="text" id="user_email_for_added" name="user_email_for_add_cp" class="field_cp" value="<?php echo $email ?>" size="30">
+                <label for="add_user_by_email_cp"><input type="checkbox" name="add_user_by_email_cp" id="add_user_by_email_cp" class="field_cp"> Подключить пользователя</label>
+                <p>
+                    <small>Внимание! Эти данные указываются только если требуется предоставить персоне доступ к системе.</small>
+                </p>
+            <?php
+        }
+    } 
+
+
+
+    //save meta data
+    function save($post_id) {
+
+        // if autosave then cancel
+        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
+
+        // check wpnonce
+        if ( !isset( $_POST['person_select_user-nonce'] ) || !wp_verify_nonce( $_POST['person_select_user-nonce'], basename( __FILE__ ) ) ) return $post_id;
+
+        //user can?
+        if ( !current_user_can( 'edit_post', $post_id ) ) return $post_id;
+
+        $post = get_post($post_id);
+
+        //Проверяем наличие отметки о подключении персоны
+        if ($post->post_type == 'persons' and isset($_POST['add_user_by_email_cp'])) {
+            
+            //Проверка email на адекватность или прекращаем выполнение
+            if(is_email( $_POST['user_email_for_add_cp'] )){
+                $email = $_POST['user_email_for_add_cp'];
+            } else {
+                return $post_id;
+            }
+            
+            //Проверяем есть ли пользователь или создаем на основе переданного адреса почты
+            $user_id = email_exists($email);
+            if($user_id) {
+                
+                //привязываем персону к найденному пользователю
+                update_user_meta($user_id, 'id_person', $post_id);
+                
+            } else {
+                //создаем нового пользователя и привязываем к персоне
+                $user_name = str_replace(array(".", "@", "+"), "-", $email);
+                $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+                $user_id = wp_create_user( $user_name, $random_password, $email );
+                wp_new_user_notification($user_id, $random_password);
+                update_user_meta($user_id, 'id_person', $post_id);
+
+            }
+            //update_post_meta($post_id, 'person_user_id', esc_attr($_POST['user_email_for_add_cp']));
+        }
+        return $post_id;
+    }
+    
+     
+/**
+ * Служебные функции одиночки
+ */
+protected function __clone() {
+	// ограничивает клонирование объекта
+}
+static public function getInstance() {
+	if(is_null(self::$_instance))
+	{
+	self::$_instance = new self();
+	}
+	return self::$_instance;
+}    
+    
+} $PersonRelationshipUser_CP = PersonRelationshipUser_CP_Singleton::getInstance();
