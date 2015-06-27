@@ -43,7 +43,6 @@ include_once 'cp-includes/new-content-menu.php';
 include_once 'cp-includes/redirect-onsave.php';
 include_once 'cp-includes/acf_integrate/_load.php';
 include_once 'cp-includes/acl/acl.php';
-include_once 'cp-includes/reports/_load.php';
 include_once 'cp-includes/todo-comments/todo-comments-integrate-cp.php';
 
 include_once 'cp-includes/cp-log_actions/cp-log_actions.php';
