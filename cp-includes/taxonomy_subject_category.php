@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Add taxonomy for classification subjects. This taxonomy replace 2 taxonomy: porsons category and org category
+ * Add taxonomy for classification subjects. This taxonomy replace 2 taxonomy: persons category and org category
  */
 
 add_action('init', 'register_subjects_category_tax');
@@ -20,7 +20,7 @@ function register_subjects_category_tax() {
 		'not_found' 			=> 'Категория не найдена',
 		'not_found_in_trash' 	=> 'В корзине не найдена',
 	);
-		
+
 	$args = array(
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Категория субъектов',
