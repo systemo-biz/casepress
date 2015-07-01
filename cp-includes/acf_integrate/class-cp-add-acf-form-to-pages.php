@@ -13,7 +13,7 @@ class CP_Add_ACF_Form_On_Pages {
 	}
 
 	function add_acf_form_to_post($content){
-		if (is_singular(array("cases", "persons", "organizations", "objects", "process", "unit"))) {
+		if (is_singular(array("cases", "persons", "organizations", "objects"))) {
 			if (function_exists('acf_form')){
 		        ob_start();
 		        ?>
@@ -41,7 +41,7 @@ class CP_Add_ACF_Form_On_Pages {
 
 	function load_acf_components(){
 	    global $post;
-	    if(is_single() && in_array($post->post_type, array('organizations', 'objects', 'persons', 'cases', 'unit'))){
+	    if(is_single() && in_array($post->post_type, array('organizations', 'objects', 'persons', 'cases'))){
 	      acf_form_head();
 	      $path_to_plugin = trailingslashit(plugin_dir_url(__FILE__) );
 	      wp_enqueue_style( 'acf_fix', $path_to_plugin.'assets/css/acf_fix.css', false, false, 'all' );
