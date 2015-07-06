@@ -259,6 +259,38 @@ function shortcode_meta(){
             </script>
         </div>
 
+        
+        <!-- От -->
+
+        <div id="cp_case_from_wrapper" class="form-group">
+            <div>
+                <label class="cp_label" id="cp_case_from_label">От:</label>
+                <span id="cp_case_from_view" class="cp_forms">
+                    <?php $from_id = get_post_meta( $post->ID, 'cp_from', true ); ?>
+                    <?php if($from_id != ''): ?>
+                        <a href="<?php echo get_permalink($from_id); ?>"><?php echo get_the_title($from_id); ?></a>
+                    <?php else: ?>
+                        <span>Нет</span>
+                    <?php endif; ?>
+                </span>
+            </div>
+        </div>
+
+        <!-- Кому -->
+        <div id="cp_case_to_wrapper" class="form-group">
+            <div>
+                <label class="cp_label" id="cp_case_to_label">Кому:</label>
+                <span id="cp_case_to_view" class="cp_forms">
+                    <?php $to_id = get_post_meta( $post->ID, 'cp_to', true ); ?>
+                    <?php if($to_id != ''): ?>
+                        <a href="<?php echo get_permalink($to_id); ?>"><?php echo get_the_title($to_id); ?></a>
+                    <?php else: ?>
+                        <span>Нет</span>
+                    <?php endif; ?>
+                </span>
+            </div>
+        </div>
+        
         <!-- Основание дела -->
         
         <div id="cp_case_post_parent" class="form-group">
