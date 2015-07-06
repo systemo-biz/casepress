@@ -12,12 +12,78 @@ private function __construct() {
     add_action( 'added_post_meta', array($this, 'add_responsible_to_members'), 111, 4 );
     add_action( 'updated_post_meta', array($this, 'add_responsible_to_members'), 111, 4 );
     
+    add_action( 'wp_ajax_query_from', array($this, 'query_from_callback') );
+    add_action( 'wp_ajax_query_to', array($this, 'query_to_callback') );
 
 }
 
+//Функция ответа JSON для AJAX SELECT2
+function query_to_callback(){
+    $args = array(
+        'fields' => 'ids',
+        's' => $_GET['q'],
+        'paged' => $_GET['page'],
+        'posts_per_page' => $_GET['page_limit'],
+        'post_type' => array('persons', 'organizations')
+        );
 
+    $query = new WP_Query( $args );
 
+    $elements = array();
+    foreach ($query->posts as $post_id){
+        //try get organization
+        $organization = "без организации";
+        if ($organization_id = get_post_meta($post_id, 'organization-cp-posts-array', true)) {
+            $organization = get_the_title($organization_id[0]);
+        }
+        
+        $elements[] = array(
+            'id' => $post_id,
+            'title' => get_the_title($post_id),
+            'organization' => $organization
+            );
+    }
+    
+    $data[] = array(
+        "total" => (int)$query->found_posts, 
+        'elements' => $elements);
 
+    wp_send_json($data[0]);
+}
+
+//Функция ответа JSON для AJAX SELECT2
+function query_from_callback(){
+    $args = array(
+        'fields' => 'ids',
+        's' => $_GET['q'],
+        'paged' => $_GET['page'],
+        'posts_per_page' => $_GET['page_limit'],
+        'post_type' => array('persons', 'organizations')
+        );
+
+    $query = new WP_Query( $args );
+
+    $elements = array();
+    foreach ($query->posts as $post_id){
+        //try get organization
+        $organization = "без организации";
+        if ($organization_id = get_post_meta($post_id, 'organization-cp-posts-array', true)) {
+            $organization = get_the_title($organization_id[0]);
+        }
+        
+        $elements[] = array(
+            'id' => $post_id,
+            'title' => get_the_title($post_id),
+            'organization' => $organization
+            );
+    }
+    
+    $data[] = array(
+        "total" => (int)$query->found_posts, 
+        'elements' => $elements);
+
+    wp_send_json($data[0]);
+}
   
 
 //Добавляем ответственного в участники.

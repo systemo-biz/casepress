@@ -23,11 +23,159 @@ private function __construct() {
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_result'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_parent'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_parser_result_function_cp'));
+    add_action('add_field_for_case_aside_parameters', array($this, 'add_field_from'));
+    add_action('add_field_for_case_aside_parameters', array($this, 'add_field_to'));
 
     add_action( 'save_post', array($this, 'save_data_post'));
 
 }
 
+    // Add field "To"
+function add_field_to($post) {
+ ?>
+    <!-- Кому  -->
+
+    <div id="cp_case_to_wrapper">
+        <div>
+            <div>
+                <label class="cp_label" id="cp_case_to_label" for="cp_case_to_input" onclick="">Адресат:</label>
+            </div>
+            <div id="cp_case_to_edit">
+                <div id="cp_case_to_edit_input">
+                    <input type="hidden" id="cp_case_to_input" name="cp_to" class="cp_select2_single" />
+                </div>  
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+
+                $("#cp_case_to_input").select2({
+                    placeholder: "Выберите субъекта",
+                    width: '100%',
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                            url: "<?php echo admin_url('admin-ajax.php') ?>",
+                            dataType: 'json',
+                            quietMillis: 100,
+                            data: function (term, page) { // page is the one-based page number tracked by Select2
+                                    return {
+                                            action: 'query_to',
+                                            page_limit: 10, // page size
+                                            page: page, // page number
+                                            //params: {contentType: "application/json;charset=utf-8"},
+                                            q: term //search term
+                                    };
+                            },
+                            results: function (data, page) {
+                                    //alert(data.total);
+                                    var more = (page * 10) < data.total; // whether or not there are more results available
+
+                                    // notice we return the value of more so Select2 knows if more results can be loaded
+                                    return {
+                                            results: data.elements,
+                                            more: more
+                                            };
+                            }
+                    },
+                    
+                    formatResult: function(element){ return "<div>" + element.title + "</div>" }, // omitted for brevity, see the source of this page
+                    formatSelection: function(element){  return element.title; }, // omitted for brevity, see the source of this page
+                    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+                    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+                });
+
+                //Если есть данные о значении, то делаем выбор
+                <?php 
+                    $item_id = get_post_meta( $post->ID, 'cp_to', true );
+
+                    if($item_id != ''): ?>   
+                    $("#cp_case_to_input").select2(
+                        "data", 
+                        <?php echo json_encode(array('id' => $item_id, 'title' => get_the_title($item_id))); ?>
+                    ); 
+                <?php endif; ?>
+
+
+            });
+        </script>   
+    </div>
+    <?php
+}
+    
+// Add field "From"
+function add_field_from($post) {
+ ?>
+    <!-- От  -->
+
+    <div id="cp_case_from_wrapper">
+        <div>
+            <div>
+                <label class="cp_label" id="cp_case_from_label" for="cp_case_from_input" onclick="">От:</label>
+            </div>
+            <div id="cp_case_from_edit">
+                <div id="cp_case_from_edit_input">
+                    <input type="hidden" id="cp_case_from_input" name="cp_from" class="cp_select2_single" />
+                </div>  
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+
+                $("#cp_case_from_input").select2({
+                    placeholder: "Выберите субъекта",
+                    width: '100%',
+                    allowClear: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                            url: "<?php echo admin_url('admin-ajax.php') ?>",
+                            dataType: 'json',
+                            quietMillis: 100,
+                            data: function (term, page) { // page is the one-based page number tracked by Select2
+                                    return {
+                                            action: 'query_from',
+                                            page_limit: 10, // page size
+                                            page: page, // page number
+                                            //params: {contentType: "application/json;charset=utf-8"},
+                                            q: term //search term
+                                    };
+                            },
+                            results: function (data, page) {
+                                    //alert(data.total);
+                                    var more = (page * 10) < data.total; // whether or not there are more results available
+
+                                    // notice we return the value of more so Select2 knows if more results can be loaded
+                                    return {
+                                            results: data.elements,
+                                            more: more
+                                            };
+                            }
+                    },
+                    
+                    formatResult: function(element){ return "<div>" + element.title + "</div>" }, // omitted for brevity, see the source of this page
+                    formatSelection: function(element){  return element.title; }, // omitted for brevity, see the source of this page
+                    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+                    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+                });
+
+                //Если есть данные о значении, то делаем выбор
+                <?php 
+                    $item_id = get_post_meta( $post->ID, 'cp_from', true );
+
+                    if($item_id != ''): ?>   
+                    $("#cp_case_from_input").select2(
+                        "data", 
+                        <?php echo json_encode(array('id' => $item_id, 'title' => get_the_title($item_id))); ?>
+                    ); 
+                <?php endif; ?>
+
+
+            });
+        </script>   
+    </div>
+    <?php
+}
+    
 //Функция для парсинга результатов AJAX запроса
 function add_parser_result_function_cp(){
 ?>
@@ -448,14 +596,30 @@ function form_case_parameters_render(){
 
 //Сохраняем данные поста
 function save_data_post(){
-    global $post;
+    $post = get_post();
     //check right post type
     if (!(is_object($post))) return;
-    if (!($post->post_type == 'cases')) return;
+    if ($post->post_type != 'cases') return;
     
     $post_id = $post->ID;
+ 
+    /** Save date end
+     * field name: cp_to
+     */
+    if (isset($_REQUEST['cp_to'])) {
+        $key = 'cp_to';
+        $value = $_REQUEST['cp_to'];
+        update_post_meta( $post_id, $key, $value);
+    }
     
-
+     /** Save date end
+     * field name: cp_from
+     */
+    if (isset($_REQUEST['cp_from'])) {
+        $key = 'cp_from';
+        $value = $_REQUEST['cp_from'];
+        update_post_meta( $post_id, $key, $value);
+    }
     
     /*
      * Save case category
