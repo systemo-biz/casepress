@@ -19,7 +19,7 @@ class CP_Add_ACF_Form_On_Pages {
 		        ?>
 		        <section id="data_acf_post" class="cases-box">
 		          <div class="cases-box-header">
-		            <h1>Данные</h1>
+		            <h1>Произвольные поля</h1>
 		            <hr />
 		          </div>
 		          <div class="cases-box-content" id="cases_add_data">
