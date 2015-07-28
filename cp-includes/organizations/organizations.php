@@ -13,79 +13,11 @@ private function __construct() {
     add_action('init', array($this, 'register_organizations_post_type'));
    
     add_filter('post_type_link', array($this, 'org_post_type_link'), 10, 2);
-
-    add_action('cp_activate', array($this, 'register_organizations_category_tax'));	
-    add_action('init', array($this, 'register_organizations_category_tax'));  
-
-    add_action('cp_activate', array($this, 'register_organization_structure_tax'));	
-    add_action('init', array($this, 'register_organization_structure_tax'));  
-
 }
 
     
-function register_organization_structure_tax() {
-	$labels = array(
-		'name' 					=> 'Структуры организаций',
-		'singular_name' 		=> 'Структура организаций',
-		'add_new' 				=> 'Добавить',
-		'add_new_item' 			=> 'Добавить Структуру организаций',
-		'edit_item' 			=> 'Редактировать Структуру организаций',
-		'new_item' 				=> 'Новая Структура организаций',
-		'view_item' 			=> 'Просмотр Структуры организаций',
-		'search_items' 			=> 'Поиск Структуры организаций',
-		'not_found' 			=> 'Структура организаций не найдена',
-		'not_found_in_trash' 	=> 'В Корзине Структура организаций не найдена',
-	);
-	
-	$pages = array('persons');
-				
-	$args = array(
-		'labels' 			=> $labels,
-		'singular_label' 	=> 'Структура организаций',
-		'public' 			=> true,
-		'show_ui' 			=> true,
-		'hierarchical' 		=> true,
-		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => true,
-		'rewrite' 			=> array('slug' => 'organization_structure', 'with_front' => false ),
-	 );
-	register_taxonomy('organization_structure', $pages, $args);
-}
-    
-    
-    
-    
-    
-function register_organizations_category_tax() {
-	$labels = array(
-		'name' 					=> 'Категории организаций',
-		'singular_name' 		=> 'Категория организаций',
-		'add_new' 				=> 'Добавить',
-		'add_new_item' 			=> 'Добавить Категорию организаций',
-		'edit_item' 			=> 'Редактировать Категорию организаций',
-		'new_item' 				=> 'Новая Категория организаций',
-		'view_item' 			=> 'Просмотр Категории организаций',
-		'search_items' 			=> 'Поиск Категории организаций',
-		'not_found' 			=> 'Категория организаций не найдена',
-		'not_found_in_trash' 	=> 'В Корзине Категория организаций не найдена',
-	);
-	
-	$pages = array('organizations');
-				
-	$args = array(
-		'labels' 			=> $labels,
-		'singular_label' 	=> 'Категория организаций',
-		'public' 			=> true,
-		'show_ui' 			=> false,
-		'hierarchical' 		=> true,
-		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => false,
-		'rewrite' 			=> array('slug' => 'organizations_category', 'with_front' => false ),
-	 );
-	register_taxonomy('organizations_category', $pages, $args);
-}
-    
-    
+
+// Post type for organizations    
 function register_organizations_post_type() {
 	$labels = array(
 		'name' 				=> 'Организации',
