@@ -27,13 +27,15 @@ include_once 'cp-includes/settings/_load.php';
 include_once 'cp-includes/cases/_load.php';
 
 //Персоны
-require_once 'cp-includes/persons/_load.php'; 
+require_once 'cp-includes/persons/_load.php';
 
 //Организации
-include_once 'cp-includes/organizations/_load.php'; 
+include_once 'cp-includes/organizations/_load.php';
 
 //Прочее
 include_once 'cp-includes/comments_action.php';
+
+include_once 'cp-includes/sc-get-meta.php';
 
 include_once 'cp-includes/commone_taxonomy.php';
 include_once 'cp-includes/new-content-menu.php';
@@ -90,7 +92,7 @@ include_once 'cp-includes/add_caps_for_contributors.php';
 
 register_activation_hook( __FILE__, 'cp_activation' );
 function cp_activation() {
-  
+
   //хук для компонентов, которым нужна активация
   do_action( 'cp_activate' );
 
