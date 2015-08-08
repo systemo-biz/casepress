@@ -8,13 +8,13 @@ Plugin Name: Person meta data
 class PersonMeta_CP_Singleton {
 
 private static $_instance = null;
-    
+
 private function __construct() {
     add_action( 'add_meta_boxes', array( &$this, 'add' ) );
     add_action( 'save_post', array( &$this, 'save' ), 1, 2 );
     add_filter('the_content', array( &$this, 'view' ));
 }
-    
+
 //init metabox
 function add() {
     add_meta_box('person_contacts', __('Person contacts', 'casepress'), array(&$this, 'person_contacts_callback'), 'persons', 'normal');
@@ -27,6 +27,9 @@ function add() {
 
         $email = get_post_meta($post->ID, 'email',true);
         $tel = get_post_meta($post->ID, 'tel',true);
+        //Если в телефоне есть буквы, то их убираем
+        $tel = filter_var($tel, FILTER_SANITIZE_NUMBER_INT);
+
         $contacts_others = get_post_meta($post->ID, 'contacts_others',true);
 
         ?>
@@ -44,7 +47,7 @@ function add() {
                 <textarea rows="3" cols="70" name="contacts_others" id="person_contacts_others" class="field_cp"><?php echo $contacts_others ?></textarea>
             </p>
         <?php
-    } 
+    }
 
 
 
@@ -70,16 +73,16 @@ function add() {
         }
         return $post_id;
     }
-    
+
     function view($content){
         $post = get_post();
-        
+
         if('persons' != $post->post_type) return $content;
-        
+
         $email = get_post_meta($post->ID, 'email',true);
         $tel = get_post_meta($post->ID, 'tel',true);
         $contacts_others = get_post_meta($post->ID, 'contacts_others',true);
-        
+
         ob_start();
         ?>
         <div id="person_contacts" class="section_cp">
@@ -96,7 +99,7 @@ function add() {
         ob_get_clean();
         return $html . $content;
     }
-     
+
 /**
  * Служебные функции одиночки
  */
@@ -109,6 +112,6 @@ static public function getInstance() {
 	self::$_instance = new self();
 	}
 	return self::$_instance;
-}    
-    
+}
+
 } $PersonMeta_CP = PersonMeta_CP_Singleton::getInstance();
