@@ -17,7 +17,7 @@ private function __construct() {
 
 //init metabox
 function add() {
-    add_meta_box('person_contacts', __('Person contacts', 'casepress'), array(&$this, 'person_contacts_callback'), 'persons', 'normal');
+    add_meta_box('person_contacts', __('Person contacts', 'casepress'), array(&$this, 'person_contacts_callback'), 'persons', 'advanced', 'high');
 
 }
 
