@@ -32,8 +32,8 @@ function add() {
         ?>
             <p>
                 <label for="person_phone">Телефон (основной):</label><br/>
-                <small>Номер телефона, по которому проще всего связаться с персоной</small><br/>
-                <input type="text" name="tel" id="person_phone" class="field_cp" value="<?php echo $tel ?>" size="50">
+                <small>Номер телефона, по которому проще всего связаться с персоной. Пример 71234567890</small><br/>
+                <input type="number" name="tel" id="person_phone" class="field_cp" value="<?php echo $tel ?>" size="50">
             </p>
             <p>
                 <label for="person_email">Email (основной):</label><br/>
