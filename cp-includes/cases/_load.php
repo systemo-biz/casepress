@@ -23,3 +23,4 @@ include_once 'includes/nav_field_case_category.php';
 
 include_once 'includes/visits/_load.php';
 include_once 'includes/list_cases_for_subjects.php';
+include_once 'includes/close_case_in_comment.php';
