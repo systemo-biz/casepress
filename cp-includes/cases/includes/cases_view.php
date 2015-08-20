@@ -4,29 +4,24 @@
 /*
 Общие механизмы вывода элементов дела
 */
+class CaseViews {
 
-
-class CaseViewsSingltone {
-	private static $_instance = null;
-
-	private function __construct() {
+	function __construct() {
 
 		add_filter('the_content', array($this, 'add_wrapper_content_case_cp'), 9, 2);
-        add_action('content_before_wrapper_cp', array($this, 'add_meta_content_top'), 14, 2);
-        //add_filter('the_excerpt', array($this, 'add_meta_content_top'), 14, 2);
-        add_action('content_before_wrapper_cp', array($this, 'add_field_members_cp'), 22);
 
-	    add_action('wp_footer', array($this, 'add_js_functions'));
+    add_action('content_before_wrapper_cp', array($this, 'add_meta_content_top'), 14, 2);
+    add_action('content_before_wrapper_cp', array($this, 'add_field_members_cp'), 22);
 
-        add_action('case_meta_top_add_li', array($this, 'add_id_and_category_to_case_meta'));
-        add_action('case_meta_top_add_li', array($this, 'add_result_meta'));
-        add_action('case_meta_top_add_li', array($this, 'add_deadline'));
-        add_action('case_meta_top_add_li', array($this, 'add_responsible'));
-        
+    add_action('case_meta_top_add_li', array($this, 'add_id_and_category_to_case_meta'));
+    add_action('case_meta_top_add_li', array($this, 'add_result_meta'));
+    add_action('case_meta_top_add_li', array($this, 'add_deadline'));
+    add_action('case_meta_top_add_li', array($this, 'add_responsible'));
 
-        add_action('wp', array($this, 'save_members'));
-        add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
+    add_action('init', array($this, 'save_members'));
+    add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
 
+		add_action('wp_footer', array($this, 'add_js_functions'));
 	}
 
 //Добавляем Срок в поле под заголовок поста
@@ -44,7 +39,7 @@ function add_deadline($violation_of_date = false){
     //Если срок больше даты завершения или текущего времени то отмечаем факт нарушения срока
     if ( ($deadline_cp <= $cp_date_end) and $cp_date_end > 0) {
          $violation_of_date = true;
-    } elseif(empty($cp_date_end) and $deadline_cp < $now) { 
+    } elseif(empty($cp_date_end) and $deadline_cp < $now) {
          $violation_of_date = true;
     }
     ?>
@@ -93,16 +88,16 @@ function query_persons_callback(){
         if ($organization_id = get_post_meta($post_id, 'organization-cp-posts-array', true)) {
             $organization = get_the_title($organization_id[0]);
         }
-        
+
         $elements[] = array(
             'id' => $post_id,
             'title' => get_the_title($post_id),
             'organization' => $organization
             );
     }
-    
+
     $data[] = array(
-        "total" => (int)$query->found_posts, 
+        "total" => (int)$query->found_posts,
         'elements' => $elements);
     //$data[] = $query;
     wp_send_json($data[0]);
@@ -112,16 +107,14 @@ function query_persons_callback(){
 function save_members(){
 
     //Если нет передачи параметра, то пропуск, иначе определяем переменную и записываем список участников
-    if(isset($_REQUEST['case_members'])) {
-        $case_members = $_REQUEST['case_members'];
-    } else {
-        return;
-    }
+		if(!isset($_REQUEST['case_members'])) return;
 
-    global $post;
+    $case_members = $_REQUEST['case_members'];
+		$post_id = $_REQUEST['post_id'];
+
+    $post = get_post($post_id);
+
     $post_id = $post->ID;
-
-    //var_dump($post_id);
 
     $case_members = explode(',', $case_members);
 
@@ -129,20 +122,20 @@ function save_members(){
 
     //тут участники которых удалили из списка
     $members_remove = array_diff($current_members, $case_members);
-    
+
     //участники которых нет в текущей записи, на добавление
     $members_add = array_diff($case_members, $current_members);
     if(empty($members_add)) $members_add = $case_members;
-    
+
     //получаем ИД ответственного
      $responsible_id = get_post_meta($post->ID, 'responsible-cp-posts-sql', true);
 
     //удаляем лишних учатсников
     foreach($members_remove as $member){
-        
+
             //если участника на удаление есть в поле Ответственный, то пропускаем удаление
             if($responsible_id == $member) continue;
-            
+
             //удаляем участника из списка
             delete_post_meta($post->ID, 'members-cp-posts-sql', trim($member));
     }
@@ -152,16 +145,16 @@ function save_members(){
     foreach($members_add as $member){
 
         $test = add_post_meta($post->ID, 'members-cp-posts-sql', $member);
-    }   
+    }
 
 }
- 
+
 /*
 Добавляем поле Участники над описанием
 */
 function add_field_members_cp($content){
     if(!is_singular('cases')) return $content;
-    
+
     global $post;
 
     ?>
@@ -179,7 +172,7 @@ function add_field_members_cp($content){
                     $members = get_posts( array(
                         'post_type' => 'persons',
                         'include'   => get_post_meta($post->ID, 'members-cp-posts-sql')
-                    )); 
+                    ));
                     ?>
                     <ul class="list-inline">
                     <?php foreach ($members as $member): ?>
@@ -193,6 +186,8 @@ function add_field_members_cp($content){
             <div id="case_members_edit_wrapper" class="hidden">
                 <form method="post">
                     <input type="hidden" name="save_case_members" value=true />
+										<input type="hidden" name="post_id" value="<?php echo $post->ID; ?>" />
+
                     <div class="form-group">
                         <input type="hidden" id="case_members" name="case_members"/>
                     </div>
@@ -203,7 +198,7 @@ function add_field_members_cp($content){
             </div>
         </div>
         <script type="text/javascript">
-        
+
            //Скрываем и расскрываем поле для редактирования
             (function($) {
                 $("#edit_members_btn").click(function(){
@@ -213,7 +208,7 @@ function add_field_members_cp($content){
                         $('#case_members_view').removeClass('show').addClass('hidden');
                     } else {
                         $('#case_members_edit_wrapper').removeClass('show').addClass('hidden');
-                        $('#case_members_view').removeClass('hidden').addClass('show');                        
+                        $('#case_members_view').removeClass('hidden').addClass('show');
                     }
                 });
 
@@ -263,26 +258,26 @@ function add_field_members_cp($content){
 
                 //Если есть данные о значении, то делаем выбор
                 $("#case_members").select2(
-                    "data", 
-                    <?php 
+                    "data",
+                    <?php
                         $members_data = array();
                         foreach ($members as $member):
                             $members_data[] = array('id' => $member->ID, 'title' => $member->post_title);
                         endforeach;
                         echo json_encode($members_data); //(array('id' => $post_parent_id, 'title' => get_the_title($post_parent_id)));
                     ?>
-                ); 
+                );
             });
 
-         
 
 
-     
-        </script>           
+
+
+        </script>
     </div>
 
 
-             
+
 
     <?php
 
@@ -294,16 +289,16 @@ function add_field_members_cp($content){
     //Доавляем секцию с мета данными
     function add_meta_content_top(){
         global $post;
-        
+
         if (!(is_singular('cases') or (is_search() and get_post_type($post->ID) == 'cases') or (get_post_type($post->ID) == 'cases' and is_archive()))) return;
 
-        
+
 
         ?>
         <section id='meta-case'>
             <ul class="list-inline">
                 <?php do_action('case_meta_top_add_li'); ?>
-            </ul> 
+            </ul>
         </section>
         <?php
 
@@ -319,8 +314,8 @@ function add_field_members_cp($content){
         </li>
         <li>
             <span id="case_category_meta_wrapper">
-                <?php 
-                $category_case = wp_get_post_terms($post->ID, 'functions'); 
+                <?php
+                $category_case = wp_get_post_terms($post->ID, 'functions');
                 //var_dump($category_case);
                 ?>
                 <?php if(empty($category_case)): ?>
@@ -335,11 +330,11 @@ function add_field_members_cp($content){
         </li>
         <?php
     }
-    
+
    //Добавляем результат в мету кейса, если есть
     function add_result_meta(){
         global $post;
-        $result = wp_get_post_terms($post->ID, 'results'); 
+        $result = wp_get_post_terms($post->ID, 'results');
         if(! empty($result)):
         ?>
         <li>
@@ -376,7 +371,7 @@ function add_field_members_cp($content){
 			        return markup;
 			}
 
-			//get field for put to input 
+			//get field for put to input
 			function elementFormatSelection(element) {
 			        return element.title;
 			}
@@ -386,48 +381,12 @@ function add_field_members_cp($content){
 	}
 
 
-
-
-
-
-/*
-Добавляем обертку для контента. С пониженным приоритетом. Чтобы затем можно было точно отделить контент от остальных секций добавляемых через хук the_content
-*/
-function add_wrapper_content_case_cp($content){
-	if(!is_singular('cases')) return $content;
-	return '<div class="jumbotron">' . $content . '</div>';
-}
-
-
-
-
-
-
-
-
-protected function __clone() {
-	// ограничивает клонирование объекта
-}
-
-static public function getInstance() {
-	if(is_null(self::$_instance))
-	{
-	self::$_instance = new self();
+	/*
+	Добавляем обертку для контента. С пониженным приоритетом. Чтобы затем можно было точно отделить контент от остальных секций добавляемых через хук the_content
+	*/
+	function add_wrapper_content_case_cp($content){
+		if(!is_singular('cases')) return $content;
+		return '<div class="jumbotron">' . $content . '</div>';
 	}
-	return self::$_instance;
-}
 
-} $CasesView = CaseViewsSingltone::getInstance();
-
-
-
-
-
-
-
-
-
-
-
-
-
+} $TheCasesView = new CaseViews;
