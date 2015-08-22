@@ -1,0 +1,239 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: CasePress\n"
+"POT-Creation-Date: 2015-08-03 12:36+0500\n"
+"PO-Revision-Date: 2015-08-01 21:26+0500\n"
+"Last-Translator: \n"
+"Language-Team: Systemo <s@casepress.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.3\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: translate;__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:1,2,4c;"
+"_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;"
+"esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: cp-includes/add_checklist.php:5
+msgctxt "post type general name"
+msgid "Заметки"
+msgstr ""
+
+#: cp-includes/add_checklist.php:6
+msgctxt "post type singular name"
+msgid "Заметку"
+msgstr ""
+
+#: cp-includes/add_checklist.php:7
+msgctxt "Event"
+msgid "Добавить"
+msgstr ""
+
+#: cp-includes/add_checklist.php:8
+msgid "Добавить новую заметку"
+msgstr ""
+
+#: cp-includes/add_checklist.php:9
+msgid "Редактировать заметку"
+msgstr ""
+
+#: cp-includes/add_checklist.php:10
+msgid "Новая заметка"
+msgstr ""
+
+#: cp-includes/add_checklist.php:11
+msgid "Просмотреть заметку"
+msgstr ""
+
+#: cp-includes/add_checklist.php:12
+msgid "Поиск заметок"
+msgstr ""
+
+#: cp-includes/add_checklist.php:13
+msgid "Заметки не найдены"
+msgstr ""
+
+#: cp-includes/add_checklist.php:14
+msgid "Не найдено"
+msgstr ""
+
+#: cp-includes/add_status_archive.php:6
+#, php-format
+msgid "Архив <span class=\"count\">(%s)</span>"
+msgid_plural "Архивы <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: cp-includes/casepress_commone_functions.php:17
+msgid "Every minute"
+msgstr ""
+
+#: cp-includes/cases/includes/visits/visits_check/_load.php:44
+#, php-format
+msgid "<cite class=\"fn\">%s</cite> <span class=\"says\">wrote:</span>"
+msgstr ""
+
+#: cp-includes/cases/includes/visits/visits_check/_load.php:47
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: cp-includes/cases/includes/visits/visits_check/_load.php:51
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: cp-includes/cases/includes/visits/visits_check/_load.php:51
+msgid "(Edit)"
+msgstr ""
+
+#: cp-includes/l10n.php:28
+msgid "Example: First example! It's just string to translate"
+msgstr ""
+
+#: cp-includes/l10n.php:34
+msgctxt "Example"
+msgid "Example: Second example! Click here to add new!"
+msgstr ""
+
+#: cp-includes/l10n.php:39
+msgctxt "Picture"
+msgid "Example: Third example! Click here to add new!"
+msgstr ""
+
+#: cp-includes/l10n.php:43
+msgid "Example: Hello, dear user!\n"
+msgstr ""
+
+#: cp-includes/l10n.php:47
+msgid "Example: This text will be printed on screen\n"
+msgstr ""
+
+#: cp-includes/l10n.php:51
+msgctxt "Picture"
+msgid "Example: Translating text with 'picture' context: landscape\n"
+msgstr ""
+
+#: cp-includes/l10n.php:56
+msgctxt "Terrain"
+msgid "Example: Translating text with 'terrain' context: landscape\n"
+msgstr ""
+
+#: cp-includes/l10n.php:60
+#, php-format
+msgid "Example: We deleted %d spam message."
+msgid_plural "Example: We deleted %d spam messages."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: cp-includes/l10n.php:66
+#, php-format
+msgid "Example: I found %d dollar."
+msgid_plural "Example: I found %d dollars."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: cp-includes/l10n.php:70
+#, php-format
+msgctxt "Commentary rating"
+msgid "Example: %d star"
+msgid_plural "Example: %d stars"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#. TRANSLATORS: PHP time format, see @ http://php.net/date
+#: cp-includes/l10n.php:81
+msgid "g:i:s a"
+msgstr ""
+
+#: cp-includes/new-content-menu.php:20
+msgctxt "add new from admin bar"
+msgid "Media"
+msgstr ""
+
+#: cp-includes/new-content-menu.php:23
+msgctxt "add new from admin bar"
+msgid "Link"
+msgstr ""
+
+#: cp-includes/new-content-menu.php:40
+msgctxt "add new from admin bar"
+msgid "User"
+msgstr ""
+
+#: cp-includes/new-content-menu.php:45
+msgctxt "admin bar menu group label"
+msgid "New"
+msgstr ""
+
+#: cp-includes/new-content-menu.php:52
+msgctxt "admin bar menu group label"
+msgid "Add New"
+msgstr ""
+
+#: cp-includes/persons/includes/person_meta.php:20
+msgid "Person contacts"
+msgstr ""
+
+#: cp-includes/persons/includes/user_person_link.php:36
+msgid "User"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:292
+msgid "Delete this image"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:292
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:927
+msgid "Delete"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:393
+msgid "Cannot delete file. Something's wrong."
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:623
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:668
+msgid "Remove"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:635
+msgid "Add"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:922
+msgid "Uploaded files"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:934
+msgid "Upload new files"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:940
+msgid "Add more files"
+msgstr ""
+
+#: cp-includes/redirect/mb_class/my-meta-box-class.php:993
+msgid "Select a color"
+msgstr ""
+
+#: cp-includes/redirect/redirect.php:38
+msgid "Custom Links"
+msgstr ""
+
+#: cp-includes/redirect/redirect.php:39
+msgid "Custom Link"
+msgstr ""
+
+#: cp-includes/wb_ban_cps/wp_ban_cps_ms_alert.php:56
+msgid "WordPress &rsaquo; Error"
+msgstr ""

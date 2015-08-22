@@ -16,6 +16,8 @@ Version: 20150820-2
 
 
 
+// Локализация
+include_once 'cp-includes/l10n.php';
 
 //Общие функции
 include_once 'cp-includes/casepress_commone_functions.php';
