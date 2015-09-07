@@ -7,7 +7,7 @@ Author: CasePress
 Author URI: http://casepress.org
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20150820-2
+Version: 20150907-1
 */
 
 /*
@@ -55,7 +55,7 @@ include_once 'cp-includes/toolbar_home_icon/admin_menu_icon.php';
 include_once 'cp-includes/need-authentication/need-auth-int-casepress.php';
 include_once 'cp-includes/wb_ban_cps/wp_ban_cps.php';
 include_once 'cp-includes/add_wrapper_and_hooks_for_posts.php';
-include_once 'cp-includes/sidebars/_load.php';
+include_once 'cp-includes/sidebars/index.php';
 
 include_once 'cp-includes/search_by_meta.php';
 include_once 'cp-includes/lab_temp.php';
