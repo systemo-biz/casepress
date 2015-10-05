@@ -45,3 +45,13 @@ function status_display_in_archive_admin_cp( $statuses ) {
 }
  
 add_filter( 'display_post_states', 'status_display_in_archive_admin_cp' );
+
+
+function add_status_cp() {
+	echo "<script>
+	jQuery(document).ready( function($) {
+		$( 'select[name=\"_status\"]' ).append( '<option value=\"archive\">Архив</option>' );
+	});
+	</script>";
+}
+add_action('admin_footer-edit.php','add_status_cp');
