@@ -35,33 +35,38 @@ add_action('init', 'register_subjects_category_tax');
 add_action('cp_activate', 'register_subjects_category_tax');
 
 
-function register_organization_structure_tax() {
-	$labels = array(
-		'name' 					=> 'Подразделения',
-		'singular_name' 		=> 'Подразделение',
-		'add_new' 				=> 'Добавить',
-		'add_new_item' 			=> 'Добавить',
-		'edit_item' 			=> 'Изменить',
-		'new_item' 				=> 'Новая',
-		'view_item' 			=> 'Просмотр',
-		'search_items' 			=> 'Поиск',
-		'not_found' 			=> 'Подразделения не найдены',
-		'not_found_in_trash' 	=> 'В корзине не найдены подразделения',
-	);
-	
-	$post_types = array('persons', 'cases');
-				
-	$args = array(
-		'labels' 			=> $labels,
-		'singular_label' 	=> 'Подразделение',
-		'public' 			=> true,
-		'show_ui' 			=> true,
-		'hierarchical' 		=> true,
-		'show_tagcloud' 	=> true,
-		'show_in_nav_menus' => true,
-		'rewrite' 			=> array('slug' => 'organization_structure', 'with_front' => false ),
-	 );
-	register_taxonomy('organization_structure', $post_types, $args);
+//Добавляем подразделения
+function register_branche_tax() {
+
+$n = array('Подразделение', 'Подразделения');//in next versions this variable need move to options WP
+
+  $labels = array(
+    'name' => $n[1],
+    'singular_name' => $n[0],
+    'add_new' => 'Добавить',
+    'add_new_item' => 'Добавить '.$n[0],
+    'edit_item' => 'Редактировать '.$n[1],
+    'new_item' => 'Новое '.$n[0],
+    'view_item' => 'Просмотр '.$n[1],
+    'search_items' => 'Поиск '.$n[1],
+    'not_found' => $n[0].' не найдено',
+    'not_found_in_trash' => 'В Корзине '.$n[0].' не найдено',
+    );
+
+  $post_types = array('cases','persons');
+
+  $args = array(
+    'labels' => $labels,
+    'singular_label' => $n[0],
+    'public' => true,
+    'show_ui' => true,
+    'hierarchical' => true,
+    'show_tagcloud' => true,
+    'show_in_nav_menus' => true,
+    'rewrite' => array('slug' => 'branche', 'with_front' => false ),
+  );
+
+  register_taxonomy('branche', $post_types, $args);
 }
-add_action('init', 'register_organization_structure_tax');
-add_action('cp_activate', 'register_organization_structure_tax');
+add_action('init', 'register_branche_tax');
+add_action('cp_activate', 'register_branche_tax');

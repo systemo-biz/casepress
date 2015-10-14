@@ -57,8 +57,9 @@ $n = array('Категория дел', 'Категории дел', 'Катег
 
   register_taxonomy('functions', $pages, $args);
 } 
-    
-    
+
+
+        
 function register_results_tax() {
 	$labels = array(
 		'name' 					=> 'Результаты',
@@ -164,6 +165,7 @@ function gf_cases_rewrite(){
 
 
 function remove_cases_metabox() {
+  remove_meta_box('branchediv', 'cases', 'side');
   remove_meta_box('functionsdiv', 'cases', 'side');
   remove_meta_box('tagsdiv-navigation', 'cases', 'side');
   remove_meta_box('tagsdiv-results', 'cases', 'side');

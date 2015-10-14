@@ -17,6 +17,7 @@ private function __construct() {
     add_action( 'post_submitbox_misc_actions', array($this, 'form_case_parameters_render') );
 
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_case_category'));
+    add_action('add_field_for_case_aside_parameters', array($this, 'add_field_case_branche'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_responsible'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_deadline'));
     add_action('add_field_for_case_aside_parameters', array($this, 'add_field_date_end'));
@@ -548,6 +549,60 @@ function add_field_case_category($post){
 <?php
 }
 
+
+function add_field_case_branche($post){
+
+?>
+
+    <!--------Подразделения-------->
+    <div id="cp_case_branche_div">
+       <?php
+
+        $post_id = $post->ID;
+        $taxonomy = 'branche';
+        $terms = get_the_terms( $post_id, $taxonomy );
+
+        //get first term from array
+        if (is_array($terms)) $term = array_shift($terms);
+        
+        ?>
+
+        <label class="cp_label" for="cp_case_branche_select">Подразделение</label>
+        <?php
+        $case_branche_id = '0';
+        
+        if (isset($term->term_id)){
+            $case_branche_id = $term->term_id;
+        } elseif (isset($_REQUEST['case_branche_id'])) {
+            $case_branche_id = $_REQUEST['case_branche_id'];
+        } else $case_branche_id = '0';
+
+        wp_dropdown_categories( array(
+            'name' => 'cp_case_branche',
+            'class' => 'cp_full_width',
+            'id' => 'cp_case_branche_select',
+            'echo' => 1,
+            'hide_empty' => 0, 
+            'show_option_none' => 'Выберите подразделение',
+            'option_none_value' => '0',
+            'selected' => $case_branche_id,
+            'hierarchical' => 1,
+            'taxonomy' => 'branche'
+        )) ; ?>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                 $('#cp_case_branche_select').select2({
+                    width: '100%',
+                    allowClear: true,
+                 });
+            });
+        </script>  
+
+    </div>
+<?php
+}
+
 function add_field_deadline($post){
     ?>
 
@@ -628,6 +683,13 @@ function save_data_post(){
     if (isset($_REQUEST['cp_case_category']) && $_REQUEST['cp_case_category'] != ''){
         $terms = $_REQUEST['cp_case_category'];
         $taxonomy = "functions";
+        $append = false;
+        wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
+    }
+
+    if (isset($_REQUEST['cp_case_branche']) && $_REQUEST['cp_case_branche'] != ''){
+        $terms = $_REQUEST['cp_case_branche'];
+        $taxonomy = "branche";
         $append = false;
         wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
     }
