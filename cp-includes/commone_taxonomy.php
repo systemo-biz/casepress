@@ -63,10 +63,10 @@ $n = array('Подразделение', 'Подразделения');//in next
     'hierarchical' => true,
     'show_tagcloud' => true,
     'show_in_nav_menus' => true,
-    'rewrite' => array('slug' => 'branche', 'with_front' => false ),
+    'rewrite' => array('slug' => 't-branche', 'with_front' => false ),
   );
 
-  register_taxonomy('branche', $post_types, $args);
+  register_taxonomy('t-branche', $post_types, $args);
 }
 add_action('init', 'register_branche_tax');
 add_action('cp_activate', 'register_branche_tax');
