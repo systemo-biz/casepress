@@ -559,7 +559,7 @@ function add_field_case_branche($post){
        <?php
 
         $post_id = $post->ID;
-        $taxonomy = 'branche';
+        $taxonomy = 't-branche';
         $terms = get_the_terms( $post_id, $taxonomy );
 
         //get first term from array
@@ -587,7 +587,7 @@ function add_field_case_branche($post){
             'option_none_value' => '0',
             'selected' => $case_branche_id,
             'hierarchical' => 1,
-            'taxonomy' => 'branche'
+            'taxonomy' => 't-branche'
         )) ; ?>
 
         <script type="text/javascript">
@@ -689,7 +689,7 @@ function save_data_post(){
 
     if (isset($_REQUEST['cp_case_branche']) && $_REQUEST['cp_case_branche'] != ''){
         $terms = $_REQUEST['cp_case_branche'];
-        $taxonomy = "branche";
+        $taxonomy = "t-branche";
         $append = false;
         wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
     }
