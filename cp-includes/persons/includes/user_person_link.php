@@ -3,14 +3,14 @@
 //Профиль пользователя. Выводим данные о связанной персоне
 function show_person_data($user) {
 	echo "<h3>Данные о связанной Персоне</h3>";
-	
+
 	$user_email = $user->data->user_email;
 	$user_id =  $user->data->ID;
-	$linked_post_id = get_user_meta($user_id,'id_person',true);	
-	if ($linked_post_id)		
+	$linked_post_id = get_user_meta($user_id,'id_person',true);
+	if ($linked_post_id)
 		{
 			$linked_post = get_post($linked_post_id);
-			echo "			
+			echo "
 			<a href='".$linked_post->guid."'>".$linked_post->post_title."</a><br>
 			<a href='/wp-admin/post.php?post=".$linked_post->ID."&action=edit'>Редактировать Персону</a>";
 		}
@@ -25,12 +25,12 @@ add_action( 'edit_user_profile', 'show_person_data' );
 class PersonRelationshipUser_CP_Singleton {
 
 private static $_instance = null;
-    
+
 private function __construct() {
     add_action( 'add_meta_boxes', array( &$this, 'add' ) );
     add_action( 'save_post', array( &$this, 'save' ), 1, 2 );
 }
-    
+
 //init metabox
 function add() {
     add_meta_box('person_select_user', __('User', 'casepress'), array(&$this, 'person_select_user_callback'), 'persons', 'side');
@@ -39,11 +39,11 @@ function add() {
 
     //print HTML add_contacts
     function person_select_user_callback($post){
-        
+
         $post = get_post();
-        
+
         wp_nonce_field( basename( __FILE__ ), 'person_select_user-nonce' );
-        
+
         $email = get_post_meta($post->ID, 'email',true);
 
         // Get user for person
@@ -62,7 +62,7 @@ function add() {
                 </p>
             <?php
         }
-    } 
+    }
 
 
 
@@ -82,36 +82,55 @@ function add() {
 
         //Проверяем наличие отметки о подключении персоны
         if ($post->post_type == 'persons' and isset($_POST['add_user_by_email_cp'])) {
-            
+
             //Проверка email на адекватность или прекращаем выполнение
             if(is_email( $_POST['user_email_for_add_cp'] )){
                 $email = $_POST['user_email_for_add_cp'];
             } else {
                 return $post_id;
             }
-            
+
             //Проверяем есть ли пользователь или создаем на основе переданного адреса почты
             $user_id = email_exists($email);
             if($user_id) {
-                
+
                 //привязываем персону к найденному пользователю
                 update_user_meta($user_id, 'id_person', $post_id);
-                
+
             } else {
+
+								//Get last ID user for insert
+								$users = get_users('fields=ID&number=3&orderby=registered&order=DESC');
+								$last_id = max($users);
+								$new_id = $last_id+1;
+
                 //создаем нового пользователя и привязываем к персоне
-                $user_name = str_replace(array(".", "@", "+"), "-", $email);
+                $user_name = 'u' . $new_id;
                 $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
                 $user_id = wp_create_user( $user_name, $random_password, $email );
-                wp_new_user_notification($user_id, $random_password);
+								wp_new_user_notification($user_id, $random_password);
+
+
+								$user_name = get_the_title($post_id);
+								$url_user = get_permalink($post_id);
+
+								$user_id = wp_update_user(array(
+									'ID' => $user_id,
+									'user_url' => $url_user,
+									'display_name' => $user_name,
+									'user_nicename' => $user_name,
+									));
+
                 update_user_meta($user_id, 'id_person', $post_id);
 
+
             }
-            //update_post_meta($post_id, 'person_user_id', esc_attr($_POST['user_email_for_add_cp']));
+
         }
         return $post_id;
     }
-    
-     
+
+
 /**
  * Служебные функции одиночки
  */
@@ -124,6 +143,6 @@ static public function getInstance() {
 	self::$_instance = new self();
 	}
 	return self::$_instance;
-}    
-    
+}
+
 } $PersonRelationshipUser_CP = PersonRelationshipUser_CP_Singleton::getInstance();
