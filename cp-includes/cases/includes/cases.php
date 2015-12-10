@@ -155,14 +155,6 @@ function cases_post_type_link( $link, $post = 0 ){
 }
 
 
-function gf_cases_rewrite(){
-  global $wp_rewrite;
-  $wp_rewrite->add_rewrite_tag('%cases_id%', '([^/]+)', 'post_type=cases&p=');
-  $wp_rewrite->add_permastruct('cases', '/cases/%cases_id%', false);
-  
-} 
-
-
 
 function remove_cases_metabox() {
   remove_meta_box('branchediv', 'cases', 'side');
