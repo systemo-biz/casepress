@@ -146,12 +146,11 @@ function register_cases_post_type() {
 } 
 
     
-function cases_post_type_link( $link, $post = 0 ){
-    if ( $post->post_type == 'cases' ){
-        return home_url( 'cases/' . $post->ID );
-    } else {
-        return $link;
-    }
+function cases_post_type_link($permalink, $post) {      
+        if (('cases' == $post->post_type) && '' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
+            $permalink = "/cases/" . $post->ID . "/";
+        }
+        return $permalink;
 }
 
 
