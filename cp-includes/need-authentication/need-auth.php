@@ -18,5 +18,5 @@ function CheckAllow() {
 }
 
 function is_login() {
-    return in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php', 'wp-cron.php', 'xmlrpc.php' ) );
+    return in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php', 'wp-cron.php', 'xmlrpc.php', 'admin-ajax.php' ) );
 }
