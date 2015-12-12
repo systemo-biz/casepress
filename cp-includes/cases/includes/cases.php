@@ -8,20 +8,25 @@ private static $_instance = null;
 private function __construct() {
 
 
-    add_action('cp_activate', array($this, 'register_cases_post_type'));	
+    add_action('cp_activate', array($this, 'register_cases_post_type'));
     add_action('init', array($this, 'register_cases_post_type'));
 
-    add_action('cp_activate', array($this, 'register_results_tax'));	
+    add_action('cp_activate', array($this, 'register_results_tax'));
     add_action('init', array($this, 'register_results_tax'));
-    
-    add_action('cp_activate', array($this, 'register_functions_tax'));	
+
+    add_action('cp_activate', array($this, 'register_functions_tax'));
     add_action('init', array($this, 'register_functions_tax'));
 
-    add_filter('post_type_link', array($this, 'cases_post_type_link'), 10, 2);
 
     add_filter( 'comments_open', array($this, 'enable_comment_for_case_cp'), 10, 2);
     add_action( 'admin_menu', array($this, 'remove_cases_metabox'));
-    add_action( 'admin_menu' , array($this, 'remove_result_mb_cases') );  
+    add_action( 'admin_menu' , array($this, 'remove_result_mb_cases') );
+
+
+    //add_filter('post_type_link', array($this, 'cases_post_type_link'), 11111, 2);
+    //add_action('cp_activate', array($this, 'cases_rewrite_rule'));
+    //add_action('init', array($this, 'cases_rewrite_rule'));
+
 }
 
 
@@ -56,10 +61,10 @@ $n = array('Категория дел', 'Категории дел', 'Катег
   );
 
   register_taxonomy('functions', $pages, $args);
-} 
+}
 
 
-        
+
 function register_results_tax() {
 	$labels = array(
 		'name' 					=> 'Результаты',
@@ -73,9 +78,9 @@ function register_results_tax() {
 		'not_found' 			=> 'Результат не найден',
 		'not_found_in_trash' 	=> 'В Корзине Результат не найден',
 	);
-	
+
 	$post_types = array('cases', 'process');
-				
+
 	$args = array(
 		'labels' 			=> $labels,
 		'singular_label' 	=> 'Результат',
@@ -86,13 +91,13 @@ function register_results_tax() {
 		'show_in_nav_menus' => true,
 		'rewrite' 			=> array('slug' => 'results', 'with_front' => false ),
 	 );
-	register_taxonomy('results', $post_types, $args);    
+	register_taxonomy('results', $post_types, $args);
 }
 
 
-function remove_result_mb_cases() {  
-    remove_meta_box( 'resultsdiv' , 'cases' , 'side' );  
-}  
+function remove_result_mb_cases() {
+    remove_meta_box( 'resultsdiv' , 'cases' , 'side' );
+}
 
 
 function register_cases_post_type() {
@@ -122,7 +127,7 @@ function register_cases_post_type() {
       //add custom-fields, if it is enable
       if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="custom-fields";
       if (get_option( 'enable_custom_fields_for_cases' )) $supports[]="excerpt";
-      
+
       $args = array(
         'labels' => $labels,
         'singular_label' => $n[0],
@@ -139,20 +144,35 @@ function register_cases_post_type() {
       );
 
     register_post_type('cases',$args);
-    add_rewrite_rule(
-        'cases/([0-9]+)?$',
-        'index.php?post_type=cases&p=$matches[1]',
-        'top' );
-} 
 
-    
-function cases_post_type_link($permalink, $post) {      
-        if (('cases' == $post->post_type) && '' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
-            $permalink = "/cases/" . $post->ID . "/";
-        }
-        return $permalink;
 }
 
+
+function cases_post_type_link($permalink, $post) {
+
+  $post = get_post($post);
+
+  if (('cases' == $post->post_type) && '' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
+    $permalink = "/cases/" . $post->ID . "/";
+  }
+
+  if(get_current_user_id() == 3){
+    //var_dump($permalink);
+
+  }
+
+  return $permalink;
+}
+
+
+function cases_rewrite_rule(){
+
+  add_rewrite_rule(
+      'cases/([0-9]+)?$',
+      'index.php?post_type=cases&p=$matches[1]',
+      'top' );
+
+}
 
 
 function remove_cases_metabox() {
@@ -160,11 +180,11 @@ function remove_cases_metabox() {
   remove_meta_box('functionsdiv', 'cases', 'side');
   remove_meta_box('tagsdiv-navigation', 'cases', 'side');
   remove_meta_box('tagsdiv-results', 'cases', 'side');
-  remove_meta_box('tagsdiv-state', 'cases', 'side');  
+  remove_meta_box('tagsdiv-state', 'cases', 'side');
   remove_meta_box('commentsdiv', 'cases', 'side');
-  remove_meta_box('commentstatusdiv', 'cases', 'side');  
+  remove_meta_box('commentstatusdiv', 'cases', 'side');
 }
-    
+
 // Включаем комменты для дел всегда
 function enable_comment_for_case_cp($open, $post_id){
     if('cases' == get_post_type($post_id))
@@ -172,7 +192,7 @@ function enable_comment_for_case_cp($open, $post_id){
     return $open;
 }
 
-    
+
 protected function __clone() {
 	// ограничивает клонирование объекта
 }
@@ -186,4 +206,3 @@ static public function getInstance() {
 }
 
 } $CasesModel = CasesModelSingltone::getInstance();
-
