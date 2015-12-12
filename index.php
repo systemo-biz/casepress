@@ -5,9 +5,10 @@ Plugin URI: http://casepress.org
 Description: Adaptive Case Managment System based on WordPress. Beta-version
 Author: CasePress
 Author URI: http://casepress.org
+Text Domain: casepress
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20151211-1
+Version: 20151212-1
 */
 
 /*
