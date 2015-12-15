@@ -120,7 +120,7 @@ function search_array_cp_case_from($search_array, $data, $postarr){
 
 
 
-//Добавляем в поисковый кеш наименование поля Кому
+//Добавляем в поисковый кеш наименование поля Адреса
 function search_array_cp_case_to($search_array, $data, $postarr){
 
 	//получаем адрес email для персоны и помещаем в переменную $meta;
