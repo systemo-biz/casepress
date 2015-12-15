@@ -8,7 +8,7 @@ Author URI: http://casepress.org
 Text Domain: casepress
 GitHub Plugin URI: https://github.com/systemo-biz/casepress
 GitHub Branch: master
-Version: 20151214-2
+Version: 20151214-3
 */
 
 /*
