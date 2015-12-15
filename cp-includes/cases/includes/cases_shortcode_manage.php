@@ -323,10 +323,10 @@ function shortcode_meta(){
             </div>
         </div>
 
-        <!-- Кому -->
+        <!-- Адресат -->
         <div id="cp_case_to_wrapper" class="form-group">
             <div>
-                <label class="cp_label" id="cp_case_to_label">Кому:</label>
+                <label class="cp_label" id="cp_case_to_label">Адресат:</label>
                 <span id="cp_case_to_view" class="cp_forms">
                     <?php $to_id = get_post_meta( $post->ID, 'cp_to', true ); ?>
                     <?php if($to_id != ''): ?>
