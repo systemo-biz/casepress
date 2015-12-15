@@ -322,7 +322,7 @@ function add_field_members_cp($content){
                     <span class="label label-default"><span class="glyphicon glyphicon-folder-open"></span> Без категории</span>
                 <?php else: ?>
                     <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-folder-open"></span> </span><?php echo $category_case[0]->name; ?></span>
+                        <span class="glyphicon glyphicon-folder-open"></span> <span><?php echo $category_case[0]->name; ?></span>
                     </a>
                 <?php endif; ?>
 
