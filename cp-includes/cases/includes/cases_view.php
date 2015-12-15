@@ -10,16 +10,16 @@ class CaseViews {
 
 		add_filter('the_content', array($this, 'add_wrapper_content_case_cp'), 9, 2);
 
-    add_action('content_before_wrapper_cp', array($this, 'add_meta_content_top'), 14, 2);
-    add_action('content_before_wrapper_cp', array($this, 'add_field_members_cp'), 22);
-
-    add_action('case_meta_top_add_li', array($this, 'add_id_and_category_to_case_meta'));
-    add_action('case_meta_top_add_li', array($this, 'add_result_meta'));
-    add_action('case_meta_top_add_li', array($this, 'add_deadline'));
-    add_action('case_meta_top_add_li', array($this, 'add_responsible'));
-
-    add_action('init', array($this, 'save_members'));
-    add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
+    		add_action('content_before_wrapper_cp', array($this, 'add_meta_content_top'), 14, 2);
+    		add_action('content_before_wrapper_cp', array($this, 'add_field_members_cp'), 22);
+		
+		add_action('case_meta_top_add_li', array($this, 'add_id_and_category_to_case_meta'));
+		add_action('case_meta_top_add_li', array($this, 'add_result_meta'));
+		add_action('case_meta_top_add_li', array($this, 'add_deadline'));
+		add_action('case_meta_top_add_li', array($this, 'add_responsible'));
+		
+		add_action('init', array($this, 'save_members'));
+		add_action( 'wp_ajax_query_persons', array($this, 'query_persons_callback') );
 
 		add_action('wp_footer', array($this, 'add_js_functions'));
 	}
@@ -321,8 +321,8 @@ function add_field_members_cp($content){
                 <?php if(empty($category_case)): ?>
                     <span class="label label-default"><span class="glyphicon glyphicon-folder-open"></span> Без категории</span>
                 <?php else: ?>
-                    <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>">
-                        <span class="label label-default"><span class="glyphicon glyphicon-folder-open"></span> <?php echo $category_case[0]->name; ?></span>
+                    <a href="<?php echo get_term_link( $category_case[0]->term_id, 'functions'); ?>" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-folder-open"></span> </span><?php echo $category_case[0]->name; ?></span>
                     </a>
                 <?php endif; ?>
 
