@@ -34,7 +34,7 @@ private function __construct() {
     // Add field "To"
 function add_field_to($post) {
  ?>
-    <!-- Кому  -->
+    <!-- Адресат  -->
 
     <div id="cp_case_to_wrapper">
         <div>
