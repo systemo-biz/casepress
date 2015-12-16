@@ -77,5 +77,7 @@ function add_comment_new_case_cp($post_ID, $post) {
        wp_insert_comment($commentdata);
 	}
 
-} add_action('wp_insert_post','add_comment_new_case_cp', 100, 2);
+} 
+//20151212 - временно отключил это увдомление, а то забиывает почта лишними письмами (надо думать как это лучше решить)
+//add_action('wp_insert_post','add_comment_new_case_cp', 100, 2);
 
