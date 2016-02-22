@@ -36,7 +36,7 @@ CasePress - adaptive case managment system powered by WordPress
 # Установка
 1. Ставим тему https://github.com/systemo-biz/wpbss
 2. Лучше сразу создать дочернюю тему ([инструкция](http://codex.wordpress.org/%D0%94%D0%BE%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D0%B5_%D1%82%D0%B5%D0%BC%D1%8B)). Для ускорения заготовку можно взять из родительской https://github.com/systemo-biz/wpbss/tree/master/wpbss-child
-3. Выполняем инструкцию http://casepress.org/shpargalka/
+3. Выполняем инструкцию http://casepress.org/ustanovka/
 
 
 # Changelog
